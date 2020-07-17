@@ -1,10 +1,13 @@
 <template>
   <div id="app">
+    <div class="bigContainer">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
     <nav>
       <ul class="nav">
-        <a href=""> <img :src="require('./assets/ros-logo.png')" style="margin-left: 15px; height:50px" /> </a>
+        <a href>
+          <img :src="require('./assets/ros-logo.png')" style="margin-left: 15px; height:50px" />
+        </a>
         <li>
           <span>Max Mustermann</span>
           <img :src="require('./assets/user.png')" class="logo" style="transform: translateY(6px);" />
@@ -55,9 +58,11 @@
         :directory="directory"
         style="height:150px"
       />
-      
+
       <DataFiles v-for="(file, id) in files" v-bind:key="id+10" :file="file" style="height:150px" />
     </div>
+    <accountSlider/>
+  </div>
   </div>
 </template>
 
@@ -66,6 +71,7 @@ import Data from "@/components/Data.vue";
 import DataFiles from "@/components/DataFiles.vue";
 import MenuleisteInhalt from "@/components/MenuleisteInhalt.vue";
 import EventService from "@/services/EventService.js";
+import accountSlider from '@/components/accountSlider.vue';
 
 export default {
   data() {
@@ -77,7 +83,8 @@ export default {
   components: {
     Data,
     DataFiles,
-    MenuleisteInhalt
+    MenuleisteInhalt,
+    accountSlider
   },
 
   created() {
@@ -106,7 +113,9 @@ export default {
   margin: 0;
   font-family: Helvetica;
 }
-
+.bigContainer{
+  overflow: hidden;
+}
 nav ul {
   z-index: 100;
   display: flex;
@@ -234,4 +243,5 @@ nav ul {
   color: grey;
   font-size: 15px;
 }
+
 </style>
