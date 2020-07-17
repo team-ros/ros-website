@@ -1,68 +1,80 @@
 <template>
   <div id="app">
     <div class="bigContainer">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
-    <nav>
-      <ul class="nav">
-        <a href>
-          <img :src="require('./assets/ros-logo.png')" style="margin-left: 15px; height:50px" />
-        </a>
-        <li>
-          <span>Max Mustermann</span>
-          <img :src="require('./assets/user.png')" class="logo" style="transform: translateY(6px);" />
-        </li>
-      </ul>
-    </nav>
+      <nav>
+        <ul class="nav">
+          <a href>
+            <img :src="require('./assets/ros-logo.png')" style="margin-left: 15px; height:50px" />
+          </a>
+          <li>
+            <span>Max Mustermann</span>
+            <img 
+              :src="require('./assets/user.png')"
+              class="logo"
+              style="transform: translateY(6px); cursor: pointer;"
+              @click="loadSlider"
+            />
+          </li>
+        </ul>
+      </nav>
 
-    <div class="menubar">
-      <p style="color:#797979; font-weight: 300; padding-left:10px;">Deine Daten</p>
-      <hr class="menubar-line" style="margin-left:10px;" />
-      <!-- Vue Single File Components -->
+      <div class="menubar">
+        <p style="color:#797979; font-weight: 300; padding-left:10px;">Deine Daten</p>
+        <hr class="menubar-line" style="margin-left:10px;" />
+        <!-- Vue Single File Components -->
 
-      <MenuleisteInhalt
-        v-for="(directory, id) in directorys"
-        v-bind:key="id"
-        :directory="directory"
-      />
+        <MenuleisteInhalt
+          v-for="(directory, id) in directorys"
+          v-bind:key="id"
+          :directory="directory"
+        />
+      </div>
+
+      <div class="leiste">
+        <ul class="leiste-ul">
+          <li>
+            <div class="such_box">
+              <input type="text" placeholder="Suchen.." />
+              <i class="fas fa-search"></i>
+            </div>
+          </li>
+
+          <li class="leiste-ul-li">
+            <div class="leiste-button">
+              <i class="fas fa-upload" style="margin-top:12px;"></i>
+              Hochladen
+            </div>
+          </li>
+          <li class="leiste-ul-li">
+            <div class="leiste-button">
+              <i class="fas fa-plus" style="margin-top:12px; "></i>
+              Neuer Ordner
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="datencontainer">
+        <Data
+          v-for="(directory, id) in directorys"
+          v-bind:key="id"
+          :directory="directory"
+          style="height:150px"
+          
+        />
+
+        <DataFiles
+          v-for="(file, id) in files"
+          v-bind:key="id+10"
+          :file="file"
+          style="height:150px"
+        />
+      </div>
+
+      <accountSlider v-if="this.$store.state.activeSlider === true"/>
     </div>
-
-    <div class="leiste">
-      <ul class="leiste-ul">
-        <li>
-          <div class="such_box">
-            <input type="text" placeholder="Suchen.." />
-            <i class="fas fa-search"></i>
-          </div>
-        </li>
-
-        <li class="leiste-ul-li">
-          <div class="leiste-button">
-            <i class="fas fa-upload" style="margin-top:12px;"></i>
-            Hochladen
-          </div>
-        </li>
-        <li class="leiste-ul-li">
-          <div class="leiste-button">
-            <i class="fas fa-plus" style="margin-top:12px; "></i>
-            Neuer Ordner
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="datencontainer">
-      <Data
-        v-for="(directory, id) in directorys"
-        v-bind:key="id"
-        :directory="directory"
-        style="height:150px"
-      />
-
-      <DataFiles v-for="(file, id) in files" v-bind:key="id+10" :file="file" style="height:150px" />
-    </div>
-    <accountSlider/>
-  </div>
   </div>
 </template>
 
@@ -80,13 +92,18 @@ export default {
       files: {}
     };
   },
+  methods: {
+    loadSlider() {
+      this.$store.dispatch("loadSlider"),
+      console.log("echo123")
+    }
+  },
   components: {
     Data,
     DataFiles,
     MenuleisteInhalt,
     accountSlider
   },
-
   created() {
     EventService.getDirectorys()
       .then(response => {
@@ -102,6 +119,7 @@ export default {
       .catch(error => {
         console.log("There was an error:", error.response); // Logs out the error
       });
+      
   }
 };
 </script>
@@ -113,7 +131,7 @@ export default {
   margin: 0;
   font-family: Helvetica;
 }
-.bigContainer{
+.bigContainer {
   overflow: hidden;
 }
 nav ul {
@@ -244,4 +262,7 @@ nav ul {
   font-size: 15px;
 }
 
+.hideSlider {
+  transform: translateX(-110%);
+}
 </style>

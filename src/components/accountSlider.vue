@@ -1,32 +1,19 @@
 <template>
-  <div class="accountSlider">
-    <button id="closeButton"> 
-    <img src="@/assets/closeX.png" width="30" class="buttonImg" id="imageX"/>
-    </button>
-  </div>
+  <div id="accountSlider" class="accountSlider">
+        <button id="closeButton" @click="updateAccountSliderState">
+            <img src="@/assets/closeX.png" width="30" class="buttonImg" id="imageX" />
+        </button>
+    </div>
 </template>
 
 <script>
-export default {
-};
-/*eslint-disable */
-
-window.onload = function(){
-
-const closeButton = document.getElementById("closeButton");
-const accountSlider = document.getElementById("accountSlider");
-
-closeButton.onclick = hideSlider();
-
-function hideSlider(){
-    document.getElementById("accountSlider").addEventListener("click", hideSlider);
+export default{
+  methods: {
+    updateAccountSliderState() {
+      this.$store.dispatch("startUpdateAccountSliderState")
+    }
+  }
 }
-
-}
-/*eslint-enable */
-
-
-
 </script>
 
 <style scoped>
@@ -46,7 +33,7 @@ function hideSlider(){
   float: right;
   cursor: pointer;
 }
-.hideSlider{
-    transform: translateX(-110%);
+.hideSlider {
+  transform: translateX(-110%);
 }
 </style>
