@@ -1,19 +1,48 @@
 <template>
   <div id="accountSlider" class="accountSlider">
-        <button id="closeButton" @click="updateAccountSliderState">
-            <img src="@/assets/closeX.png" width="30" class="buttonImg" id="imageX" />
-        </button>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <div class="accountSliderContent">
+      <img
+        src="@/assets/closeX.png"
+        width="30"
+        height="30"
+        class="buttonImg"
+        id="imageX"
+        @click="updateAccountSliderState"
+      />
+
+      <h1>Account</h1>
+      <p>Hier sind ihre Accountinformationen zu sehen</p>
+      <input type="text" placeholder="dein Name" class="accountInfos" readonly />
+      <input type="text" placeholder="deine E-Mail Adresse" class="accountInfos" readonly />
+      <input type="text" placeholder="dein Abonnement Ende " class="accountInfos" readonly />
+      <h3>Passwort zurücksetzen?</h3>
+      <input type="email" class="accountInfos" placeholder="E-Mail" />
+      <button class="resetButton">ZURÜCKSETZEN</button>
+      <h3>Projektwebsite</h3>
+      <a href="http://ros-cloud.at/">ROS Cloud</a>
+      <h3>Social Media</h3>
+      <a href="https://www.instagram.com/ros_cloud/?hl=de"  class="fa fa-instagram"> <span style="margin-left: 4px"> Instagram </span> </a>
+      <a href="https://twitter.com/cloud_ros" class="fa fa-twitter">  <span style="margin-left: 4px"> Twitter </span></a>
+      <a href="https://at.linkedin.com/in/ros-cloud-5b53aa1b0" class="fa fa-linkedin">   <span style="margin-left: 4px"> LinkedIn </span></a>
+      <h3>Hilfe</h3>
+      <a href="#" style="margin-bottom:3px">Impressum</a>
+      <a href="#">Support</a>
     </div>
+  </div>
 </template>
 
 <script>
-export default{
+export default {
   methods: {
     updateAccountSliderState() {
-      this.$store.dispatch("startUpdateAccountSliderState")
+      this.$store.dispatch("startUpdateAccountSliderState");
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -28,12 +57,65 @@ export default{
   box-shadow: -6px 0px 16px 1px rgba(0, 0, 0, 0.75);
   position: fixed;
 }
+.accountSliderContent {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+}
 .buttonImg {
-  margin: 10px;
+  margin: 15px;
   float: right;
   cursor: pointer;
+  right: 10px;
+  justify-items: end;
 }
 .hideSlider {
   transform: translateX(-110%);
+}
+.accountInfos {
+  display: block;
+}
+h1 {
+  margin-top: 80px;
+}
+h1,
+h3 {
+  margin-bottom: 0;
+}
+h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.accountInfos {
+  width: 98.5%;
+  border-color: #adadad;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  font-size: 16px;
+  color: black;
+  padding: 2px;
+  height: 30px;
+}
+.resetButton {
+  width: 100%;
+  margin-top: 10px;
+  height: 35px;
+  background-color: #0044b2;
+  border-radius: 3px;
+  color: #ffffff;
+  border-color: #0044b2;
+  font-size: 18px;
+  cursor: pointer;
+    outline: none;
+
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.fa{
+  margin-bottom: 3px;
 }
 </style>
