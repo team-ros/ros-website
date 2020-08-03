@@ -42,7 +42,9 @@
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
-              <label> <i class="fas fa-upload" style="margin-top:12px;"></i> Hochladen</label>
+              <label>
+                <i class="fas fa-upload" style="margin-top:12px;"></i> Hochladen
+              </label>
               <input type="file" name="my-upload-field" />
             </div>
           </li>
@@ -126,6 +128,7 @@ export default {
   margin: 0;
   font-family: Helvetica;
 }
+
 .bigContainer {
   overflow: hidden;
 }
@@ -261,36 +264,35 @@ nav ul {
   transform: translateX(-110%);
 }
 .upload-wrapper {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
 .upload-wrapper label {
-    display: inline-block;
-    height: 40px;
+  display: inline-block;
+  height: 40px;
   transition: 0.3s;
   border-radius: 3px;
-    color: #000;
-    cursor: pointer;
+  color: #000;
+  cursor: pointer;
 }
 .upload-wrapper input[type="file"] {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: 100%;
-    height: 50px;
-    opacity: 0;
-    z-index: 99;
-    display: block;
-    cursor: pointer;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 50px;
+  opacity: 0;
+  z-index: 99;
+  display: block;
+  cursor: pointer;
 }
 
 .uploaded-file-name {
-    position: relative;
-    z-index: 999;
-    display: inline-block;
+  position: relative;
+  z-index: 999;
+  display: inline-block;
 }
-
 </style>
