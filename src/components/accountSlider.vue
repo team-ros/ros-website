@@ -20,14 +20,21 @@
       <input type="text" placeholder="deine E-Mail Adresse" class="accountInfos" readonly />
       <input type="text" placeholder="dein Abonnement Ende " class="accountInfos" readonly />
       <h3>Passwort zurücksetzen?</h3>
-      <input type="email" class="accountInfos" placeholder="E-Mail" />
-      <button class="resetButton">ZURÜCKSETZEN</button>
+      <input type="password" class="accountInfos" placeholder="neues Passwort" required/>
+      <input type="password" class="accountInfos" placeholder="neues Passwort wiederholen" required/>
+      <button class="resetButton">PASSWORT ÄNDERN</button>
       <h3>Projektwebsite</h3>
       <a href="http://ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
-      <a href="https://www.instagram.com/ros_cloud/?hl=de"  class="fa fa-instagram"> <span style="margin-left: 4px"> Instagram </span> </a>
-      <a href="https://twitter.com/cloud_ros" class="fa fa-twitter">  <span style="margin-left: 4px"> Twitter </span></a>
-      <a href="https://at.linkedin.com/in/ros-cloud-5b53aa1b0" class="fa fa-linkedin">   <span style="margin-left: 4px"> LinkedIn </span></a>
+      <a href="https://www.instagram.com/ros_cloud/?hl=de" class="fa fa-instagram">
+        <span style="margin-left: 4px">Instagram</span>
+      </a>
+      <a href="https://twitter.com/cloud_ros" class="fa fa-twitter">
+        <span style="margin-left: 4px">Twitter</span>
+      </a>
+      <a href="https://at.linkedin.com/in/ros-cloud-5b53aa1b0" class="fa fa-linkedin">
+        <span style="margin-left: 4px">LinkedIn</span>
+      </a>
       <h3>Hilfe</h3>
       <a href="#" style="margin-bottom:3px">Impressum</a>
       <a href="#">Support</a>
@@ -108,14 +115,18 @@ h3 {
   border-color: #0044b2;
   font-size: 18px;
   cursor: pointer;
-    outline: none;
-
+  outline: none;
 }
-a{
-    text-decoration: none;
-    color: black;
+a {
+  text-decoration: none;
+  color: black;
 }
-.fa{
+.fa {
   margin-bottom: 3px;
+}
+input:focus,
+input:valid {
+  border-color: #0044b2;
+  transition: ease-in-out 0.5s;
 }
 </style>

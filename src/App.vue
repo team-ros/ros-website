@@ -10,7 +10,7 @@
           </a>
           <li>
             <span>Max Mustermann</span>
-            <img 
+            <img
               :src="require('./assets/user.png')"
               class="logo"
               style="transform: translateY(6px); cursor: pointer;"
@@ -40,11 +40,10 @@
               <i class="fas fa-search"></i>
             </div>
           </li>
-
-          <li class="leiste-ul-li">
-            <div class="leiste-button">
-              <i class="fas fa-upload" style="margin-top:12px;"></i>
-              Hochladen
+          <li class="leiste-ul-li leiste-button">
+            <div class="upload-wrapper">
+              <label> <i class="fas fa-upload" style="margin-top:12px;"></i> Hochladen</label>
+              <input type="file" name="my-upload-field" />
             </div>
           </li>
           <li class="leiste-ul-li">
@@ -62,7 +61,6 @@
           v-bind:key="id"
           :directory="directory"
           style="height:150px"
-          
         />
 
         <DataFiles
@@ -72,9 +70,8 @@
           style="height:150px"
         />
       </div>
-
-      <accountSlider v-if="this.$store.state.activeSlider === true"/>
     </div>
+    <accountSlider v-if="this.$store.state.activeSlider === true" />
   </div>
 </template>
 
@@ -83,7 +80,7 @@ import Data from "@/components/Data.vue";
 import DataFiles from "@/components/DataFiles.vue";
 import MenuleisteInhalt from "@/components/MenuleisteInhalt.vue";
 import EventService from "@/services/EventService.js";
-import accountSlider from '@/components/accountSlider.vue';
+import accountSlider from "@/components/accountSlider.vue";
 
 export default {
   data() {
@@ -94,8 +91,7 @@ export default {
   },
   methods: {
     loadSlider() {
-      this.$store.dispatch("loadSlider"),
-      console.log("echo123")
+      this.$store.dispatch("loadSlider"), console.log("echo123");
     }
   },
   components: {
@@ -119,7 +115,6 @@ export default {
       .catch(error => {
         console.log("There was an error:", error.response); // Logs out the error
       });
-      
   }
 };
 </script>
@@ -265,4 +260,37 @@ nav ul {
 .hideSlider {
   transform: translateX(-110%);
 }
+.upload-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.upload-wrapper label {
+    display: inline-block;
+    height: 40px;
+  transition: 0.3s;
+  border-radius: 3px;
+    color: #000;
+    cursor: pointer;
+}
+.upload-wrapper input[type="file"] {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+    opacity: 0;
+    z-index: 99;
+    display: block;
+    cursor: pointer;
+}
+
+.uploaded-file-name {
+    position: relative;
+    z-index: 999;
+    display: inline-block;
+}
+
 </style>
