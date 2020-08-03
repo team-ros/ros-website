@@ -21,8 +21,8 @@
       <input type="text" placeholder="dein Abonnement Ende " class="accountInfos" readonly />
       <h3>Passwort zurücksetzen?</h3>
       <input
-        v-bind:class="{blauerHaken: password1 == password2 && password1.length>1}"
         v-model="password1"
+        v-on:input="passwordStrongTest"
         type="password"
         class="accountInfos"
         id="newPassword1"
@@ -30,8 +30,8 @@
         required
       />
       <input
-        v-bind:class="{blauerHaken: password1 == password2 && password1.length>1}"
         v-model="password2"
+        v-on:input="passwordStrongTest"
         type="password"
         class="accountInfos"
         id="newPassword2"
@@ -39,7 +39,7 @@
         required
       />
 
-      <button :disabled="password1 != password2" class="resetButton">PASSWORT ÄNDERN</button>
+      <button :disabled="this.passwordStrong != true" class="resetButton">PASSWORT ÄNDERN</button>
       <h3>Projektwebsite</h3>
       <a href="http://ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
@@ -63,14 +63,23 @@
 export default {
   data: function() {
     return {
-      passwordsEqual: false,
-      password1: null,
-      password2: ""
+      password1: "",
+      password2: "",
+      regex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      passwordStrong: false
     };
   },
   methods: {
     updateAccountSliderState() {
       this.$store.dispatch("startUpdateAccountSliderState");
+    },
+    passwordStrongTest() {
+      if(this.regex.test(this.password1) && this.password1 == this.password2){
+        this.passwordStrong = true;
+      }
+      else{
+        this.passwordStrong = false;
+      }
     }
   }
 };
@@ -139,10 +148,10 @@ h3 {
   font-size: 18px;
   cursor: pointer;
   outline: none;
-  transition: opacity .5s ease-out;
-  -moz-transition: opacity .5s ease-out;
-  -webkit-transition: opacity .5s ease-out;
-  -o-transition: opacity .5s ease-out;
+  transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -webkit-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
 }
 .resetButton:disabled {
   opacity: 40%;
@@ -157,11 +166,6 @@ a {
 input:focus,
 input:valid {
   border-color: #0044b2;
-}
-.blauerHaken {
-  background-image: url(../assets/blauerHaken.png);
-  background-position: right;
-  background-size: 20px;
-  background-repeat: no-repeat;
+  transition: ease-in-out 0.5s;
 }
 </style>
