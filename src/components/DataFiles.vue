@@ -14,6 +14,7 @@ export default {
     file: Object
   } 
 };
+
 </script>
 
 <style scoped>
