@@ -35,10 +35,7 @@
       <div class="leiste">
         <ul class="leiste-ul">
           <li>
-            <div class="such_box">
-              <input type="text" placeholder="Suchen.." />
-              <i class="fas fa-search"></i>
-            </div>
+            <treeSelect class="multiselect" placeholder="Where are you from?"/>
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
@@ -54,7 +51,7 @@
               Neuer Ordner
             </div>
           </li>
-          <multiSelect />
+          
         </ul>
       </div>
 
@@ -84,7 +81,7 @@ import DataFiles from "@/components/DataFiles.vue";
 import MenuleisteInhalt from "@/components/MenuleisteInhalt.vue";
 import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
-import multiSelect from "@/components/multiSelect.vue";
+import treeSelect from "@/components/treeSelect.vue";
 
 export default {
   data() {
@@ -103,7 +100,7 @@ export default {
     DataFiles,
     MenuleisteInhalt,
     accountSlider,
-    multiSelect
+    treeSelect
   },
   created() {
     EventService.getDirectorys()
@@ -192,8 +189,10 @@ nav ul {
   top: 50px;
   background-color: #f3f2f1;
   width: 100%;
-  height: 40px;
+  height: 50px;
   padding-left: 250px;
+  display: flex;
+  align-items: center;
 }
 .leiste-button {
   height: 40px;
@@ -227,7 +226,7 @@ nav ul {
   top: 0;
   left: 0;
   padding-left: 250px;
-  padding-top: 85px;
+  padding-top: 95px;
   display: flex;
 }
 
@@ -298,4 +297,8 @@ nav ul {
   z-index: 999;
   display: inline-block;
 }
+.multiselect{
+  width: 450px;
+}
+
 </style>
