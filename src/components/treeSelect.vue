@@ -33,6 +33,30 @@ export default {
             {
               id: "node-1-b",
               label: ".docx"
+            },
+            {
+              id: "node-1-c",
+              label: ".html"
+            },
+            {
+              id: "node-1-d",
+              label: ".png"
+            },
+            {
+              id: "node-1-e",
+              label: ".jpg"
+            },
+            {
+              id: "node-1-f",
+              label: ".xls"
+            },
+            {
+              id: "node-1-g",
+              label: ".rtf"
+            },
+            {
+              id: "node-1-h",
+              label: ".txt"
             }
           ]
         },

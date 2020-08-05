@@ -4,54 +4,45 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
       <nav>
-        <ul class="nav">
-          <a href>
-            <img :src="require('./assets/ros-logo.png')" style="margin-left: 15px; height:50px" />
-          </a>
-          <li>
-            <span>Max Mustermann</span>
+        <div class="nav">
+          <div>
+            <a href>
+              <img :src="require('./assets/ros-logo.png')" style=" height:50px; " />
+            </a>
+          </div>
+          <div style="display: flex; align-items:center; ">
+            <span style="position: relative; "> Max Mustermann</span>
             <img
               :src="require('./assets/user.png')"
               class="logo"
-              style="transform: translateY(6px); cursor: pointer;"
+              style=" cursor: pointer; height: 40px; margin: .5px"
               @click="loadSlider"
             />
-          </li>
-        </ul>
+          </div>
+        </div>
       </nav>
-
-      <div class="menubar">
-        <p style="color:#797979; font-weight: 300; padding-left:10px;">Deine Daten</p>
-        <hr class="menubar-line" style="margin-left:10px;" />
-        <!-- Vue Single File Components -->
-
-        <MenuleisteInhalt
-          v-for="(directory, id) in directorys"
-          v-bind:key="id"
-          :directory="directory"
-        />
-      </div>
 
       <div class="leiste">
         <ul class="leiste-ul">
           <li>
-            <treeSelect class="multiselect" placeholder="Where are you from?"/>
+            <treeSelect class="multiselect" placeholder="Where are you from?" />
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
               <label>
-                <i class="fas fa-upload" style="margin-top:12px;"></i> Hochladen
+                <i class="fas fa-upload"></i> Hochladen
               </label>
               <input type="file" name="my-upload-field" />
             </div>
           </li>
-          <li class="leiste-ul-li">
-            <div class="leiste-button">
-              <i class="fas fa-plus" style="margin-top:12px; "></i>
-              Neuer Ordner
+          <li class="leiste-ul-li leiste-button">
+            <div class="upload-wrapper">
+              <label>
+                <i class="fas fa-plus"></i>
+                Neuer Ordner
+              </label>
             </div>
           </li>
-          
         </ul>
       </div>
 
@@ -78,7 +69,6 @@
 <script>
 import Data from "@/components/Data.vue";
 import DataFiles from "@/components/DataFiles.vue";
-import MenuleisteInhalt from "@/components/MenuleisteInhalt.vue";
 import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
 import treeSelect from "@/components/treeSelect.vue";
@@ -98,7 +88,7 @@ export default {
   components: {
     Data,
     DataFiles,
-    MenuleisteInhalt,
+
     accountSlider,
     treeSelect
   },
@@ -132,11 +122,11 @@ export default {
 .bigContainer {
   overflow: hidden;
 }
-nav ul {
+.nav {
   z-index: 100;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  
   top: 0;
   left: 0;
   position: absolute;
@@ -154,32 +144,12 @@ nav ul {
 .nav li {
   display: inline-block;
   padding: 20px;
+  height: 50px;
 }
 
 .logo {
   height: 30px;
   margin: auto;
-}
-
-.menubar {
-  z-index: 100;
-  position: absolute;
-  background-color: #f3f2f1;
-  width: 250px;
-  top: 50px;
-  height: auto;
-  left: 0;
-  margin: 0;
-  padding-top: 15px;
-  padding-left: 0px;
-  bottom: 0;
-}
-
-.menubar-line {
-  height: 1px;
-  width: 230px;
-  margin-top: 4px;
-  background-color: #797979;
 }
 
 .leiste {
@@ -190,25 +160,23 @@ nav ul {
   background-color: #f3f2f1;
   width: 100%;
   height: 50px;
-  padding-left: 250px;
-  display: flex;
+  padding: 0px;
   align-items: center;
 }
 .leiste-button {
-  height: 40px;
+  padding: 0;
+  margin: 0;
   transition: 0.3s;
   border-radius: 3px;
+  height: 100%;
 }
 .leiste-button:hover {
-  height: 40px;
   background-color: rgb(216, 216, 216);
   cursor: pointer;
 }
 
 .leiste-ul-li {
   float: right;
-  margin-left: 100px;
-  margin-right: 10px;
 }
 
 .leiste-ul li {
@@ -225,9 +193,8 @@ nav ul {
   width: 100%;
   top: 0;
   left: 0;
-  padding-left: 250px;
+  overflow-wrap: break-word;
   padding-top: 95px;
-  display: flex;
 }
 
 .datencontainer div {
@@ -269,10 +236,14 @@ nav ul {
   position: relative;
   display: inline-block;
   cursor: pointer;
+  height: 100%;
+  width: 150px;
+  text-align: center;
 }
 .upload-wrapper label {
   display: inline-block;
-  height: 40px;
+  height: 35px;
+  margin-top: 15px;
   transition: 0.3s;
   border-radius: 3px;
   color: #000;
@@ -297,8 +268,9 @@ nav ul {
   z-index: 999;
   display: inline-block;
 }
-.multiselect{
+.multiselect {
   width: 450px;
+  margin-top: 7px;
+  margin-left: 10px;
 }
-
 </style>

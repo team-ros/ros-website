@@ -4,7 +4,7 @@
         {
             "id": "d1",
             "parentid": "",
-            "name": "/burokratie",
+            "name": "Burokratie",
             "entrys": 3,
             "type": "directory",
             "size": 123456
@@ -12,7 +12,7 @@
         {
             "id": "d2",
             "parentid": "",
-            "name": "/privat",
+            "name": "Privat",
             "entrys": 3,
             "type": "directory",
             "size": 12345
@@ -24,13 +24,61 @@
             "entrys": 3,
             "type": "directory",
             "size": 12345
+        },
+        {
+            "id": "d4",
+            "parentid": "",
+            "name": "Bewerbungen",
+            "entrys": 3,
+            "type": "directory",
+            "size": 123456
+        },
+        {
+            "id": "d5",
+            "parentid": "",
+            "name": "Uni",
+            "entrys": 3,
+            "type": "directory",
+            "size": 6126
+        },
+        {
+            "id": "d6",
+            "parentid": "d2",
+            "name": "Schule",
+            "entrys": 3,
+            "type": "directory",
+            "size": 46512
+        },
+        {
+            "id": "d7",
+            "parentid": "",
+            "name": "Abschlussprojekt",
+            "entrys": 3,
+            "type": "directory",
+            "size": 1234
+        },
+        {
+            "id": "d8",
+            "parentid": "d6",
+            "name": "Noten",
+            "entrys": 3,
+            "type": "directory",
+            "size": 12345
+        },
+        {
+            "id": "d9",
+            "parentid": "d5",
+            "name": "Hausübungen_2019",
+            "entrys": 3,
+            "type": "directory",
+            "size": 713371
         }
     ],
     "files": [
 
         {
             "id": "f1",
-            "parentid": "d1",
+            "parentid": "",
             "type": ".docx",
             "name": "Hausübung_Cerny"
         },
@@ -42,7 +90,7 @@
         },
         {
             "id": "f3",
-            "parentid": "d2",
+            "parentid": "",
             "type": ".pdf",
             "name": "Lebenslauf"
         },
@@ -54,13 +102,13 @@
         },
         {
             "id": "f5",
-            "parentid": "d2",
+            "parentid": "",
             "type": ".pdf",
             "name": "Referat-Zusammenfassung"
         },
         {
             "id": "f6",
-            "parentid": "d3",
+            "parentid": "",
             "type": ".pdf",
             "name": "Steuerausgleich"
         }

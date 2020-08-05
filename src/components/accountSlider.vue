@@ -114,7 +114,7 @@ export default {
 }
 
 h1 {
-  margin-top: 80px;
+  margin-top: 40px;
 }
 h1,
 h3 {
