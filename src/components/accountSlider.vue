@@ -104,6 +104,7 @@ export default {
 }
 .buttonImg {
   margin: 15px;
+  
   float: right;
   cursor: pointer;
   right: 10px;

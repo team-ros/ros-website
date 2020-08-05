@@ -7,13 +7,19 @@
     </div>
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries">
-        <p>Umbenennen</p>
+        <p>
+          <i class="fas fa-eraser"></i> <span class="contextMenuText">Umbenennen </span>
+        </p>
       </li>
       <li class="contextMenuEntries">
-        <p>Löschen</p>
+        <p>
+          <i class="far fa-trash-alt" style="margin-left:2px"></i> <span class="contextMenuText"> Löschen </span>
+        </p>
       </li>
       <li class="contextMenuEntries">
-        <p>Herunterladen</p>
+        <p>
+          <i class="fas fa-download"></i><span class="contextMenuText">Herunterladen </span>
+        </p>
       </li>
     </vue-context>
   </div>
@@ -38,7 +44,7 @@ export default {
 </script>
 
 <style scoped>
-*{
+* {
   font-family: helvetica;
 }
 .event-link {
@@ -69,23 +75,35 @@ export default {
   margin: 0;
 }
 .contextMenu {
-  background-color: lightgray;
-  -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.75);
+  background-color: #eee;
+ -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
+-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
+box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
   outline: none;
   list-style-type: none;
   padding: 0px;
-  width: 150px;
+  width: 180px;
   position: absolute;
-    margin: 0px;
-
+  margin: 3px;
+  border-radius: 4px;
+  z-index: 10;
 }
 .contextMenuEntries:hover {
   width: 100%;
   margin: 0px;
   padding: 0px;
-  background-color: grey;
+  background-color: rgb(216, 216, 216);
   cursor: pointer;
+}
+.contextMenuEntries p {
+  margin: 0;
+  margin-left: 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.contextMenuText{
+  position: relative;
+  left: 12px;
 }
 </style>
