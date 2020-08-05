@@ -54,6 +54,7 @@
               Neuer Ordner
             </div>
           </li>
+          <multiSelect />
         </ul>
       </div>
 
@@ -83,6 +84,7 @@ import DataFiles from "@/components/DataFiles.vue";
 import MenuleisteInhalt from "@/components/MenuleisteInhalt.vue";
 import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
+import multiSelect from "@/components/multiSelect.vue";
 
 export default {
   data() {
@@ -100,7 +102,8 @@ export default {
     Data,
     DataFiles,
     MenuleisteInhalt,
-    accountSlider
+    accountSlider,
+    multiSelect
   },
   created() {
     EventService.getDirectorys()
