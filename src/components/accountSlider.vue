@@ -72,6 +72,7 @@ export default {
   methods: {
     updateAccountSliderState() {
       this.$store.dispatch("startUpdateAccountSliderState");
+      this.$emit('closeAccountSlider')
     },
     passwordStrongTest() {
       if(this.regex.test(this.password1) && this.password1 == this.password2){

@@ -4,14 +4,14 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
       <nav>
-        <div class="nav">
+        <div class="nav" id="blurBackgroundNav">
           <div>
             <a href>
               <img :src="require('./assets/ros-logo.png')" style=" height:50px; " />
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
-            <span style="position: relative; "> Max Mustermann</span>
+            <span style="position: relative; ">Max Mustermann</span>
             <img
               :src="require('./assets/user.png')"
               class="logo"
@@ -22,7 +22,7 @@
         </div>
       </nav>
 
-      <div class="leiste">
+      <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
           <li>
             <treeSelect class="multiselect" placeholder="Where are you from?" />
@@ -46,7 +46,7 @@
         </ul>
       </div>
 
-      <div class="datencontainer">
+      <div class="datencontainer" id="blurBackgroundData">
         <Data
           v-for="(directory, id) in directorys"
           v-bind:key="id"
@@ -62,7 +62,7 @@
         />
       </div>
     </div>
-    <accountSlider v-if="this.$store.state.activeSlider === true" />
+    <accountSlider v-if="this.$store.state.activeSlider === true"  @closeAccountSlider="closeAccountSlider"/>
   </div>
 </template>
 
@@ -77,18 +77,39 @@ export default {
   data() {
     return {
       directorys: {},
-      files: {}
+      files: {},
     };
   },
   methods: {
     loadSlider() {
-      this.$store.dispatch("loadSlider"), console.log("echo123");
+      this.$store.dispatch("loadSlider");
+      if (this.$store.state.activeSlider === true) {
+        document
+          .getElementById("blurBackgroundNav")
+          .classList.add("blurBackground");
+        document
+          .getElementById("blurBackgroundData")
+          .classList.add("blurBackground");
+        document
+          .getElementById("blurBackgroundLeiste")
+          .classList.add("blurBackground");
+      } 
+    },
+    closeAccountSlider(){
+      document
+          .getElementById("blurBackgroundNav")
+          .classList.remove("blurBackground");
+        document
+          .getElementById("blurBackgroundData")
+          .classList.remove("blurBackground");
+        document
+          .getElementById("blurBackgroundLeiste")
+          .classList.remove("blurBackground");
     }
   },
   components: {
     Data,
     DataFiles,
-
     accountSlider,
     treeSelect
   },
@@ -126,7 +147,7 @@ export default {
   z-index: 100;
   display: flex;
   justify-content: space-between;
-  
+
   top: 0;
   left: 0;
   position: absolute;
@@ -272,5 +293,17 @@ export default {
   width: 450px;
   margin-top: 7px;
   margin-left: 10px;
+}
+.blurBackground {
+  transition: 0.2s filter linear;
+  -webkit-transition: 0.2s -webkit-filter linear;
+  -moz-transition: 0.2s -moz-filter linear;
+  -ms-transition: 0.2s -ms-filter linear;
+  -o-transition: 0.2s -o-filter linear;
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
 }
 </style>

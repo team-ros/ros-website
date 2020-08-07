@@ -1,24 +1,33 @@
 <template>
-  <div v-if="this.$store.state.ActiveID == directory.parentid" @click="UpdateDiv">
-    <div class="wrapper" @contextmenu.prevent="$refs.menu.open">
+  <div
+    v-if="this.$store.state.ActiveID == directory.parentid"
+    @contextmenu.prevent="$refs.menu.open"
+  >
+    <div class="wrapper" @click="UpdateDiv">
       <img src="@/assets/Folder.png" class="logo" />
       <p class="name">{{directory.name}}</p>
       <p class="size">{{directory.size}} Byte</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
+      <li class="contextMenuEntries" @mouseover="onClick">
+        <p>
+          <i class="fas fa-eraser"></i>
+          <span class="contextMenuText">Umbenennen</span>
+        </p>
+      </li>
+      <li v-if="this.showChangeName == true">
+        <input type="text" class="changeName" />
+      </li>
       <li class="contextMenuEntries">
         <p>
-          <i class="fas fa-eraser"></i> <span class="contextMenuText">Umbenennen </span>
+          <i class="far fa-trash-alt" style="margin-left:2px"></i>
+          <span class="contextMenuText">Löschen</span>
         </p>
       </li>
       <li class="contextMenuEntries">
         <p>
-          <i class="far fa-trash-alt" style="margin-left:2px"></i> <span class="contextMenuText"> Löschen </span>
-        </p>
-      </li>
-      <li class="contextMenuEntries">
-        <p>
-          <i class="fas fa-download"></i><span class="contextMenuText">Herunterladen </span>
+          <i class="fas fa-download"></i>
+          <span class="contextMenuText">Herunterladen</span>
         </p>
       </li>
     </vue-context>
@@ -28,6 +37,11 @@
 <script>
 import VueContext from "vue-context";
 export default {
+  data() {
+    return {
+      showChangeName: false,
+    };
+  },
   components: {
     VueContext
   },
@@ -38,6 +52,10 @@ export default {
     UpdateDiv() {
       this.$store.dispatch("StartUpdateDiv", this.directory.id),
         console.log("Es geht");
+    },
+    onClick() {
+      this.showChangeName = true,
+      console.log("test")
     }
   }
 };
@@ -76,9 +94,9 @@ export default {
 }
 .contextMenu {
   background-color: #eee;
- -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
--moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
   outline: none;
   list-style-type: none;
   padding: 0px;
@@ -102,8 +120,21 @@ box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
   display: flex;
   align-items: center;
 }
-.contextMenuText{
+.contextMenuText {
   position: relative;
   left: 12px;
+}
+.changeName {
+  display: block;
+  position: relative;
+  width: 180px;
+  border: 0px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  transition: .5s;
+}
+.changeNameShow{
+  display: none;
 }
 </style>
