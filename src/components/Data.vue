@@ -3,20 +3,24 @@
     v-if="this.$store.state.ActiveID == directory.parentid"
     @contextmenu.prevent="$refs.menu.open"
   >
-    <div class="wrapper" @click="UpdateDiv">
-      <img src="@/assets/Folder.png" class="logo" />
-      <p class="name">{{directory.name}}</p>
+    <div class="wrapper"  @mouseover="addHoverName" @mouseleave="removeHoverName">
+      <img src="@/assets/Folder.png" class="logo" @click="UpdateDiv" />
+      <input
+        type="text"
+        class="dataName"
+        v-bind:placeholder="directory.name"
+        :disabled="changeNameActive == false"
+        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
+        @click.prevent=""
+      />
       <p class="size">{{directory.size}} Byte</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
-      <li class="contextMenuEntries" @mouseover="onClick">
+      <li class="contextMenuEntries" @click="changeNameSet">
         <p>
           <i class="fas fa-eraser"></i>
-          <span class="contextMenuText">Umbenennen</span>
+          <span class="contextMenuText" >Umbenennen</span>
         </p>
-      </li>
-      <li v-if="this.showChangeName == true">
-        <input type="text" class="changeName" />
       </li>
       <li class="contextMenuEntries">
         <p>
@@ -40,6 +44,9 @@ export default {
   data() {
     return {
       showChangeName: false,
+      changeNameActive: false,
+      hovername: false,
+      seeWriteable: false,
     };
   },
   components: {
@@ -54,9 +61,18 @@ export default {
         console.log("Es geht");
     },
     onClick() {
-      this.showChangeName = true,
-      console.log("test")
-    }
+      (this.showChangeName = true), console.log("test");
+    },
+    changeNameSet() {
+      this.changeNameActive = true;
+      this.seeWriteable=true;
+    },
+    addHoverName() {
+      this.hovername = true;
+    },
+    removeHoverName() {
+      this.hovername = false;
+    },
   }
 };
 </script>
@@ -80,6 +96,9 @@ export default {
 }
 .logo {
   height: 95px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .name {
   font-size: 13px;
@@ -124,17 +143,23 @@ export default {
   position: relative;
   left: 12px;
 }
-.changeName {
+.dataName {
+  border: 0;
+  text-align: center;
+  color: black;
   display: block;
-  position: relative;
-  width: 180px;
-  border: 0px;
-  height: 30px;
-  padding: 0;
-  margin: 0;
-  transition: .5s;
+  background-color: #fff;
+  transition: 0.3s;
+  border: 1px solid transparent;
 }
-.changeNameShow{
-  display: none;
+.dataName::placeholder {
+  color: black;
+}
+.dataNameHover {
+  background-color: #f3f2f1;
+}
+.seeWriteable{
+  border-radius: 4px;
+  border: 2px solid rgb(50, 115, 220);
 }
 </style>

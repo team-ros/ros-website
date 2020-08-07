@@ -62,7 +62,10 @@
         />
       </div>
     </div>
-    <accountSlider v-if="this.$store.state.activeSlider === true"  @closeAccountSlider="closeAccountSlider"/>
+    <accountSlider
+      v-if="this.$store.state.activeSlider === true"
+      @closeAccountSlider="closeAccountSlider"
+    />
   </div>
 </template>
 
@@ -77,7 +80,7 @@ export default {
   data() {
     return {
       directorys: {},
-      files: {},
+      files: {}
     };
   },
   methods: {
@@ -93,18 +96,18 @@ export default {
         document
           .getElementById("blurBackgroundLeiste")
           .classList.add("blurBackground");
-      } 
+      }
     },
-    closeAccountSlider(){
+    closeAccountSlider() {
       document
-          .getElementById("blurBackgroundNav")
-          .classList.remove("blurBackground");
-        document
-          .getElementById("blurBackgroundData")
-          .classList.remove("blurBackground");
-        document
-          .getElementById("blurBackgroundLeiste")
-          .classList.remove("blurBackground");
+        .getElementById("blurBackgroundNav")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundData")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundLeiste")
+        .classList.remove("blurBackground");
     }
   },
   components: {
@@ -300,10 +303,6 @@ export default {
   -moz-transition: 0.2s -moz-filter linear;
   -ms-transition: 0.2s -ms-filter linear;
   -o-transition: 0.2s -o-filter linear;
-  -webkit-filter: blur(2px);
-  -moz-filter: blur(2px);
-  -o-filter: blur(2px);
-  -ms-filter: blur(2px);
-  filter: blur(2px);
+  filter: brightness(40%);
 }
 </style>
