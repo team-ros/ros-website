@@ -1,29 +1,60 @@
 <template>
-  <div v-if="this.$store.state.ActiveID == file.parentid">
-    <div v-if="file.type == '.pdf'" class="wrapper" @contextmenu.prevent="$refs.menu.open">
+  <div v-if="this.$store.state.ActiveID == file.parentid" @contextmenu.prevent="$refs.menu.open">
+    <div
+      v-if="file.type == '.pdf'"
+      class="wrapper"
+      @mouseover="addHoverName"
+      @mouseleave="removeHoverName"
+    >
       <img src="@/assets/pdf-logo.png" class="logo" />
-      <p class="name">{{file.name}}</p>
-      <p class="size">{{file.type}} </p>
+      <input
+        type="text"
+        class="dataName"
+        v-bind:placeholder="file.name"
+        :disabled="changeNameActive == false"
+        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
+        @keypress.enter="finishNameChange"
+        @focusout="finishNameChange"
+        ref="search"
+      />
+      <p class="size">{{file.type}}</p>
     </div>
-    <div v-if="file.type == '.docx'" class="wrapper" @contextmenu.prevent="$refs.menu.open">
+    <div
+      v-if="file.type == '.docx'"
+      class="wrapper"
+      @mouseover="addHoverName"
+      @mouseleave="removeHoverName"
+    >
       <img src="@/assets/docx-logo.png" class="logo" style="padding-left: 5px" />
-      <p class="name">{{file.name}}</p>
-      <p class="size">{{file.type}} </p>
+      <input
+        type="text"
+        class="dataName"
+        v-bind:placeholder="file.name"
+        :disabled="changeNameActive == false"
+        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
+        @keypress.enter="finishNameChange"
+        @focusout="finishNameChange"
+        ref="search"
+      />
+      <p class="size">{{file.type}}</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
-      <li class="contextMenuEntries">
+      <li class="contextMenuEntries" @click="changeNameSet">
         <p>
-          <i class="fas fa-eraser"></i> <span class="contextMenuText">Umbenennen </span>
+          <i class="fas fa-eraser"></i>
+          <span class="contextMenuText">Umbenennen</span>
         </p>
       </li>
       <li class="contextMenuEntries">
         <p>
-          <i class="far fa-trash-alt" style="margin-left:2px"></i> <span class="contextMenuText"> Löschen </span>
+          <i class="far fa-trash-alt" style="margin-left:2px"></i>
+          <span class="contextMenuText">Löschen</span>
         </p>
       </li>
       <li class="contextMenuEntries">
         <p>
-          <i class="fas fa-download"></i><span class="contextMenuText">Herunterladen </span>
+          <i class="fas fa-download"></i>
+          <span class="contextMenuText">Herunterladen</span>
         </p>
       </li>
     </vue-context>
@@ -34,14 +65,42 @@
 import VueContext from "vue-context";
 
 export default {
+  data() {
+    return {
+      showChangeName: false,
+      changeNameActive: false,
+      hovername: false,
+      seeWriteable: false
+    };
+  },
   components: {
     VueContext
   },
   props: {
     file: Object
-  } 
+  },
+  methods: {
+    onClick() {
+      (this.showChangeName = true), console.log("test");
+    },
+    changeNameSet() {
+      this.changeNameActive = true;
+      this.seeWriteable = true;
+      this.$nextTick(function() {
+        this.$refs.search.focus();
+      });
+    },
+    addHoverName() {
+      this.hovername = true;
+    },
+    removeHoverName() {
+      this.hovername = false;
+    },
+    finishNameChange() {
+      (this.changeNameActive = false), (this.seeWriteable = false);
+    }
+  }
 };
-
 </script>
 
 <style scoped>
@@ -50,12 +109,12 @@ export default {
   text-decoration: none;
 }
 .wrapper {
-  margin: 15px 20px 0px;
+  margin: 15px 15px 0px;
   padding: 5px;
   transition: 0.3s;
   position: relative;
   overflow-wrap: break-word;
-  width: 120px;
+  width: 140px;
 }
 .wrapper:hover {
   background-color: #f3f2f1;
@@ -63,7 +122,9 @@ export default {
 }
 .logo {
   height: 95px;
-  padding-left: 20px
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .name {
   font-size: 13px;
@@ -78,9 +139,9 @@ export default {
 }
 .contextMenu {
   background-color: #eee;
- -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
--moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
-box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
   outline: none;
   list-style-type: none;
   padding: 0px;
@@ -104,8 +165,27 @@ box-shadow: 0px 0px 5px 0px rgba(0,0,0,1);
   display: flex;
   align-items: center;
 }
-.contextMenuText{
+.contextMenuText {
   position: relative;
   left: 12px;
+}
+.dataName {
+  border: 0;
+  text-align: center;
+  color: black;
+  display: block;
+  background-color: #fff;
+  transition: 0.3s;
+  border: 1px solid transparent;
+}
+.dataName::placeholder {
+  color: black;
+}
+.dataNameHover {
+  background-color: #f3f2f1;
+}
+.seeWriteable {
+  border-radius: 4px;
+  border: 2px solid rgb(50, 115, 220);
 }
 </style>

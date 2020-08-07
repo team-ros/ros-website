@@ -36,7 +36,7 @@
             </div>
           </li>
           <li class="leiste-ul-li leiste-button">
-            <div class="upload-wrapper">
+            <div class="upload-wrapper" @click="newDirectory">
               <label>
                 <i class="fas fa-plus"></i>
                 Neuer Ordner
@@ -108,6 +108,9 @@ export default {
       document
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
+    },
+    newDirectory(){
+      
     }
   },
   components: {

@@ -3,7 +3,7 @@
     v-if="this.$store.state.ActiveID == directory.parentid"
     @contextmenu.prevent="$refs.menu.open"
   >
-    <div class="wrapper"  @mouseover="addHoverName" @mouseleave="removeHoverName">
+    <div class="wrapper" @mouseover="addHoverName" @mouseleave="removeHoverName">
       <img src="@/assets/Folder.png" class="logo" @click="UpdateDiv" />
       <input
         type="text"
@@ -11,7 +11,9 @@
         v-bind:placeholder="directory.name"
         :disabled="changeNameActive == false"
         :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
-        @click.prevent=""
+        @keypress.enter="finishNameChange"
+        @focusout="finishNameChange"
+        ref="search"
       />
       <p class="size">{{directory.size}} Byte</p>
     </div>
@@ -19,7 +21,7 @@
       <li class="contextMenuEntries" @click="changeNameSet">
         <p>
           <i class="fas fa-eraser"></i>
-          <span class="contextMenuText" >Umbenennen</span>
+          <span class="contextMenuText">Umbenennen</span>
         </p>
       </li>
       <li class="contextMenuEntries">
@@ -46,7 +48,7 @@ export default {
       showChangeName: false,
       changeNameActive: false,
       hovername: false,
-      seeWriteable: false,
+      seeWriteable: false
     };
   },
   components: {
@@ -65,7 +67,10 @@ export default {
     },
     changeNameSet() {
       this.changeNameActive = true;
-      this.seeWriteable=true;
+      this.seeWriteable = true;
+      this.$nextTick(function() {
+        this.$refs.search.focus();
+      });
     },
     addHoverName() {
       this.hovername = true;
@@ -73,6 +78,9 @@ export default {
     removeHoverName() {
       this.hovername = false;
     },
+    finishNameChange() {
+      (this.changeNameActive = false), (this.seeWriteable = false);
+    }
   }
 };
 </script>
@@ -158,7 +166,7 @@ export default {
 .dataNameHover {
   background-color: #f3f2f1;
 }
-.seeWriteable{
+.seeWriteable {
   border-radius: 4px;
   border: 2px solid rgb(50, 115, 220);
 }
