@@ -5,6 +5,7 @@
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
+      :class="{fileDeleted: fileDeleted}"
     >
       <img src="@/assets/pdf-logo.png" class="logo" />
       <input
@@ -24,6 +25,7 @@
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
+      :class="{fileDeleted: fileDeleted}"
     >
       <img src="@/assets/docx-logo.png" class="logo" style="padding-left: 5px" />
       <input
@@ -45,18 +47,20 @@
           <span class="contextMenuText">Umbenennen</span>
         </p>
       </li>
-      <li class="contextMenuEntries">
+      <li class="contextMenuEntries" @click="deleteFile">
         <p>
           <i class="far fa-trash-alt" style="margin-left:2px"></i>
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <li class="contextMenuEntries">
+      <a href="" download="" style="color: black; text-decoration: none"> 
+      <li class="contextMenuEntries" >
         <p>
           <i class="fas fa-download"></i>
-          <span class="contextMenuText">Herunterladen</span>
+          <span class="contextMenuText"> Herunterladen </span>
         </p>
       </li>
+      </a>
     </vue-context>
   </div>
 </template>
@@ -70,7 +74,9 @@ export default {
       showChangeName: false,
       changeNameActive: false,
       hovername: false,
-      seeWriteable: false
+      seeWriteable: false,
+      fileDeleted: false,
+      box: null,
     };
   },
   components: {
@@ -98,7 +104,15 @@ export default {
     },
     finishNameChange() {
       (this.changeNameActive = false), (this.seeWriteable = false);
-    }
+    },
+    deleteFile(){
+      this.box = window.confirm("Wollen sie die Datei "+ this.file.name + " wirklich löschen?")
+      if(this.box ==true){
+      this.fileDeleted = true;
+      } else if(this.box==false){
+        this.fileDeleted =false;
+      }
+ }
   }
 };
 </script>
@@ -187,5 +201,8 @@ export default {
 .seeWriteable {
   border-radius: 4px;
   border: 2px solid rgb(50, 115, 220);
+}
+.fileDeleted{
+  display: none;
 }
 </style>

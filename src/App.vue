@@ -308,4 +308,5 @@ export default {
   -o-transition: 0.2s -o-filter linear;
   filter: brightness(40%);
 }
+
 </style>
