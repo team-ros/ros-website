@@ -1,15 +1,21 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Data from "../components/Data.vue";
+import loginVue from "../components/loginVue";
+import dashboardWrapper from "../components/dashboardWrapper"
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/data/",
-    name: "Data",
-    component: Data,
+    path: "/",
+    name: "Login",
+    component: loginVue,
   },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: dashboardWrapper,
+  }
 ];
 
 const router = new VueRouter({

@@ -87,6 +87,10 @@ export default {
               label: "aufsteigend"
             }
           ]
+        },
+        {
+          id: "node-5",
+          label: "zuletzt gelöschte Dateien",
         }
       ]
     };

@@ -11,6 +11,8 @@
     "@riophae/vue-treeselect": "^0.4.0",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "firebase": "^7.17.2",
+    "ros-sdk-js": "git+https://github.com/team-ros/ros-sdk-js.git",
     "vue": "^2.6.11",
     "vue-context": "^6.0.0",
     "vue-context-menu": "0.0.13",
