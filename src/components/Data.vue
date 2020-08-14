@@ -3,7 +3,12 @@
     v-if="this.$store.state.ActiveID == directory.parentid"
     @contextmenu.prevent="$refs.menu.open"
   >
-    <div class="wrapper" @mouseover="addHoverName" @mouseleave="removeHoverName" :class="{fileDeleted: fileDeleted}">
+    <div
+      class="wrapper"
+      @mouseover="addHoverName"
+      @mouseleave="removeHoverName"
+      :class="{fileDeleted: fileDeleted}"
+    >
       <img src="@/assets/Folder.png" class="logo" @click="UpdateDiv" />
       <input
         type="text"
@@ -15,7 +20,7 @@
         @focusout="finishNameChange"
         ref="search"
       />
-      <p class="size">{{directory.size}} Byte</p>
+      <p class="size">{{directory.size | prettyBytes}}</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
@@ -30,13 +35,13 @@
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <a href="" download="" style="color: black; text-decoration: none">
-      <li class="contextMenuEntries">
-        <p>
-          <i class="fas fa-download"></i>
-          <span class="contextMenuText">   Herunterladen  </span>
-        </p>
-      </li>
+      <a href download style="color: black; text-decoration: none">
+        <li class="contextMenuEntries">
+          <p>
+            <i class="fas fa-download"></i>
+            <span class="contextMenuText">Herunterladen</span>
+          </p>
+        </li>
       </a>
     </vue-context>
   </div>
@@ -44,6 +49,9 @@
 
 <script>
 import VueContext from "vue-context";
+
+
+
 export default {
   data() {
     return {
@@ -52,7 +60,7 @@ export default {
       hovername: false,
       seeWriteable: false,
       fileDeleted: false,
-      box: null,
+      box: null
     };
   },
   components: {
@@ -85,14 +93,16 @@ export default {
     finishNameChange() {
       (this.changeNameActive = false), (this.seeWriteable = false);
     },
-    deleteFile(){
-      this.box = window.confirm("Wollen sie den Ordner "+ this.directory.name + " wirklich löschen?")
-      if(this.box ==true){
-      this.fileDeleted = true;
-      } else if(this.box==false){
-        this.fileDeleted =false;
+    deleteFile() {
+      this.box = window.confirm(
+        "Wollen sie den Ordner " + this.directory.name + " wirklich löschen?"
+      );
+      if (this.box == true) {
+        this.fileDeleted = true;
+      } else if (this.box == false) {
+        this.fileDeleted = false;
       }
- }
+    }
   }
 };
 </script>
@@ -182,7 +192,7 @@ export default {
   border-radius: 4px;
   border: 2px solid rgb(50, 115, 220);
 }
-.fileDeleted{
+.fileDeleted {
   display: none;
 }
 </style>

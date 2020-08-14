@@ -80,37 +80,48 @@
             "id": "f1",
             "parentid": "",
             "type": ".docx",
-            "name": "Hausübung_Cerny"
+            "name": "Hausübung_Cerny",
+            "size": 713371
         },
         {
             "id": "f2",
             "parentid": "d2d3",
             "type": ".pdf",
-            "name": "Hausübung_Zainzinger"
+            "name": "Hausübung_Zainzinger",
+            "size": 12345
+
         },
         {
             "id": "f3",
             "parentid": "",
             "type": ".pdf",
-            "name": "Lebenslauf"
+            "name": "Lebenslauf",
+            "size": 12345
+
         },
         {
             "id": "f4",
             "parentid": "d2",
             "type": ".pdf",
-            "name": "Motivationsschreiben"
+            "name": "Motivationsschreiben",
+            "size": 12345
+
         },
         {
             "id": "f5",
             "parentid": "",
             "type": ".pdf",
-            "name": "Referat-Zusammenfassung"
+            "name": "Referat-Zusammenfassung",
+            "size": 12345
+
         },
         {
             "id": "f6",
             "parentid": "",
             "type": ".pdf",
-            "name": "Steuerausgleich"
+            "name": "Steuerausgleich",
+            "size": 12345
+
         }
         
     ]

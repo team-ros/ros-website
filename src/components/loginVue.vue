@@ -403,12 +403,13 @@ export default {
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
+$rosblue: #0044b2;
 * {
   font-family: Helvetica;
 }
 .bigWrapper {
-  background-color: #0044b2;
+  background-color: $rosblue;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -432,7 +433,7 @@ export default {
 .leftPage {
   width: 50%;
   height: 100%;
-  background-color: #0044b2;
+  background-color: $rosblue;
   /*  background-color: grey; */
   float: left;
   display: flex;
@@ -484,8 +485,8 @@ export default {
   margin-top: 20px;
   margin-right: 0.1vw;
   border-radius: 5px;
-  color: #0044b2;
-  border-color: #0044b2;
+  color: $rosblue;
+  border-color: $rosblue;
   border-width: 1.4px;
   font-weight: 300;
   font-size: 18px;
@@ -638,7 +639,7 @@ a {
 }
 
 .inputValid {
-  border-color: #0044b2;
+  border-color: $rosblue;
   transition: ease-in-out 0.5s;
 }
 .inputInvalid {

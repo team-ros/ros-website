@@ -11,14 +11,14 @@
       <input
         type="text"
         class="dataName"
-        v-bind:placeholder="file.name"
+        v-bind:placeholder="file.name + file.type"
         :disabled="changeNameActive == false"
         :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="finishNameChange"
         @focusout="finishNameChange"
         ref="search"
       />
-      <p class="size">{{file.type}}</p>
+      <p class="size">{{file.size | prettyBytes}}</p>
     </div>
     <div
       v-if="file.type == '.docx'"
@@ -31,14 +31,14 @@
       <input
         type="text"
         class="dataName"
-        v-bind:placeholder="file.name"
+        v-bind:placeholder="file.name + file.type"
         :disabled="changeNameActive == false"
         :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="finishNameChange"
         @focusout="finishNameChange"
         ref="search"
       />
-      <p class="size">{{file.type}}</p>
+      <p class="size">{{file.size | prettyBytes}}</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">

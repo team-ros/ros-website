@@ -139,7 +139,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$rosblue: #0044b2;
+
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -159,7 +162,7 @@ export default {
   left: 0;
   position: absolute;
   width: 100%;
-  background-image: linear-gradient(90deg, #5d8dfc, #0048fd);
+  background-image: linear-gradient(90deg, #5d8dfc, $rosblue);
   height: 50px;
   color: white;
   font-size: 25px;

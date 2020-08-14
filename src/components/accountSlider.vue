@@ -86,7 +86,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$rosblue: #0044b2;
+
+
 .accountSlider {
   width: 400px;
   height: 100%;
@@ -142,10 +145,10 @@ h3 {
   width: 100%;
   margin-top: 10px;
   height: 35px;
-  background-color: #0044b2;
+  background-color: $rosblue;
   border-radius: 3px;
   color: #ffffff;
-  border-color: #0044b2;
+  border-color: $rosblue;
   font-size: 18px;
   cursor: pointer;
   outline: none;
@@ -166,7 +169,7 @@ a {
 }
 input:focus,
 input:valid {
-  border-color: #0044b2;
+  border-color: $rosblue;
   transition: ease-in-out 0.5s;
 }
 </style>
