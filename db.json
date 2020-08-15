@@ -7,7 +7,9 @@
             "name": "Burokratie",
             "entrys": 3,
             "type": "directory",
-            "size": 123456
+            "size": 723456,
+            "date": "2008-11-11"
+
         },
         {
             "id": "d2",
@@ -15,7 +17,8 @@
             "name": "Privat",
             "entrys": 3,
             "type": "directory",
-            "size": 12345
+            "size": 12145,
+            "date": "2006-11-11"
         },
         {
             "id": "d3",
@@ -23,7 +26,8 @@
             "name": "Hausübungen_2019",
             "entrys": 3,
             "type": "directory",
-            "size": 12345
+            "size": 12345,
+            "date": "2008-13-11"
         },
         {
             "id": "d4",
@@ -31,7 +35,8 @@
             "name": "Bewerbungen",
             "entrys": 3,
             "type": "directory",
-            "size": 123456
+            "size": 1234156,
+            "date": "2020-11-11"
         },
         {
             "id": "d5",
@@ -39,7 +44,8 @@
             "name": "Uni",
             "entrys": 3,
             "type": "directory",
-            "size": 6126
+            "size": 6126,
+            "date": "2008-11-01"
         },
         {
             "id": "d6",
@@ -47,7 +53,8 @@
             "name": "Schule",
             "entrys": 3,
             "type": "directory",
-            "size": 46512
+            "size": 46512,
+            "date": "2008-11-01"
         },
         {
             "id": "d7",
@@ -55,7 +62,8 @@
             "name": "Abschlussprojekt",
             "entrys": 3,
             "type": "directory",
-            "size": 1234
+            "size": 12126634,
+            "date": "2008-11-01"
         },
         {
             "id": "d8",
@@ -63,7 +71,8 @@
             "name": "Noten",
             "entrys": 3,
             "type": "directory",
-            "size": 12345
+            "size": 21,
+            "date": "2008-11-01"
         },
         {
             "id": "d9",
@@ -71,7 +80,8 @@
             "name": "Hausübungen_2019",
             "entrys": 3,
             "type": "directory",
-            "size": 713371
+            "size": 713371,
+            "date": "2008-11-01"
         }
     ],
     "files": [
@@ -81,14 +91,16 @@
             "parentid": "",
             "type": ".docx",
             "name": "Hausübung_Cerny",
-            "size": 713371
+            "size": 713371,
+            "date": "2008-11-01"
         },
         {
             "id": "f2",
             "parentid": "d2d3",
             "type": ".pdf",
             "name": "Hausübung_Zainzinger",
-            "size": 12345
+            "size": 122,
+            "date": "2008-11-01"
 
         },
         {
@@ -96,7 +108,8 @@
             "parentid": "",
             "type": ".pdf",
             "name": "Lebenslauf",
-            "size": 12345
+            "size": 1231235123545,
+            "date": "2021-11-01"
 
         },
         {
@@ -104,7 +117,8 @@
             "parentid": "d2",
             "type": ".pdf",
             "name": "Motivationsschreiben",
-            "size": 12345
+            "size": 123415,
+            "date": "2021-11-01"
 
         },
         {
@@ -112,7 +126,8 @@
             "parentid": "",
             "type": ".pdf",
             "name": "Referat-Zusammenfassung",
-            "size": 12345
+            "size": 12342135123515,
+            "date": "2018-11-01"
 
         },
         {
@@ -120,7 +135,8 @@
             "parentid": "",
             "type": ".pdf",
             "name": "Steuerausgleich",
-            "size": 12345
+            "size": 125,
+            "date": "2017-11-01"
 
         }
         

@@ -27,7 +27,7 @@
       @mouseleave="removeHoverName"
       :class="{fileDeleted: fileDeleted}"
     >
-      <img src="@/assets/docx-logo.png" class="logo" style="padding-left: 5px" />
+      <img src="@/assets/docx-logo.png" class="logo" style="padding-right: 10px" />
       <input
         type="text"
         class="dataName"

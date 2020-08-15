@@ -26,8 +26,13 @@
         <ul class="leiste-ul">
           <li>
             <template class="filterField">
-              <div>
-                <v-selectize :options="options" v-model="selectedFilter" multiple placeholder="Suchen..." />
+              <div @keypress.enter="sortData" @focusout="sortData">
+                <v-selectize
+                  :options="options"
+                  v-model="selectedFilter"
+                  multiple
+                  placeholder="Suchen..."
+                />
               </div>
             </template>
           </li>
@@ -52,14 +57,14 @@
 
       <div class="datencontainer" id="blurBackgroundData">
         <Data
-          v-for="(directory, id) in directorys"
+          v-for="(directory, id) in orderBy(directorys, this.filterExpression, 1)"
           v-bind:key="id"
           :directory="directory"
           style="height:150px"
         />
 
         <DataFiles
-          v-for="(file, id) in files"
+          v-for="(file, id) in orderBy(files, this.filterExpression, 1)"
           v-bind:key="id+10"
           :file="file"
           style="height:150px"
@@ -75,22 +80,24 @@
 
 <script>
 import Vue from "vue";
-
+import Vue2Filters from "vue2-filters";
 import Data from "@/components/Data.vue";
 import DataFiles from "@/components/DataFiles.vue";
 import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
 import VSelectize from "@isneezy/vue-selectize";
+Vue.use(Vue2Filters);
 Vue.component("v-selectize", VSelectize);
 
 export default {
-  
+  mixins: [Vue2Filters.mixin],
   data() {
     return {
       directorys: {},
       files: {},
       selectedFilter: [],
-      options: ['Name', 'Datum', 'Dateityp', 'Dateigröße'],
+      options: ["Name", "Datum", "Dateityp", "Dateigröße"],
+      filterExpression: ""
     };
   },
   methods: {
@@ -119,7 +126,18 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
-    newDirectory() {}
+    newDirectory() {},
+    sortData() {
+      if (this.selectedFilter.includes("Dateigröße")) {
+        this.filterExpression = "size";
+      } else if (this.selectedFilter.includes("Name")) {
+        this.filterExpression = "name";
+      } else if(this.selectedFilter.includes("Datum")){
+        this.filterExpression ="date"
+      } else if(this.selectedFilter.includes("Dateityp")){
+        this.filterExpression ="type"
+      }
+    }
   },
   components: {
     Data,
@@ -157,7 +175,7 @@ $rosblue: #0044b2;
   margin: 0;
   font-family: Helvetica;
 }
-.selectize-input{
+.selectize-input {
   width: 300px;
 }
 .bigContainer {
