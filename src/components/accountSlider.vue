@@ -13,7 +13,14 @@
         id="imageX"
         @click="updateAccountSliderState"
       />
-
+      <router-link to="/">
+      <img
+        src="@/assets/logout.png"
+        width="35"
+        height="35"
+        class="logout"
+      />
+      </router-link>
       <h1>Account</h1>
       <p>Hier sind ihre Accountinformationen zu sehen</p>
       <input type="text" placeholder="dein Name" class="accountInfos" readonly />
@@ -107,11 +114,8 @@ $rosblue: #0044b2;
   justify-content: center;
 }
 .buttonImg {
-  margin: 15px;
-  float: right;
+  margin-top: 25px;
   cursor: pointer;
-  right: 10px;
-  justify-items: end;
 }
 .hideSlider {
   transform: translateX(-110%);
@@ -171,5 +175,10 @@ input:focus,
 input:valid {
   border-color: $rosblue;
   transition: ease-in-out 0.5s;
+}
+.logout{
+  position: absolute;
+  left: 330px;
+  top: 25px;
 }
 </style>

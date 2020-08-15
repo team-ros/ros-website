@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="bigContainer">
+  <div>
+    <div class="bigContainer">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
       <nav>
@@ -25,7 +25,11 @@
       <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
           <li>
-            <treeSelect class="multiselect" placeholder="Where are you from?" />
+            <template class="filterField">
+              <div>
+                <v-selectize :options="options" v-model="selectedFilter" multiple placeholder="Suchen..." />
+              </div>
+            </template>
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
@@ -66,22 +70,27 @@
       v-if="this.$store.state.activeSlider === true"
       @closeAccountSlider="closeAccountSlider"
     />
-    </div>
+  </div>
 </template>
 
 <script>
+import Vue from "vue";
+
 import Data from "@/components/Data.vue";
 import DataFiles from "@/components/DataFiles.vue";
 import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
-import treeSelect from "@/components/treeSelect.vue";
-
+import VSelectize from "@isneezy/vue-selectize";
+Vue.component("v-selectize", VSelectize);
 
 export default {
+  
   data() {
     return {
       directorys: {},
-      files: {}
+      files: {},
+      selectedFilter: [],
+      options: ['Name', 'Datum', 'Dateityp', 'Dateigröße'],
     };
   },
   methods: {
@@ -110,15 +119,13 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
-    newDirectory(){
-      
-    }
+    newDirectory() {}
   },
   components: {
     Data,
     DataFiles,
     accountSlider,
-    treeSelect
+    VSelectize
   },
   created() {
     EventService.getDirectorys()
@@ -140,8 +147,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$rosblue: #0044b2;
+@import "~selectize/dist/css/selectize.bootstrap3.css";
 
+$rosblue: #0044b2;
 
 * {
   box-sizing: border-box;
@@ -149,7 +157,9 @@ $rosblue: #0044b2;
   margin: 0;
   font-family: Helvetica;
 }
-
+.selectize-input{
+  width: 300px;
+}
 .bigContainer {
   overflow: hidden;
 }
@@ -312,5 +322,4 @@ $rosblue: #0044b2;
   -o-transition: 0.2s -o-filter linear;
   filter: brightness(40%);
 }
-
 </style>
