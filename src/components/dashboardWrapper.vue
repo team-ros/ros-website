@@ -1,13 +1,19 @@
 <template>
   <div>
     <div class="bigContainer">
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+      <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      />
 
       <nav>
         <div class="nav" id="blurBackgroundNav">
           <div>
             <a href>
-              <img :src="require('@/assets/ros-logo.png')" style=" height:50px; " />
+              <img
+                :src="require('@/assets/ros-logo.png')"
+                style=" height:50px; "
+              />
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
@@ -30,17 +36,17 @@
                 <v-selectize
                   :options="options"
                   v-model="selectedFilter"
-                  multiple
                   placeholder="Suchen..."
                 />
               </div>
             </template>
           </li>
+          <li>
+           
+          </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
-              <label>
-                <i class="fas fa-upload"></i> Hochladen
-              </label>
+              <label> <i class="fas fa-upload"></i> Hochladen </label>
               <input type="file" name="my-upload-field" />
             </div>
           </li>
@@ -55,17 +61,48 @@
         </ul>
       </div>
 
-      <div class="datencontainer" id="blurBackgroundData">
+      <div
+        class="datencontainer"
+        id="blurBackgroundData"
+        v-if="this.filterByName == ''"
+      >
         <Data
-          v-for="(directory, id) in orderBy(directorys, this.filterExpression, 1)"
+          v-for="(directory, id) in orderBy(
+            directorys,
+            this.filterExpression,
+            this.filterDirection
+          )"
           v-bind:key="id"
           :directory="directory"
           style="height:150px"
         />
 
         <DataFiles
-          v-for="(file, id) in orderBy(files, this.filterExpression, 1)"
-          v-bind:key="id+10"
+          v-for="(file, id) in orderBy(
+            files,
+            this.filterExpression,
+            this.filterDirection
+          )"
+          v-bind:key="id + 100"
+          :file="file"
+          style="height:150px"
+        />
+      </div>
+      <div
+        class="datencontainer"
+        id="blurBackgroundData"
+        v-if="this.filterByName != ''"
+      >
+        <Data
+          v-for="(directory, id) in find(directorys, this.filterByName)"
+          v-bind:key="id"
+          :directory="directory"
+          style="height:150px"
+        />
+
+        <DataFiles
+          v-for="(file, id) in find(files, this.filterByName)"
+          v-bind:key="id + 1000"
           :file="file"
           style="height:150px"
         />
@@ -95,9 +132,11 @@ export default {
     return {
       directorys: {},
       files: {},
-      selectedFilter: [],
+      selectedFilter: "",
       options: ["Name", "Datum", "Dateityp", "Dateigröße"],
-      filterExpression: ""
+      filterExpression: "",
+      filterDirection: "",
+      filterByName: ""
     };
   },
   methods: {
@@ -128,14 +167,21 @@ export default {
     },
     newDirectory() {},
     sortData() {
+      console.log(this.selectedFilter);
       if (this.selectedFilter.includes("Dateigröße")) {
         this.filterExpression = "size";
+        this.filterDirection = -1;
       } else if (this.selectedFilter.includes("Name")) {
         this.filterExpression = "name";
-      } else if(this.selectedFilter.includes("Datum")){
-        this.filterExpression ="date"
-      } else if(this.selectedFilter.includes("Dateityp")){
-        this.filterExpression ="type"
+        this.filterDirection = 1;
+      } else if (this.selectedFilter.includes("Datum")) {
+        this.filterExpression = "date";
+        this.filterDirection = -1;
+      } else if (this.selectedFilter.includes("Dateityp")) {
+        this.filterExpression = "type";
+        this.filterDirection = 1;
+      } else {
+        this.filterByName = this.selectedFilter;
       }
     }
   },
