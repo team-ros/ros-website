@@ -125,7 +125,7 @@ export default {
   border-radius: 5px;
 }
 .logo {
-  height: 95px;
+  height: 85px;
   position: relative;
   left: 50%;
   transform: translateX(-50%);

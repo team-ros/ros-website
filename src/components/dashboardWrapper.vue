@@ -1,19 +1,13 @@
 <template>
   <div>
     <div class="bigContainer">
-      <link
-        rel="stylesheet"
-        href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-      />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
       <nav>
         <div class="nav" id="blurBackgroundNav">
           <div>
             <a href>
-              <img
-                :src="require('@/assets/ros-logo.png')"
-                style=" height:50px; "
-              />
+              <img :src="require('@/assets/ros-logo.png')" style=" height:50px; " />
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
@@ -30,23 +24,14 @@
 
       <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
-          <li>
-            <template class="filterField">
-              <div @keypress.enter="sortData" @focusout="sortData">
-                <v-selectize
-                  :options="options"
-                  v-model="selectedFilter"
-                  placeholder="Suchen..."
-                />
-              </div>
-            </template>
-          </li>
-          <li>
-           
+          <li class="leiste-ul-li">
+            <dropdown @newFilter="sortData" />
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
-              <label> <i class="fas fa-upload"></i> Hochladen </label>
+              <label>
+                <i class="fas fa-upload"></i> Hochladen
+              </label>
               <input type="file" name="my-upload-field" />
             </div>
           </li>
@@ -61,11 +46,7 @@
         </ul>
       </div>
 
-      <div
-        class="datencontainer"
-        id="blurBackgroundData"
-        v-if="this.filterByName == ''"
-      >
+      <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName == ''">
         <Data
           v-for="(directory, id) in orderBy(
             directorys,
@@ -88,11 +69,7 @@
           style="height:150px"
         />
       </div>
-      <div
-        class="datencontainer"
-        id="blurBackgroundData"
-        v-if="this.filterByName != ''"
-      >
+      <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName != ''">
         <Data
           v-for="(directory, id) in find(directorys, this.filterByName)"
           v-bind:key="id"
@@ -122,9 +99,9 @@ import Data from "@/components/Data.vue";
 import DataFiles from "@/components/DataFiles.vue";
 import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
-import VSelectize from "@isneezy/vue-selectize";
+import dropdown from "@/components/dropdown.vue";
+
 Vue.use(Vue2Filters);
-Vue.component("v-selectize", VSelectize);
 
 export default {
   mixins: [Vue2Filters.mixin],
@@ -166,18 +143,18 @@ export default {
         .classList.remove("blurBackground");
     },
     newDirectory() {},
-    sortData() {
-      console.log(this.selectedFilter);
-      if (this.selectedFilter.includes("Dateigröße")) {
+    sortData(filterByWhat) {
+      console.log(filterByWhat);
+      if (filterByWhat == "filterBySize") {
         this.filterExpression = "size";
         this.filterDirection = -1;
-      } else if (this.selectedFilter.includes("Name")) {
+      } else if (filterByWhat == "filterByName") {
         this.filterExpression = "name";
         this.filterDirection = 1;
-      } else if (this.selectedFilter.includes("Datum")) {
+      } else if (filterByWhat == "filterByDate") {
         this.filterExpression = "date";
         this.filterDirection = -1;
-      } else if (this.selectedFilter.includes("Dateityp")) {
+      } else if (filterByWhat == "filterByDatatype") {
         this.filterExpression = "type";
         this.filterDirection = 1;
       } else {
@@ -189,7 +166,7 @@ export default {
     Data,
     DataFiles,
     accountSlider,
-    VSelectize
+    dropdown
   },
   created() {
     EventService.getDirectorys()
@@ -220,12 +197,14 @@ $rosblue: #0044b2;
   padding: 0;
   margin: 0;
   font-family: Helvetica;
+  
 }
+
 .selectize-input {
   width: 300px;
 }
 .bigContainer {
-  overflow: hidden;
+  width: 100%;
 }
 .nav {
   z-index: 100;

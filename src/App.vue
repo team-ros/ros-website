@@ -12,7 +12,8 @@ export default {
       files: {}
     };
   },
-  components: {}
+  components: {},
+  
 };
 </script>
 <style scoped>

@@ -118,24 +118,24 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: helvetica;
+}
 .event-link {
   color: black;
   text-decoration: none;
 }
 .wrapper {
-  margin: 15px 15px 0px;
+  margin: 15px 20px 0px;
   padding: 5px;
   transition: 0.3s;
-  position: relative;
-  overflow-wrap: break-word;
-  width: 140px;
 }
 .wrapper:hover {
   background-color: #f3f2f1;
   border-radius: 5px;
 }
 .logo {
-  height: 95px;
+  height: 85px;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -202,7 +202,7 @@ export default {
   border-radius: 4px;
   border: 2px solid rgb(50, 115, 220);
 }
-.fileDeleted{
+.fileDeleted {
   display: none;
 }
 </style>

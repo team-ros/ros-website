@@ -398,7 +398,8 @@ export default {
             });
         });
     }
-  }
+  },
+  
 };
 </script>
 
