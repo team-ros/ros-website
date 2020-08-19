@@ -24,6 +24,12 @@
 
       <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
+          <li>
+            <div>
+              <input type="text" class="such_box" placeholder="Suche nach Dateien" v-model="filterByName" @keypress.enter="sortData(filterByName)"/>
+              <img src="@/assets/searchIcon.png" class="such_box_icon" />
+            </div>
+          </li>
           <li class="leiste-ul-li">
             <dropdown @newFilter="sortData" />
           </li>
@@ -71,14 +77,14 @@
       </div>
       <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName != ''">
         <Data
-          v-for="(directory, id) in find(directorys, this.filterByName)"
+          v-for="(directory, id) in filterBy(directorys, this.filterByName)"
           v-bind:key="id"
           :directory="directory"
           style="height:150px"
         />
 
         <DataFiles
-          v-for="(file, id) in find(files, this.filterByName)"
+          v-for="(file, id) in filterBy(files, this.filterByName)"
           v-bind:key="id + 1000"
           :file="file"
           style="height:150px"
@@ -197,7 +203,6 @@ $rosblue: #0044b2;
   padding: 0;
   margin: 0;
   font-family: Helvetica;
-  
 }
 
 .selectize-input {
@@ -210,7 +215,6 @@ $rosblue: #0044b2;
   z-index: 100;
   display: flex;
   justify-content: space-between;
-
   top: 0;
   left: 0;
   position: absolute;
@@ -241,7 +245,7 @@ $rosblue: #0044b2;
   left: 0;
   position: absolute;
   top: 50px;
-  background-color: #f3f2f1;
+  background-color: #f4faff;
   width: 100%;
   height: 50px;
   padding: 0px;
@@ -286,22 +290,21 @@ $rosblue: #0044b2;
 }
 
 .such_box {
-  position: relative;
-  width: 400px;
-  top: 5px;
-}
-
-.such_box input[type="text"] {
-  width: 100%;
-  padding: 5px;
-  padding-right: 60px;
-  box-sizing: border-box;
-  background: white;
-  border: 2px solid #fff;
-  border-radius: 3px;
-  font-size: 13px;
-  color: black;
+  position: absolute;
+  width: 300px;
+  height: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 35px;
+  padding-left: 4px;
+  border-radius: 6px;
+  border: 1px solid #eee;
   outline: none;
+}
+.such_box_icon {
+  height: 20px;
+  position: absolute;
+  left: 310px;
 }
 
 .fa-search {
