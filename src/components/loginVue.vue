@@ -192,7 +192,9 @@
         <div class="copyright">
           © ROS 2020
           <span style="margin: 5px;">|</span>
+          <router-link to="/impressum">
           <a href="#">Impressum</a>
+          </router-link>
         </div>
       </div>
     </div>

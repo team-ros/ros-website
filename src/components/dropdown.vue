@@ -27,7 +27,7 @@
                 <div class="dropdown__menu" v-bind:class="{ active: show }" v-if="show">
                   <ul class="dropdown__menu-nav">
                     <li class="dropdown__menu-item" @click="startFiltering('filterByName')">
-                      <a href="#" class="dropdown__menu-link" title="Account" @click="show = false">
+                      <a href="" class="dropdown__menu-link"  @click="show = false">
                         <div class="dropdown__menu-svg">
                           <svg viewBox="0 0 20 20">
                             <path
@@ -36,11 +36,11 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">Name</div>
+                        <div class="dropdown__menu-text">nach Alphabet sortieren </div>
                       </a>
                     </li>
                     <li class="dropdown__menu-item" @click="startFiltering('filterByDate')">
-                      <a href="#" class="dropdown__menu-link" title="Account" @click="show = false">
+                      <a href="" class="dropdown__menu-link"  @click="show = false">
                         <div class="dropdown__menu-svg">
                           <svg viewBox="2 2 16 16">
                             <path
@@ -49,11 +49,11 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">Datum</div>
+                        <div class="dropdown__menu-text">nach Datum sortieren</div>
                       </a>
                     </li>
                     <li class="dropdown__menu-item" @click="startFiltering('filterByDatatype')">
-                      <a href="#" class="dropdown__menu-link" title="Account" @click="show = false">
+                      <a href="#" class="dropdown__menu-link"  @click="show = false">
                         <div class="dropdown__menu-svg">
                           <svg class="svg-icon" viewBox="2 2 16 16">
                             <path
@@ -62,11 +62,11 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">Dateityp</div>
+                        <div class="dropdown__menu-text">nach Dateityp sortieren</div>
                       </a>
                     </li>
                     <li class="dropdown__menu-item" @click="startFiltering('filterBySize')">
-                      <a href="#" class="dropdown__menu-link" title="Account" @click="show = false">
+                      <a href="" class="dropdown__menu-link"  @click="show = false">
                         <div class="dropdown__menu-svg">
                           <svg class="svg-icon" viewBox="2 2 16 16">
                             <path
@@ -75,7 +75,7 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">Dateigröße</div>
+                        <div class="dropdown__menu-text">nach Dateigröße sortieren</div>
                       </a>
                     </li>
                   </ul>
@@ -176,7 +176,7 @@ hr {
   right: 0;
   position: absolute;
   z-index: 10;
-  height: 25rem;
+  height: 20rem;
   min-width: 250px;
   margin-top: 1rem;
   overflow-y: auto;
@@ -186,6 +186,7 @@ hr {
   background-color: white;
   border: 1px solid var(--color-gray);
   background-clip: padding-box;
+  
   &-link {
     display: flex;
     align-items: center;

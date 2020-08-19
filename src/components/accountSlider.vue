@@ -60,7 +60,9 @@
         <span style="margin-left: 4px">LinkedIn</span>
       </a>
       <h3>Hilfe</h3>
+      <router-link to="/impressum">
       <a href="#" style="margin-bottom:3px">Impressum</a>
+      </router-link>
       <a href="#">Support</a>
     </div>
   </div>

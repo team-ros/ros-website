@@ -26,7 +26,13 @@
         <ul class="leiste-ul">
           <li>
             <div>
-              <input type="text" class="such_box" placeholder="Suche nach Dateien" v-model="filterByName" @keypress.enter="sortData(filterByName)"/>
+              <input
+                type="text"
+                class="such_box"
+                placeholder="Suche nach Dateien"
+                v-model="filterByName"
+                @keypress.enter="sortData(filterByName)"
+              />
               <img src="@/assets/searchIcon.png" class="such_box_icon" />
             </div>
           </li>
@@ -291,20 +297,29 @@ $rosblue: #0044b2;
 
 .such_box {
   position: absolute;
-  width: 300px;
-  height: 30px;
+  width: 200px;
+  height: 35px;
   top: 50%;
   transform: translateY(-50%);
-  left: 35px;
+  left: 41px;
   padding-left: 4px;
   border-radius: 6px;
   border: 1px solid #eee;
   outline: none;
+  padding-left: 30px;
+  transition: 0.5s;
+  font-size: 15px;
+  color: rgb(117,117,117);
+  &:hover {
+    width: 350px;
+  }
 }
+
 .such_box_icon {
   height: 20px;
   position: absolute;
-  left: 310px;
+  left: 45px;
+  transition: 0.5s;
 }
 
 .fa-search {
