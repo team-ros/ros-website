@@ -107,13 +107,14 @@ export default {
 <style lang="scss" scoped>
 $rosblue: #0044b2;
 :root {
-  --font-primary: "Open Sans", sans-serif;
+  
   --color-gray: #dadce0;
 }
 
 // Global
 * {
   list-style-type: none;
+  font-family: Helvetica;
 }
 *,
 ::after,
@@ -124,7 +125,8 @@ $rosblue: #0044b2;
 body {
   font-size: 1rem;
   -webkit-text-size-adjust: 100%;
-  font-family: var(--font-primary);
+    font-family: Helvetica;
+
   overflow: hidden;
 }
 hr {
@@ -159,7 +161,8 @@ hr {
     position: absolute;
     margin: 0;
     padding: 0;
-    color: gray;
+      color: rgb(117, 117, 117);
+
     cursor: pointer;
     border: 1px solid transparent;
     background-color: transparent;
@@ -192,7 +195,8 @@ hr {
     align-items: center;
     justify-content: flex-start;
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.6);
+      color: rgb(117, 117, 117);
+
     padding: 0.8rem 0 0.8rem 1rem;
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
@@ -252,7 +256,8 @@ hr {
   justify-content: center;
   flex-direction: column;
   &__subtitle {
-    color: #4f5959;
+      color: rgb(117, 117, 117);
+
     font-weight: 100;
     margin-bottom: 2rem;
   }
@@ -267,7 +272,8 @@ hr {
     width: 2rem;
     height: 2rem;
     opacity: 0.6;
-    color: #94a2b0;
+      color: rgb(117, 117, 117);
+
     &:hover {
       color: #ffad1f;
     }

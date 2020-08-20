@@ -14,12 +14,7 @@
         @click="updateAccountSliderState"
       />
       <router-link to="/">
-      <img
-        src="@/assets/logout.png"
-        width="35"
-        height="35"
-        class="logout"
-      />
+        <img src="@/assets/logout.png" width="35" height="35" class="logout" />
       </router-link>
       <h1>Account</h1>
       <p>Hier sind ihre Accountinformationen zu sehen</p>
@@ -28,25 +23,28 @@
       <input type="text" placeholder="dein Abonnement Ende " class="accountInfos" readonly />
       <h3>Passwort zurücksetzen?</h3>
       <input
+        v-on:input="passwordStrongTestCreate"
+        class="rightPageContentInputfield"
         v-model="password1"
-        v-on:input="passwordStrongTest"
         type="password"
-        class="accountInfos"
-        id="newPassword1"
-        placeholder="neues Passwort"
+        placeholder
         required
+        id="password1"
+        @blur="validOrInvalidPasswordCreate1"
       />
       <input
+        v-on:input="passwordStrongTestCreate"
+        @change="isDisabled"
+        class="rightPageContentInputfield"
         v-model="password2"
-        v-on:input="passwordStrongTest"
         type="password"
-        class="accountInfos"
-        id="newPassword2"
-        placeholder="neues Passwort wiederholen"
+        placeholder
         required
+        id="password2"
+        @blur="validOrInvalidPasswordCreate2"
       />
 
-      <button :disabled="this.passwordStrong != true" class="resetButton">PASSWORT ÄNDERN</button>
+      <button :disabled="disabledButton" class="resetButton">PASSWORT ÄNDERN</button>
       <h3>Projektwebsite</h3>
       <a href="http://ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
@@ -60,9 +58,7 @@
         <span style="margin-left: 4px">LinkedIn</span>
       </a>
       <h3>Hilfe</h3>
-      <router-link to="/impressum">
       <a href="#" style="margin-bottom:3px">Impressum</a>
-      </router-link>
       <a href="#">Support</a>
     </div>
   </div>
@@ -72,23 +68,55 @@
 export default {
   data: function() {
     return {
-      password1: "",
+      password1: null,
       password2: "",
-      regex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-      passwordStrong: false
+      regexPassword: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      passwordStrongCreate: false,
+      disabledButton: true,
     };
   },
   methods: {
     updateAccountSliderState() {
       this.$store.dispatch("startUpdateAccountSliderState");
-      this.$emit('closeAccountSlider')
+      this.$emit("closeAccountSlider");
     },
-    passwordStrongTest() {
-      if(this.regex.test(this.password1) && this.password1 == this.password2){
-        this.passwordStrong = true;
+     passwordStrongTestCreate() {
+
+      if (
+        this.regexPassword.test(this.password1) &&
+        this.regexPassword.test(this.password2)
+      ) {
+        this.passwordStrongCreate = true;
+      } else {
+        this.passwordStrongCreate = false;
+       
+      }
+    },
+    validOrInvalidPasswordCreate1() {
+      if (this.regexPassword.test(this.password1)) {
+        document.getElementById("password1").classList.add("inputValid");
+        document.getElementById("password1").classList.remove("inputInvalid");
+      } else {
+        document.getElementById("password1").classList.add("inputInvalid");
+        document.getElementById("password1").classList.remove("inputValid");
+      }
+    },
+    validOrInvalidPasswordCreate2() {
+      if (this.regexPassword.test(this.password2)) {
+        document.getElementById("password2").classList.add("inputValid");
+        document.getElementById("password2").classList.remove("inputInvalid");
+        
+      } else {
+        document.getElementById("password2").classList.add("inputInvalid");
+        document.getElementById("password2").classList.remove("inputValid");
+      }
+    },
+    isDisabled(){
+      if(this.password1 == this.password2 && this.passwordStrongCreate === true){
+        this.disabledButton = false;
       }
       else{
-        this.passwordStrong = false;
+        this.disabledButton = true;
       }
     }
   }
@@ -97,7 +125,6 @@ export default {
 
 <style lang="scss" scoped>
 $rosblue: #0044b2;
-
 
 .accountSlider {
   width: 400px;
@@ -173,14 +200,30 @@ a {
 .fa {
   margin-bottom: 3px;
 }
-input:focus,
-input:valid {
-  border-color: $rosblue;
-  transition: ease-in-out 0.5s;
+.rightPageContentInputfield {
+  display: block;
+  width: 98.5%;
+  border-color: #adadad;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  font-size: 16px;
+  color: black;
+  padding: 2px;
+  height: 30px;
 }
-.logout{
+.logout {
   position: absolute;
   left: 330px;
   top: 25px;
+}
+.inputValid {
+  border-color: $rosblue;
+  transition: ease-in-out 0.5s;
+}
+.inputInvalid {
+  border-color: #cc0000;
+  transition: ease-in-out 0.5s;
 }
 </style>

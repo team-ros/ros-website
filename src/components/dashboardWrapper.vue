@@ -95,6 +95,8 @@
           :file="file"
           style="height:150px"
         />
+
+        
       </div>
     </div>
     <accountSlider
@@ -154,7 +156,9 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
-    newDirectory() {},
+    newDirectory() {
+      
+    },
     sortData(filterByWhat) {
       console.log(filterByWhat);
       if (filterByWhat == "filterBySize") {
@@ -178,7 +182,7 @@ export default {
     Data,
     DataFiles,
     accountSlider,
-    dropdown
+    dropdown,
   },
   created() {
     EventService.getDirectorys()
@@ -309,7 +313,7 @@ $rosblue: #0044b2;
   padding-left: 30px;
   transition: 0.5s;
   font-size: 15px;
-  color: rgb(117,117,117);
+  color: rgb(117, 117, 117);
   &:hover {
     width: 350px;
   }
