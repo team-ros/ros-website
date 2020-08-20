@@ -14,10 +14,9 @@
 <script>
 import Treeselect from "@riophae/vue-treeselect";
 
-
 export default {
   components: { Treeselect },
- 
+
   data: function() {
     return {
       value: null,
@@ -90,7 +89,7 @@ export default {
         },
         {
           id: "node-5",
-          label: "zuletzt gelöschte Dateien",
+          label: "zuletzt gelöschte Dateien"
         }
       ]
     };

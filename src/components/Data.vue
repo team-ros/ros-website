@@ -7,7 +7,7 @@
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
-      :class="{fileDeleted: fileDeleted}"
+      :class="{ fileDeleted: fileDeleted }"
     >
       <img src="@/assets/Folder.png" class="logo" @click="UpdateDiv" />
       <input
@@ -15,12 +15,12 @@
         class="dataName"
         v-bind:placeholder="directory.name"
         :disabled="changeNameActive == false"
-        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
+        :class="{ dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="finishNameChange"
         @focusout="finishNameChange"
         ref="search"
       />
-      <p class="size">{{directory.size | prettyBytes}}</p>
+      <p class="size">{{ directory.size | prettyBytes }}</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
@@ -49,8 +49,6 @@
 
 <script>
 import VueContext from "vue-context";
-
-
 
 export default {
   data() {

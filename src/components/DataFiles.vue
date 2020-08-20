@@ -1,11 +1,14 @@
 <template>
-  <div v-if="this.$store.state.ActiveID == file.parentid" @contextmenu.prevent="$refs.menu.open">
+  <div
+    v-if="this.$store.state.ActiveID == file.parentid"
+    @contextmenu.prevent="$refs.menu.open"
+  >
     <div
       v-if="file.type == '.pdf'"
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
-      :class="{fileDeleted: fileDeleted}"
+      :class="{ fileDeleted: fileDeleted }"
     >
       <img src="@/assets/pdf-logo.png" class="logo" />
       <input
@@ -13,32 +16,36 @@
         class="dataName"
         v-bind:placeholder="file.name + file.type"
         :disabled="changeNameActive == false"
-        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
+        :class="{ dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="finishNameChange"
         @focusout="finishNameChange"
         ref="search"
       />
-      <p class="size">{{file.size | prettyBytes}}</p>
+      <p class="size">{{ file.size | prettyBytes }}</p>
     </div>
     <div
       v-if="file.type == '.docx'"
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
-      :class="{fileDeleted: fileDeleted}"
+      :class="{ fileDeleted: fileDeleted }"
     >
-      <img src="@/assets/docx-logo.png" class="logo" style="padding-right: 10px" />
+      <img
+        src="@/assets/docx-logo.png"
+        class="logo"
+        style="padding-right: 10px"
+      />
       <input
         type="text"
         class="dataName"
         v-bind:placeholder="file.name + file.type"
         :disabled="changeNameActive == false"
-        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
+        :class="{ dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="finishNameChange"
         @focusout="finishNameChange"
         ref="search"
       />
-      <p class="size">{{file.size | prettyBytes}}</p>
+      <p class="size">{{ file.size | prettyBytes }}</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
@@ -53,13 +60,13 @@
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <a href="" download="" style="color: black; text-decoration: none"> 
-      <li class="contextMenuEntries" >
-        <p>
-          <i class="fas fa-download"></i>
-          <span class="contextMenuText"> Herunterladen </span>
-        </p>
-      </li>
+      <a href="" download="" style="color: black; text-decoration: none">
+        <li class="contextMenuEntries">
+          <p>
+            <i class="fas fa-download"></i>
+            <span class="contextMenuText"> Herunterladen </span>
+          </p>
+        </li>
       </a>
     </vue-context>
   </div>
@@ -76,7 +83,7 @@ export default {
       hovername: false,
       seeWriteable: false,
       fileDeleted: false,
-      box: null,
+      box: null
     };
   },
   components: {
@@ -105,14 +112,16 @@ export default {
     finishNameChange() {
       (this.changeNameActive = false), (this.seeWriteable = false);
     },
-    deleteFile(){
-      this.box = window.confirm("Wollen sie die Datei "+ this.file.name + " wirklich löschen?")
-      if(this.box ==true){
-      this.fileDeleted = true;
-      } else if(this.box==false){
-        this.fileDeleted =false;
+    deleteFile() {
+      this.box = window.confirm(
+        "Wollen sie die Datei " + this.file.name + " wirklich löschen?"
+      );
+      if (this.box == true) {
+        this.fileDeleted = true;
+      } else if (this.box == false) {
+        this.fileDeleted = false;
       }
- }
+    }
   }
 };
 </script>

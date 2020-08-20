@@ -11,8 +11,19 @@
           <div class="leftPage">
             <div class="slidershow">
               <div class="slides">
-                <input type="radio" name="r" id="r1" checked @click="firstSlideActive()" />
-                <input type="radio" name="r" id="r2" @click="secondSlideActive()" />
+                <input
+                  type="radio"
+                  name="r"
+                  id="r1"
+                  checked
+                  @click="firstSlideActive()"
+                />
+                <input
+                  type="radio"
+                  name="r"
+                  id="r2"
+                  @click="secondSlideActive()"
+                />
 
                 <div class="slide s1">
                   <img src="@/assets/Slide1.png" alt />
@@ -22,7 +33,11 @@
                 </div>
 
                 <div class="navigation">
-                  <label for="r1" class="bar sliderButtonActive" id="navLabel1"></label>
+                  <label
+                    for="r1"
+                    class="bar sliderButtonActive"
+                    id="navLabel1"
+                  ></label>
                   <label for="r2" class="bar" id="navLabel2"></label>
                 </div>
               </div>
@@ -37,7 +52,12 @@
                 <h1>Willkommen zurück!</h1>
                 <br />
 
-                <p class="rightPageContentGrey" id="rightPageContentLoginEmailfield">E-Mail</p>
+                <p
+                  class="rightPageContentGrey"
+                  id="rightPageContentLoginEmailfield"
+                >
+                  E-Mail
+                </p>
                 <input
                   @blur="validOrInvalidEmail"
                   v-model="email"
@@ -64,11 +84,20 @@
                     :disabled="this.passwordStrong != true"
                     class="rightPageContentLoginbutton"
                     @click="regularLogin"
-                  >LOGIN</button>
+                  >
+                    LOGIN
+                  </button>
                 </router-link>
 
-                <button @click="oauthLogin" value="G+" class="rightPageContentGooglebutton">
-                  <i class="fa fa-google-plus" style="color: #db4a39; font-size: 26px"></i>
+                <button
+                  @click="oauthLogin"
+                  value="G+"
+                  class="rightPageContentGooglebutton"
+                >
+                  <i
+                    class="fa fa-google-plus"
+                    style="color: #db4a39; font-size: 26px"
+                  ></i>
                 </button>
                 <p class="rightPageContentText">
                   Noch keinen Account?
@@ -77,8 +106,7 @@
                     id="createAccountButton"
                     @click="createSwitch()"
                   >
-                    Erstelle
-                    einen!
+                    Erstelle einen!
                   </span>
                 </p>
               </div>
@@ -135,7 +163,9 @@
                     :disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 304px;"
-                  >REGISTRIEREN</button>
+                  >
+                    REGISTRIEREN
+                  </button>
 
                   <p class="rightPageContentText">
                     Du hast schon einen Account?
@@ -143,7 +173,8 @@
                       style="color:#002c6b; cursor: pointer;"
                       id="loginAccountButton"
                       @click="loginSwitch()"
-                    >Zum Login!</span>
+                      >Zum Login!</span
+                    >
                   </p>
                 </div>
                 <div class="passwordSafety" id="passwordSafety">
@@ -169,7 +200,9 @@
                     @mouseover="showPasswordSafety"
                     @mouseleave="leavePasswordSafety"
                     style="color:#002c6b; cursor: pointer;"
-                  >Mindestanforderungen</span> für ein Passwort
+                    >Mindestanforderungen</span
+                  >
+                  für ein Passwort
                 </p>
               </div>
             </div>
@@ -404,7 +437,6 @@ export default {
   
 };
 </script>
-
 
 <style lang="scss" scoped>
 $rosblue: #0044b2;

@@ -18,9 +18,24 @@
       </router-link>
       <h1>Account</h1>
       <p>Hier sind ihre Accountinformationen zu sehen</p>
-      <input type="text" placeholder="dein Name" class="accountInfos" readonly />
-      <input type="text" placeholder="deine E-Mail Adresse" class="accountInfos" readonly />
-      <input type="text" placeholder="dein Abonnement Ende " class="accountInfos" readonly />
+      <input
+        type="text"
+        placeholder="dein Name"
+        class="accountInfos"
+        readonly
+      />
+      <input
+        type="text"
+        placeholder="deine E-Mail Adresse"
+        class="accountInfos"
+        readonly
+      />
+      <input
+        type="text"
+        placeholder="dein Abonnement Ende "
+        class="accountInfos"
+        readonly
+      />
       <h3>Passwort zurücksetzen?</h3>
       <input
         v-on:input="passwordStrongTestCreate"
@@ -44,17 +59,29 @@
         @blur="validOrInvalidPasswordCreate2"
       />
 
+<<<<<<< Updated upstream
       <button :disabled="disabledButton" class="resetButton">PASSWORT ÄNDERN</button>
+=======
+      <button :disabled="this.passwordStrong != true" class="resetButton">
+        PASSWORT ÄNDERN
+      </button>
+>>>>>>> Stashed changes
       <h3>Projektwebsite</h3>
       <a href="http://ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
-      <a href="https://www.instagram.com/ros_cloud/?hl=de" class="fa fa-instagram">
+      <a
+        href="https://www.instagram.com/ros_cloud/?hl=de"
+        class="fa fa-instagram"
+      >
         <span style="margin-left: 4px">Instagram</span>
       </a>
       <a href="https://twitter.com/cloud_ros" class="fa fa-twitter">
         <span style="margin-left: 4px">Twitter</span>
       </a>
-      <a href="https://at.linkedin.com/in/ros-cloud-5b53aa1b0" class="fa fa-linkedin">
+      <a
+        href="https://at.linkedin.com/in/ros-cloud-5b53aa1b0"
+        class="fa fa-linkedin"
+      >
         <span style="margin-left: 4px">LinkedIn</span>
       </a>
       <h3>Hilfe</h3>
@@ -79,6 +106,7 @@ export default {
     updateAccountSliderState() {
       this.$store.dispatch("startUpdateAccountSliderState");
       this.$emit("closeAccountSlider");
+<<<<<<< Updated upstream
     },
      passwordStrongTestCreate() {
 
@@ -117,6 +145,14 @@ export default {
       }
       else{
         this.disabledButton = true;
+=======
+    },
+    passwordStrongTest() {
+      if (this.regex.test(this.password1) && this.password1 == this.password2) {
+        this.passwordStrong = true;
+      } else {
+        this.passwordStrong = false;
+>>>>>>> Stashed changes
       }
     }
   }
@@ -218,6 +254,7 @@ a {
   left: 330px;
   top: 25px;
 }
+<<<<<<< Updated upstream
 .inputValid {
   border-color: $rosblue;
   transition: ease-in-out 0.5s;
@@ -227,3 +264,6 @@ a {
   transition: ease-in-out 0.5s;
 }
 </style>
+=======
+</style>
+>>>>>>> Stashed changes

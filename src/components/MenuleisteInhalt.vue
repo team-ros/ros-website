@@ -1,8 +1,8 @@
 <template>
-  <router-link class="event-link" :to="{name: 'Data'}">
+  <router-link class="event-link" :to="{ name: 'Data' }">
     <div class="wrapper">
       <img src="@/assets/FolderSmall.png" class="logo" />
-      <p class="name">{{directory.name}}</p>
+      <p class="name">{{ directory.name }}</p>
     </div>
   </router-link>
 </template>
@@ -11,7 +11,7 @@
 export default {
   props: {
     directory: Object
-  },
+  }
 };
 </script>
 
@@ -29,14 +29,12 @@ export default {
   align-items: center;
   transition: 0.3s;
 }
-.router-link-exact-active{
-
+.router-link-exact-active {
   font-weight: bold;
 }
 .wrapper:hover {
   background-color: rgb(216, 216, 216);
 }
-
 
 .logo {
   height: 20px;
