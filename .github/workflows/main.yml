@@ -19,14 +19,7 @@ jobs:
         run: npm install
 
       - name: Build static Site from ue Templates
-        run: npm run build
-
-  push_to_registry:
-    name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
+        run: npm run build --if-present
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
@@ -36,3 +29,5 @@ jobs:
           registry: registry.hub.docker.com
           repository: roscloud/ros-website
           tags: latest
+
+  
