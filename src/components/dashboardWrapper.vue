@@ -31,7 +31,6 @@
       <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
           <li>
-<<<<<<< Updated upstream
             <div>
               <input
                 type="text"
@@ -45,17 +44,6 @@
           </li>
           <li class="leiste-ul-li">
             <dropdown @newFilter="sortData" />
-=======
-            <template class="filterField">
-              <div @keypress.enter="sortData" @focusout="sortData">
-                <v-selectize
-                  :options="options"
-                  v-model="selectedFilter"
-                  placeholder="Suchen..."
-                />
-              </div>
-            </template>
->>>>>>> Stashed changes
           </li>
           <li>
             <v-file-input multiple label="File input"></v-file-input>
@@ -77,15 +65,7 @@
         </ul>
       </div>
 
-<<<<<<< Updated upstream
       <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName == ''">
-=======
-      <div
-        class="datencontainer"
-        id="blurBackgroundData"
-        v-if="this.filterByName == ''"
-      >
->>>>>>> Stashed changes
         <Data
           v-for="(directory, id) in orderBy(
             directorys,
@@ -108,30 +88,16 @@
           style="height:150px"
         />
       </div>
-<<<<<<< Updated upstream
       <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName != ''">
         <Data
           v-for="(directory, id) in filterBy(directorys, this.filterByName)"
-=======
-      <div
-        class="datencontainer"
-        id="blurBackgroundData"
-        v-if="this.filterByName != ''"
-      >
-        <Data
-          v-for="(directory, id) in find(directorys, this.filterByName)"
->>>>>>> Stashed changes
           v-bind:key="id"
           :directory="directory"
           style="height:150px"
         />
 
         <DataFiles
-<<<<<<< Updated upstream
           v-for="(file, id) in filterBy(files, this.filterByName)"
-=======
-          v-for="(file, id) in find(files, this.filterByName)"
->>>>>>> Stashed changes
           v-bind:key="id + 1000"
           :file="file"
           style="height:150px"
@@ -197,7 +163,6 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
-<<<<<<< Updated upstream
     newDirectory() {
       
     },
@@ -213,21 +178,6 @@ export default {
         this.filterExpression = "date";
         this.filterDirection = -1;
       } else if (filterByWhat == "filterByDatatype") {
-=======
-    newDirectory() {},
-    sortData() {
-      console.log(this.selectedFilter);
-      if (this.selectedFilter.includes("Dateigröße")) {
-        this.filterExpression = "size";
-        this.filterDirection = -1;
-      } else if (this.selectedFilter.includes("Name")) {
-        this.filterExpression = "name";
-        this.filterDirection = 1;
-      } else if (this.selectedFilter.includes("Datum")) {
-        this.filterExpression = "date";
-        this.filterDirection = -1;
-      } else if (this.selectedFilter.includes("Dateityp")) {
->>>>>>> Stashed changes
         this.filterExpression = "type";
         this.filterDirection = 1;
       } else {

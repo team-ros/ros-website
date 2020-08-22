@@ -59,13 +59,7 @@
         @blur="validOrInvalidPasswordCreate2"
       />
 
-<<<<<<< Updated upstream
       <button :disabled="disabledButton" class="resetButton">PASSWORT ÄNDERN</button>
-=======
-      <button :disabled="this.passwordStrong != true" class="resetButton">
-        PASSWORT ÄNDERN
-      </button>
->>>>>>> Stashed changes
       <h3>Projektwebsite</h3>
       <a href="http://ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
@@ -106,7 +100,6 @@ export default {
     updateAccountSliderState() {
       this.$store.dispatch("startUpdateAccountSliderState");
       this.$emit("closeAccountSlider");
-<<<<<<< Updated upstream
     },
      passwordStrongTestCreate() {
 
@@ -145,14 +138,6 @@ export default {
       }
       else{
         this.disabledButton = true;
-=======
-    },
-    passwordStrongTest() {
-      if (this.regex.test(this.password1) && this.password1 == this.password2) {
-        this.passwordStrong = true;
-      } else {
-        this.passwordStrong = false;
->>>>>>> Stashed changes
       }
     }
   }
@@ -254,7 +239,6 @@ a {
   left: 330px;
   top: 25px;
 }
-<<<<<<< Updated upstream
 .inputValid {
   border-color: $rosblue;
   transition: ease-in-out 0.5s;
@@ -264,6 +248,3 @@ a {
   transition: ease-in-out 0.5s;
 }
 </style>
-=======
-</style>
->>>>>>> Stashed changes
