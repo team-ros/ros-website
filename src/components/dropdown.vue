@@ -27,7 +27,7 @@
                 <div class="dropdown__menu" v-bind:class="{ active: show }" v-if="show">
                   <ul class="dropdown__menu-nav">
                     <li class="dropdown__menu-item" @click="startFiltering('filterByName')">
-                      <a href="" class="dropdown__menu-link"  @click="show = false">
+                      <a href="#" class="dropdown__menu-link" @click="show = false">
                         <div class="dropdown__menu-svg">
                           <svg viewBox="0 0 20 20">
                             <path
@@ -36,11 +36,11 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">nach Alphabet sortieren </div>
+                        <div class="dropdown__menu-text">Alphabetisch ordnen</div>
                       </a>
                     </li>
                     <li class="dropdown__menu-item" @click="startFiltering('filterByDate')">
-                      <a href="" class="dropdown__menu-link"  @click="show = false">
+                      <a href="#" class="dropdown__menu-link"  @click="show = false">
                         <div class="dropdown__menu-svg">
                           <svg viewBox="2 2 16 16">
                             <path
@@ -66,7 +66,7 @@
                       </a>
                     </li>
                     <li class="dropdown__menu-item" @click="startFiltering('filterBySize')">
-                      <a href="" class="dropdown__menu-link"  @click="show = false">
+                      <a href="#" class="dropdown__menu-link"  @click="show = false">
                         <div class="dropdown__menu-svg">
                           <svg class="svg-icon" viewBox="2 2 16 16">
                             <path
@@ -107,14 +107,13 @@ export default {
 <style lang="scss" scoped>
 $rosblue: #0044b2;
 :root {
-  
+  --font-primary: "Open Sans", sans-serif;
   --color-gray: #dadce0;
 }
 
 // Global
 * {
   list-style-type: none;
-  font-family: Helvetica;
 }
 *,
 ::after,
@@ -125,8 +124,7 @@ $rosblue: #0044b2;
 body {
   font-size: 1rem;
   -webkit-text-size-adjust: 100%;
-    font-family: Helvetica;
-
+  font-family: var(--font-primary);
   overflow: hidden;
 }
 hr {
@@ -161,8 +159,7 @@ hr {
     position: absolute;
     margin: 0;
     padding: 0;
-      color: rgb(117, 117, 117);
-
+    color: gray;
     cursor: pointer;
     border: 1px solid transparent;
     background-color: transparent;
@@ -179,7 +176,7 @@ hr {
   right: 0;
   position: absolute;
   z-index: 10;
-  height: 20rem;
+  height: 25rem;
   min-width: 250px;
   margin-top: 1rem;
   overflow-y: auto;
@@ -189,14 +186,12 @@ hr {
   background-color: white;
   border: 1px solid var(--color-gray);
   background-clip: padding-box;
-  
   &-link {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     text-decoration: none;
-      color: rgb(117, 117, 117);
-
+    color: rgba(0, 0, 0, 0.6);
     padding: 0.8rem 0 0.8rem 1rem;
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
@@ -256,8 +251,7 @@ hr {
   justify-content: center;
   flex-direction: column;
   &__subtitle {
-      color: rgb(117, 117, 117);
-
+    color: #4f5959;
     font-weight: 100;
     margin-bottom: 2rem;
   }
@@ -272,8 +266,7 @@ hr {
     width: 2rem;
     height: 2rem;
     opacity: 0.6;
-      color: rgb(117, 117, 117);
-
+    color: #94a2b0;
     &:hover {
       color: #ffad1f;
     }

@@ -1,19 +1,13 @@
 <template>
   <div>
     <div class="bigContainer">
-      <link
-        rel="stylesheet"
-        href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-      />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
       <nav>
         <div class="nav" id="blurBackgroundNav">
           <div>
             <a href>
-              <img
-                :src="require('@/assets/ros-logo.png')"
-                style=" height:50px; "
-              />
+              <img :src="require('@/assets/ros-logo.png')" style=" height:50px; " />
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
@@ -45,12 +39,11 @@
           <li class="leiste-ul-li">
             <dropdown @newFilter="sortData" />
           </li>
-          <li>
-            <v-file-input multiple label="File input"></v-file-input>
-          </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
-              <label> <i class="fas fa-upload"></i> Hochladen </label>
+              <label>
+                <i class="fas fa-upload"></i> Hochladen
+              </label>
               <input type="file" name="my-upload-field" />
             </div>
           </li>
@@ -74,6 +67,8 @@
           )"
           v-bind:key="id"
           :directory="directory"
+          :directorys="directorys"
+          :draggable="test"
           style="height:150px"
         />
 
@@ -86,6 +81,7 @@
           v-bind:key="id + 100"
           :file="file"
           style="height:150px"
+          :draggable="test"
         />
       </div>
       <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName != ''">
@@ -94,6 +90,7 @@
           v-bind:key="id"
           :directory="directory"
           style="height:150px"
+          :draggable="test"
         />
 
         <DataFiles
@@ -101,6 +98,7 @@
           v-bind:key="id + 1000"
           :file="file"
           style="height:150px"
+          :draggable="test"
         />
 
         
@@ -151,6 +149,9 @@ export default {
           .getElementById("blurBackgroundLeiste")
           .classList.add("blurBackground");
       }
+    },
+    test(){
+      alert("test")
     },
     closeAccountSlider() {
       document
@@ -262,7 +263,7 @@ $rosblue: #0044b2;
   left: 0;
   position: absolute;
   top: 50px;
-  background-color: #f4faff;
+  background-color: #eee;
   width: 100%;
   height: 50px;
   padding: 0px;

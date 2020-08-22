@@ -7,7 +7,7 @@
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
-      :class="{ fileDeleted: fileDeleted }"
+      :class="{fileDeleted: fileDeleted}"
     >
       <img src="@/assets/Folder.png" class="logo" @click="UpdateDiv" />
       <input
@@ -15,12 +15,12 @@
         class="dataName"
         v-bind:placeholder="directory.name"
         :disabled="changeNameActive == false"
-        :class="{ dataNameHover: hovername, seeWriteable: seeWriteable }"
+        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="finishNameChange"
         @focusout="finishNameChange"
         ref="search"
       />
-      <p class="size">{{ directory.size | prettyBytes }}</p>
+      <p class="size">{{directory.size | prettyBytes}}</p>
     </div>
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
@@ -35,7 +35,7 @@
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <a href download style="color: black; text-decoration: none">
+      <a href download style="color: rgb(117, 117, 117); text-decoration: none">
         <li class="contextMenuEntries">
           <p>
             <i class="fas fa-download"></i>
@@ -43,14 +43,37 @@
           </p>
         </li>
       </a>
+      <li class="contextMenuEntries">
+        <p>
+          <i class="fas fa-angle-double-right"></i>
+          <span class="contextMenuText" @hover="showMove">Verschieben nach</span>
+        </p>
+      </li>
+
+      <li
+        class="contextMenuEntries moveItems"
+        v-for="(directoryItem, id) in directorys"
+        v-bind:key="id"
+        :directorys="directorys"
+      >
+        <span
+          v-if="directoryItem.parentid == $store.state.ActiveID && directoryItem.name != directory.name"
+        >{{directoryItem.name}}</span>
+      </li>
     </vue-context>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+
 import VueContext from "vue-context";
+import Vue2Filters from "vue2-filters";
+Vue.use(Vue2Filters);
 
 export default {
+  mixins: [Vue2Filters.mixin],
+
   data() {
     return {
       showChangeName: false,
@@ -65,7 +88,8 @@ export default {
     VueContext
   },
   props: {
-    directory: Object
+    directory: Object,
+    directorys: Array
   },
   methods: {
     UpdateDiv() {
@@ -100,12 +124,14 @@ export default {
       } else if (this.box == false) {
         this.fileDeleted = false;
       }
-    }
+    },
+    showMove() {}
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$rosblue: #0044b2;
 * {
   font-family: helvetica;
 }
@@ -140,7 +166,7 @@ export default {
   margin: 0;
 }
 .contextMenu {
-  background-color: #eee;
+  background-color: white;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
@@ -152,12 +178,11 @@ export default {
   margin: 3px;
   border-radius: 4px;
   z-index: 10;
+  color: rgb(117, 117, 117);
 }
 .contextMenuEntries:hover {
-  width: 100%;
-  margin: 0px;
-  padding: 0px;
-  background-color: rgb(216, 216, 216);
+  background-color: #f4faff;
+  color: $rosblue;
   cursor: pointer;
 }
 .contextMenuEntries p {
@@ -192,5 +217,11 @@ export default {
 }
 .fileDeleted {
   display: none;
+}
+.moveItems {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 2px;
+
 }
 </style>
