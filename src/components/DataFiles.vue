@@ -53,15 +53,30 @@
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <a href="" download="" style="color: black; text-decoration: none"> 
-      <li class="contextMenuEntries" >
+      <a href download style="color: rgb(117, 117, 117); text-decoration: none">
+        <li class="contextMenuEntries">
+          <p>
+            <i class="fas fa-download"></i>
+            <span class="contextMenuText">Herunterladen</span>
+          </p>
+        </li>
+      </a>
+      <li class="contextMenuEntries">
         <p>
-          <i class="fas fa-download"></i>
-          <span class="contextMenuText"> Herunterladen </span>
+          <i class="fas fa-angle-double-right"></i>
+          <span class="contextMenuText" @hover="showMove">Verschieben nach</span>
         </p>
       </li>
-    
-      </a>
+      <li
+        class="contextMenuEntries moveItems"
+        v-for="(directoryItem, id) in directorys"
+        v-bind:key="id"
+        :directorys="directorys"
+      >
+        <span
+          v-if="directoryItem.parentid == $store.state.ActiveID"
+        >{{directoryItem.name}}</span>
+      </li>
     </vue-context>
   </div>
 </template>
@@ -77,14 +92,15 @@ export default {
       hovername: false,
       seeWriteable: false,
       fileDeleted: false,
-      box: null,
+      box: null
     };
   },
   components: {
     VueContext
   },
   props: {
-    file: Object
+    file: Object,
+    directorys: Array
   },
   methods: {
     onClick() {
@@ -106,19 +122,24 @@ export default {
     finishNameChange() {
       (this.changeNameActive = false), (this.seeWriteable = false);
     },
-    deleteFile(){
-      this.box = window.confirm("Wollen sie die Datei "+ this.file.name + " wirklich löschen?")
-      if(this.box ==true){
-      this.fileDeleted = true;
-      } else if(this.box==false){
-        this.fileDeleted =false;
+    deleteFile() {
+      this.box = window.confirm(
+        "Wollen sie die Datei " + this.file.name + " wirklich löschen?"
+      );
+      if (this.box == true) {
+        this.fileDeleted = true;
+      } else if (this.box == false) {
+        this.fileDeleted = false;
       }
- }
+    },
+    showMove(){
+
+    }
   }
 };
 </script>
-
-<style scoped>
+<style lang="scss" scoped>
+$rosblue: #0044b2;
 * {
   font-family: helvetica;
 }
@@ -165,12 +186,11 @@ export default {
   margin: 3px;
   border-radius: 4px;
   z-index: 10;
+  color: rgb(117, 117, 117);
 }
 .contextMenuEntries:hover {
-  width: 100%;
-  margin: 0px;
-  padding: 0px;
-  background-color: rgb(216, 216, 216);
+  background-color: #f4faff;
+  color: $rosblue;
   cursor: pointer;
 }
 .contextMenuEntries p {
@@ -205,5 +225,10 @@ export default {
 }
 .fileDeleted {
   display: none;
+}
+.moveItems {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 2px;
 }
 </style>

@@ -68,7 +68,6 @@
           v-bind:key="id"
           :directory="directory"
           :directorys="directorys"
-          :draggable="test"
           style="height:150px"
         />
 
@@ -81,7 +80,7 @@
           v-bind:key="id + 100"
           :file="file"
           style="height:150px"
-          :draggable="test"
+          :directorys="directorys"
         />
       </div>
       <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName != ''">
@@ -90,7 +89,7 @@
           v-bind:key="id"
           :directory="directory"
           style="height:150px"
-          :draggable="test"
+          :directorys="directorys"
         />
 
         <DataFiles
@@ -98,7 +97,7 @@
           v-bind:key="id + 1000"
           :file="file"
           style="height:150px"
-          :draggable="test"
+          :directorys="directorys"
         />
 
         

@@ -96,9 +96,6 @@ export default {
       this.$store.dispatch("StartUpdateDiv", this.directory.id),
         console.log("Es geht");
     },
-    onClick() {
-      (this.showChangeName = true), console.log("test");
-    },
     changeNameSet() {
       this.changeNameActive = true;
       this.seeWriteable = true;
@@ -222,6 +219,5 @@ $rosblue: #0044b2;
   position: relative;
   padding-left: 40px;
   margin-bottom: 2px;
-
 }
 </style>
