@@ -68,7 +68,7 @@
                 </router-link>
 
                 <button @click="oauthLogin" value="G+" class="rightPageContentGooglebutton">
-                  <i class="fa fa-google-plus" style="color: #db4a39; font-size: 26px"></i>
+                  <i class="fa fa-google-plus" style="color: #db4a39"></i>
                 </button>
                 <p class="rightPageContentText">
                   Noch keinen Account?
@@ -485,10 +485,10 @@ $rosblue: #0044b2;
 .rightPageContentLoginbutton {
   width: 150px;
   height: 40px;
-  margin-top: 20px;
-  margin-right: 0.1vw;
   border-radius: 5px;
   color: $rosblue;
+  margin-right: 7px;
+  margin-top: 20px;
   border-color: $rosblue;
   border-width: 1.4px;
   font-weight: 300;
@@ -503,14 +503,13 @@ $rosblue: #0044b2;
   opacity: 40%;
 }
 .rightPageContentGooglebutton {
+  margin-top: 20px;
+  font-size: 18px;
   width: 150px;
   height: 40px;
-  margin-top: 21px;
   border-radius: 5px;
   border-color: #db4a39;
   border-width: 1.5px;
-  position: relative;
-  top: 3px;
   cursor: pointer;
 }
 
