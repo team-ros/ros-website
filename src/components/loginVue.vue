@@ -176,6 +176,7 @@
           </div>
         </div>
       </div>
+      <cookieLaw />
       <div class="footer">
         <div class="geomap">
           <iframe
@@ -205,6 +206,7 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import { API } from "ros-sdk-js";
+import cookieLaw from '@/components/cookieLaw.vue';
 
 // initialize the API class with the API endpoint URL in the constructor
 const api = new API("http://localhost:8080/user/authenticate");
@@ -233,6 +235,9 @@ API methods ...
 
 */
 export default {
+  components: {
+    cookieLaw
+  },
   data: function() {
     return {
       passwordlogin: "",
