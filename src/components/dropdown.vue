@@ -18,7 +18,7 @@
                     </svg>
                   </button>
                   <button class="header--button" v-else key="off" @click="show = true">
-                    <img src="@/assets/filterLogo.png" class="header--icon" />
+                    <img src="@/assets/filterLogo.png" class="header--icon"/>
                   </button>
                 </transition>
               </a>
@@ -138,6 +138,7 @@ hr {
 
 .header {
   padding: 11px;
+  
   &__nav {
     position: relative;
   }
