@@ -194,7 +194,7 @@
           © ROS 2020
           <span style="margin: 5px;">|</span>
           <router-link to="/impressum">
-          <a href="#">Impressum</a>
+            <a href="#">Impressum</a>
           </router-link>
         </div>
       </div>
@@ -206,7 +206,7 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import { API } from "ros-sdk-js";
-import cookieLaw from '@/components/cookieLaw.vue';
+import cookieLaw from "@/components/cookieLaw.vue";
 
 // initialize the API class with the API endpoint URL in the constructor
 const api = new API("http://localhost:8080/user/authenticate");
@@ -309,7 +309,8 @@ export default {
     passwordStrongTestCreate() {
       if (
         this.regexPassword.test(this.password1) &&
-        this.regexPassword.test(this.password2) && this.password1 == this.password2
+        this.regexPassword.test(this.password2) &&
+        this.password1 == this.password2
       ) {
         this.passwordStrongCreate = true;
       } else {
@@ -318,7 +319,9 @@ export default {
     },
 
     validOrInvalidEmail() {
-      if (this.regexEmail.test(this.email)) {
+      if (this.email == "") {
+        console.log("0");
+      } else if (this.regexEmail.test(this.email)) {
         document.getElementById("email").classList.add("inputValid");
         document.getElementById("email").classList.remove("inputInvalid");
       } else {
@@ -327,7 +330,10 @@ export default {
       }
     },
     validOrInvalidPassword() {
-      if (this.regexPassword.test(this.passwordlogin)) {
+      if (this.passwordlogin == "") {
+        console.log("0");
+      }
+      else if (this.regexPassword.test(this.passwordlogin)) {
         document.getElementById("password").classList.add("inputValid");
         document.getElementById("password").classList.remove("inputInvalid");
       } else {
@@ -336,7 +342,10 @@ export default {
       }
     },
     validOrInvalidName() {
-      if (this.regexName.test(this.name)) {
+      if (this.name == "") {
+        console.log("0");
+      }
+      else if (this.regexName.test(this.name)) {
         document.getElementById("name").classList.add("inputValid");
         document.getElementById("name").classList.remove("inputInvalid");
       } else {
@@ -345,7 +354,10 @@ export default {
       }
     },
     validOrInvalidEmailCreate() {
-      if (this.regexName.test(this.name)) {
+      if (this.emailCreate == "") {
+        console.log("0");
+      }
+      else if (this.regexEmail.test(this.emailCreate)) {
         document.getElementById("emailCreate").classList.add("inputValid");
         document.getElementById("emailCreate").classList.remove("inputInvalid");
       } else {
@@ -354,7 +366,10 @@ export default {
       }
     },
     validOrInvalidPasswordCreate1() {
-      if (this.regexPassword.test(this.password1)) {
+      if (this.password1 == "") {
+        console.log("0");
+      }
+      else if (this.regexPassword.test(this.password1)) {
         document.getElementById("password1").classList.add("inputValid");
         document.getElementById("password1").classList.remove("inputInvalid");
       } else {
@@ -363,7 +378,10 @@ export default {
       }
     },
     validOrInvalidPasswordCreate2() {
-      if (this.regexPassword.test(this.password2)) {
+      if (this.password2 == "") {
+        console.log("0");
+      }
+      else if (this.regexPassword.test(this.password2)) {
         document.getElementById("password2").classList.add("inputValid");
         document.getElementById("password2").classList.remove("inputInvalid");
       } else {
@@ -403,8 +421,7 @@ export default {
             });
         });
     }
-  },
-  
+  }
 };
 </script>
 
