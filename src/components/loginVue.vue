@@ -309,13 +309,11 @@ export default {
     passwordStrongTestCreate() {
       if (
         this.regexPassword.test(this.password1) &&
-        this.regexPassword.test(this.password2)
+        this.regexPassword.test(this.password2) && this.password1 == this.password2
       ) {
         this.passwordStrongCreate = true;
-        console.log("true");
       } else {
         this.passwordStrongCreate = false;
-        console.log("false");
       }
     },
 
@@ -495,7 +493,7 @@ $rosblue: #0044b2;
   margin-right: 7px;
   margin-top: 20px;
   border-color: $rosblue;
-  border-width: 1.4px;
+  border-width: 2px;
   font-weight: 300;
   font-size: 18px;
   cursor: pointer;
@@ -514,7 +512,7 @@ $rosblue: #0044b2;
   height: 40px;
   border-radius: 5px;
   border-color: #db4a39;
-  border-width: 1.5px;
+  border-width: 2px;
   cursor: pointer;
 }
 
