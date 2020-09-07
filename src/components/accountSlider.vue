@@ -125,7 +125,10 @@ export default {
 
 <style lang="scss" scoped>
 $rosblue: #0044b2;
-
+$rosfont: montserrat;
+* {
+  font-family: $rosfont;
+}
 .accountSlider {
   width: 400px;
   height: 100%;

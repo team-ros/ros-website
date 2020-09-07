@@ -214,12 +214,12 @@ export default {
 @import "~selectize/dist/css/selectize.bootstrap3.css";
 
 $rosblue: #0044b2;
-
+$rosfont: montserrat;
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: Helvetica;
+  font-family: $rosfont;
 }
 
 .selectize-input {

@@ -428,8 +428,10 @@ export default {
 
 <style lang="scss" scoped>
 $rosblue: #0044b2;
+$rosfont: montserrat;
 * {
-  font-family: Helvetica;
+  font-family: $rosfont;
+  font-weight: 500;
 }
 .bigWrapper {
   background-color: $rosblue;
@@ -486,7 +488,7 @@ $rosblue: #0044b2;
 }
 
 .rightPageContentInputfield {
-  width: 300px;
+  width: 100%;
   border-color: #adadad;
   border-top: none;
   border-left: none;

@@ -140,8 +140,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 $rosblue: #0044b2;
+$rosfont: montserrat;
 * {
-  font-family: helvetica;
+  font-family: $rosfont;
 }
 .event-link {
   color: black;

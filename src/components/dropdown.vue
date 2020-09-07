@@ -106,6 +106,8 @@ export default {
 
 <style lang="scss" scoped>
 $rosblue: #0044b2;
+$rosfont: montserrat;
+
 :root {
   --font-primary: "Open Sans", sans-serif;
   --color-gray: #dadce0;
@@ -114,6 +116,8 @@ $rosblue: #0044b2;
 // Global
 * {
   list-style-type: none;
+    font-family: $rosfont;
+
 }
 *,
 ::after,
