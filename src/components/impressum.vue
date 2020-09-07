@@ -1,5 +1,6 @@
 <template>
   <div class="impressumdiv">
+     <img src="@/assets/ros-logo.png" class="header--icon"/>
     <h1 class="adsimple-121389708">Impressum</h1>
     <p
       class="adsimple-121389708"
@@ -987,9 +988,18 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+$rosfont: montserrat;
+* {
+  font-family: $rosfont;
+}
 .impressumdiv{
     position: absolute;
     left: 10%;
     right: 10%;
+    
+}
+.header--icon{
+  position: relative;
+  height: 70px;
 }
 </style>
