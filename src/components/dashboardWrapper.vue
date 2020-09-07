@@ -236,7 +236,7 @@ $rosfont: montserrat;
   left: 0;
   position: absolute;
   width: 100%;
-  background-image: linear-gradient(90deg, #5d8dfc, $rosblue);
+  background-image: linear-gradient(90deg, #4170b1, $rosblue);
   height: 50px;
   color: white;
   font-size: 25px;

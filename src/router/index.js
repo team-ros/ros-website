@@ -21,6 +21,11 @@ const routes = [
     path: "/impressum",
     name: "Impressum",
     component: impressum
+  },
+  {
+    path: "*",
+    name: "404",
+    component: dashboardWrapper
   }
 ];
 
