@@ -61,21 +61,21 @@
           </p>
         </li>
       </a>
-      <li class="contextMenuEntries">
+       <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
-          <span class="contextMenuText" @hover="showMove">Verschieben nach</span>
+          <span class="contextMenuText">Verschieben nach</span>
         </p>
-      </li>
-      <li
-        class="contextMenuEntries moveItems"
-        v-for="(directoryItem, id) in directorys"
-        v-bind:key="id"
-        :directorys="directorys"
-      >
-        <span
-          v-if="directoryItem.parentid == $store.state.ActiveID"
-        >{{directoryItem.name}}</span>
+        <ul class="v-context">
+          <li
+            class="contextMenuEntries moveItems"
+            v-for="(directoryItem, id) in directorys"
+            v-bind:key="id"
+            :directorys="directorys"
+          >
+            <span v-if="directoryItem.parentid == $store.state.ActiveID" >{{directoryItem.name}}</span>
+          </li>
+        </ul>
       </li>
     </vue-context>
   </div>
@@ -231,5 +231,10 @@ $rosfont: montserrat;
   position: relative;
   padding-left: 40px;
   margin-bottom: 2px;
+}
+.moveItems {
+  position: relative;
+  padding-left: 10px;
+  color: rgb(117, 117, 117);
 }
 </style>
