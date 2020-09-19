@@ -58,7 +58,9 @@
         <span style="margin-left: 4px">LinkedIn</span>
       </a>
       <h3>Hilfe</h3>
-      <a href="#" style="margin-bottom:3px">Impressum</a>
+      <router-link to="/impressum">
+            <a href="#">Impressum</a>
+          </router-link>
       <a href="#">Support</a>
     </div>
   </div>
@@ -139,14 +141,17 @@ $rosfont: montserrat;
   background-color: #ffffff;
   box-shadow: -6px 0px 16px 1px rgba(0, 0, 0, 0.75);
   position: fixed;
+  padding: 0px 35px 0px 35px;
 }
 .accountSliderContent {
   display: grid;
   align-content: center;
   justify-content: center;
+  
 }
 .buttonImg {
-  margin-top: 25px;
+  position: relative;
+  top: 30px;
   cursor: pointer;
 }
 .hideSlider {
@@ -217,9 +222,9 @@ a {
   height: 30px;
 }
 .logout {
-  position: absolute;
-  left: 330px;
-  top: 25px;
+  float: right;
+  color: red;
+  
 }
 .inputValid {
   border-color: $rosblue;

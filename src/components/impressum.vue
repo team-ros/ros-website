@@ -6,16 +6,14 @@
       class="adsimple-121389708"
     >Informationspflicht laut §5 E-Commerce Gesetz, §14 Unternehmensgesetzbuch, §63 Gewerbeordnung und Offenlegungspflicht laut §25 Mediengesetz.</p>
     <p class="adsimple-121389708"></p>
-    <p>Paul Herbich</p>
+    <p>Team ROS</p>
     <p class="adsimple-121389708">
       Rennweg 89b, 1030 Wien
       <br />1030 Wien,
       <br />Österreich
     </p>
     <p class="adsimple-121389708">
-      <strong>Tel.:</strong> 06503716349
-      <br />
-      <strong>Fax:</strong> 01234/56789-0
+      <strong>Tel.:</strong> 01 2421510
       <br />
       <strong>E-Mail:</strong>
       <a href="mailto:team@ros-cloud.at">team@ros-cloud.at</a>

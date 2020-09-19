@@ -134,7 +134,7 @@
                   <button
                     :disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
-                    style="width: 304px;"
+                    style="width: 100%"
                   >REGISTRIEREN</button>
 
                   <p class="rightPageContentText">
@@ -332,8 +332,7 @@ export default {
     validOrInvalidPassword() {
       if (this.passwordlogin == "") {
         console.log("0");
-      }
-      else if (this.regexPassword.test(this.passwordlogin)) {
+      } else if (this.regexPassword.test(this.passwordlogin)) {
         document.getElementById("password").classList.add("inputValid");
         document.getElementById("password").classList.remove("inputInvalid");
       } else {
@@ -344,8 +343,7 @@ export default {
     validOrInvalidName() {
       if (this.name == "") {
         console.log("0");
-      }
-      else if (this.regexName.test(this.name)) {
+      } else if (this.regexName.test(this.name)) {
         document.getElementById("name").classList.add("inputValid");
         document.getElementById("name").classList.remove("inputInvalid");
       } else {
@@ -356,8 +354,7 @@ export default {
     validOrInvalidEmailCreate() {
       if (this.emailCreate == "") {
         console.log("0");
-      }
-      else if (this.regexEmail.test(this.emailCreate)) {
+      } else if (this.regexEmail.test(this.emailCreate)) {
         document.getElementById("emailCreate").classList.add("inputValid");
         document.getElementById("emailCreate").classList.remove("inputInvalid");
       } else {
@@ -368,8 +365,7 @@ export default {
     validOrInvalidPasswordCreate1() {
       if (this.password1 == "") {
         console.log("0");
-      }
-      else if (this.regexPassword.test(this.password1)) {
+      } else if (this.regexPassword.test(this.password1)) {
         document.getElementById("password1").classList.add("inputValid");
         document.getElementById("password1").classList.remove("inputInvalid");
       } else {
@@ -380,8 +376,7 @@ export default {
     validOrInvalidPasswordCreate2() {
       if (this.password2 == "") {
         console.log("0");
-      }
-      else if (this.regexPassword.test(this.password2)) {
+      } else if (this.regexPassword.test(this.password2)) {
         document.getElementById("password2").classList.add("inputValid");
         document.getElementById("password2").classList.remove("inputInvalid");
       } else {
@@ -488,7 +483,7 @@ $rosfont: montserrat;
 }
 
 .rightPageContentInputfield {
-  width: 100%;
+  width: 340px;
   border-color: #adadad;
   border-top: none;
   border-left: none;
@@ -505,11 +500,11 @@ $rosfont: montserrat;
 }
 
 .rightPageContentLoginbutton {
-  width: 150px;
+  width: 170px;
   height: 40px;
   border-radius: 5px;
   color: $rosblue;
-  margin-right: 7px;
+  margin-right: 4px;
   margin-top: 20px;
   border-color: $rosblue;
   border-width: 2px;
@@ -527,7 +522,7 @@ $rosfont: montserrat;
 .rightPageContentGooglebutton {
   margin-top: 20px;
   font-size: 18px;
-  width: 150px;
+  width: 170px;
   height: 40px;
   border-radius: 5px;
   border-color: #db4a39;
@@ -537,7 +532,7 @@ $rosfont: montserrat;
 
 .rightPageContentLogo {
   height: 80px;
-  margin: 10px;
+  margin: 15px;
   position: absolute;
 }
 
@@ -579,11 +574,11 @@ $rosfont: montserrat;
 }
 
 .bar {
-  width: 12px;
-  height: 12px;
-  border: 0.5px solid #000;
+  width: 40px;
+  height: 8px;
+  border-radius: 4px;
   background: #002c6b;
-  border-radius: 100px;
+
   margin: 380px 10px 0px;
 }
 
@@ -687,15 +682,15 @@ a {
   display: block;
 }
 .blurBackground {
-  transition: 0.3s filter linear;
+  transition: 0.1s filter linear;
   -webkit-transition: 0.3s -webkit-filter linear;
   -moz-transition: 0.3s -moz-filter linear;
   -ms-transition: 0.3s -ms-filter linear;
   -o-transition: 0.3s -o-filter linear;
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  -ms-filter: blur(3px);
-  filter: blur(3px);
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
 }
 </style>
