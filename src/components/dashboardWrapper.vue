@@ -11,7 +11,7 @@
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
-            <span style="position: relative; ">Max Mustermann</span>
+            <span style="position: relative; ">test</span>
             <img
               :src="require('@/assets/user.png')"
               class="logo"
@@ -131,8 +131,12 @@ export default {
       options: ["Name", "Datum", "Dateityp", "Dateigröße"],
       filterExpression: "",
       filterDirection: "",
-      filterByName: ""
+      filterByName: "",
+      user: {},
     };
+  },
+  mounted() {
+    this.user = this.$cookies.get("user")
   },
   methods: {
     loadSlider() {
@@ -206,7 +210,8 @@ export default {
       .catch(error => {
         console.log("There was an error:", error.response); // Logs out the error
       });
-  }
+  },
+  
 };
 </script>
 

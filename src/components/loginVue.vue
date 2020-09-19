@@ -67,7 +67,7 @@
                   >LOGIN</button>
                 </router-link>
 
-                <button @click="oauthLogin" value="G+" class="rightPageContentGooglebutton">
+                <button @click="loginWithGoogle" value="G+" class="rightPageContentGooglebutton">
                   <i class="fa fa-google-plus" style="color: #db4a39"></i>
                 </button>
                 <p class="rightPageContentText">
@@ -398,9 +398,58 @@ export default {
       document.getElementById("blurDiv").classList.remove("blurBackground");
       document.getElementById("logo").classList.remove("blurBackground");
     },
-    oauthLogin() {
-      firebase.auth().signInWithPopup(GoogleProvider);
+    loginWithGoogle: function () {
+      let self = this;
+      const GoogleProvider = new firebase.auth.GoogleAuthProvider()
+      GoogleProvider.addScope('profile')
+      GoogleProvider.addScope('email')
+      firebase.auth().useDeviceLanguage()
+      firebase.auth().signInWithPopup(GoogleProvider)
+          .catch(error => {
+            // Wenn ein Fehler beim Anmelden auftritt:
+            console.log(error)
+          }).then(function () {
+        //Wenn kein Fehler auftritt gehts hier weiter
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            let tempUser = {
+              id: user.uid,
+              vorname: user.displayName.split(' ')[0],
+              nachname: user.displayName.split(' ')[1],
+              email: user.email
+            };
+            self.$cookies.set("user", tempUser);
+            user.getIdToken().then(token => {
+                self.$cookies.set("token", token);
+            })
+          }
+        });
+        // const  api = new  API("https://api.dev.ros-cloud.at/")
+       // let token = null;
+       // api.storeToken(token)
+       // if(self.$cookies.isKey('cookiesAllowed')){
+        // this.token = this.$cookies.get('token')
+        // }else{
+        //  this.token = this.$session.get('token')
+        //
+        //
+        //
+        // api.user().authenticate("register")
+        //     .then( result  => {
+        //       if( result.status ) {
+        //         console.log(result)
+        //       }
+        //       if( !result.status ) {
+        //         console.log(result)
+        //       }
+        //     })
+        //     .catch(err => { console.log(err)})
+        //
+        // console.log("API")
+        self.$router.push("/dashboard");
+      });
     },
+
     loginTrue() {},
     regularLogin() {
       firebase
