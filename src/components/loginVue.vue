@@ -424,6 +424,7 @@ export default {
 <style lang="scss" scoped>
 $rosblue: #0044b2;
 $rosfont: montserrat;
+
 * {
   font-family: $rosfont;
   font-weight: 500;

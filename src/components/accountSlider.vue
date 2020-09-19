@@ -128,8 +128,12 @@ export default {
 <style lang="scss" scoped>
 $rosblue: #0044b2;
 $rosfont: montserrat;
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+}
 * {
   font-family: $rosfont;
+ overflow: hidden;
 }
 .accountSlider {
   width: 400px;
@@ -142,6 +146,7 @@ $rosfont: montserrat;
   box-shadow: -6px 0px 16px 1px rgba(0, 0, 0, 0.75);
   position: fixed;
   padding: 0px 35px 0px 35px;
+  overflow-y: scroll;
 }
 .accountSliderContent {
   display: grid;
