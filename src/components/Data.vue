@@ -2,6 +2,7 @@
   <div
     v-if="this.$store.state.ActiveID == directory.parentid"
     @contextmenu.prevent="$refs.menu.open"
+    :title="directory.name"
   >
     <div
       class="wrapper"

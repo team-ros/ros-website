@@ -497,7 +497,7 @@ $rosfont: montserrat;
 
 .loginForm {
   width: 80vw;
-  height: 70vh;
+  height: 75vh;
 }
 
 .leftPage {
@@ -582,7 +582,7 @@ $rosfont: montserrat;
 
 .rightPageContentLogo {
   height: 80px;
-  margin: 15px;
+  margin: 10px;
   position: absolute;
 }
 

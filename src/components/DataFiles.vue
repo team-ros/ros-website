@@ -1,5 +1,9 @@
 <template>
-  <div v-if="this.$store.state.ActiveID == file.parentid" @contextmenu.prevent="$refs.menu.open">
+  <div
+    v-if="this.$store.state.ActiveID == file.parentid"
+    @contextmenu.prevent="$refs.menu.open"
+    :title="file.name"
+  >
     <div
       v-if="file.type == '.pdf'"
       class="wrapper"
@@ -61,7 +65,7 @@
           </p>
         </li>
       </a>
-       <li class="contextMenuEntries v-context__sub">
+      <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
           <span class="contextMenuText">Verschieben nach</span>
@@ -73,7 +77,7 @@
             v-bind:key="id"
             :directorys="directorys"
           >
-            <span v-if="directoryItem.parentid == $store.state.ActiveID" >{{directoryItem.name}}</span>
+            <span v-if="directoryItem.parentid == $store.state.ActiveID">{{directoryItem.name}}</span>
           </li>
         </ul>
       </li>
@@ -132,9 +136,7 @@ export default {
         this.fileDeleted = false;
       }
     },
-    showMove(){
-
-    }
+    showMove() {}
   }
 };
 </script>
