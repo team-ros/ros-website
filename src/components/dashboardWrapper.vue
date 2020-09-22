@@ -11,7 +11,7 @@
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
-            <span style="position: relative; ">test</span>
+            <span style="position: relative; ">{{user.vorname}} {{user.nachname}}</span>
             <img
               :src="require('@/assets/user.png')"
               class="logo"

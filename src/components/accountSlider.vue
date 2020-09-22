@@ -18,9 +18,8 @@
       </router-link>
       <h1>Account</h1>
       <p>Hier sind ihre Accountinformationen zu sehen</p>
-      <input type="text" placeholder="dein Name" class="accountInfos" readonly />
-      <input type="text" placeholder="deine E-Mail Adresse" class="accountInfos" readonly />
-      <input type="text" placeholder="dein Abonnement Ende " class="accountInfos" readonly />
+      <input type="text" :placeholder="user.vorname + ' ' + user.nachname" class="accountInfos" readonly />
+      <input type="text" :placeholder="user.email" class="accountInfos" readonly />
       <h3>Passwort zurücksetzen?</h3>
       <input
         v-on:input="passwordStrongTestCreate"
@@ -75,7 +74,11 @@ export default {
       regexPassword: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
       passwordStrongCreate: false,
       disabledButton: true,
+      user: {} 
     };
+  },
+   mounted() {
+    this.user = this.$cookies.get("user")
   },
   methods: {
     updateAccountSliderState() {

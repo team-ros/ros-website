@@ -205,35 +205,13 @@
 <script>
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import { API } from "ros-sdk-js";
+//import { API } from "ros-sdk-js";
 import cookieLaw from "@/components/cookieLaw.vue";
 
 // initialize the API class with the API endpoint URL in the constructor
-const api = new API("http://localhost:8080/user/authenticate");
-const firebaseConfig = {
-  apiKey: "AIzaSyBTEaBrtxi329vwEvYUlAl4pKEk9XJ9PjY",
-  authDomain: "ros-cloud-cc711.firebaseapp.com",
-  databaseURL: "https://ros-cloud-cc711.firebaseio.com",
-  projectId: "ros-cloud-cc711",
-  storageBucket: "ros-cloud-cc711.appspot.com",
-  messagingSenderId: "175713596436",
-  appId: "1:175713596436:web:72844d2b29a01ebaa76301",
-  measurementId: "G-ZZXD7PLMCP"
-};
-firebase.initializeApp(firebaseConfig);
-const GoogleProvider = new firebase.auth.GoogleAuthProvider();
-GoogleProvider.addScope("profile");
-GoogleProvider.addScope("email");
-firebase.auth().useDeviceLanguage();
+//const api = new API("http://localhost:8080/user/authenticate");
 
-// temporarily store the JWT Token in LocalStorage
-api.storeToken("<JWT-TOKEN>");
 
-/*
-
-API methods ...
-
-*/
 export default {
   components: {
     cookieLaw
@@ -424,6 +402,9 @@ export default {
             })
           }
         });
+
+        console.log(self.$cookies.get('user'))
+
         // const  api = new  API("https://api.dev.ros-cloud.at/")
        // let token = null;
        // api.storeToken(token)
@@ -497,7 +478,7 @@ $rosfont: montserrat;
 
 .loginForm {
   width: 80vw;
-  height: 75vh;
+  height: 70vh;
 }
 
 .leftPage {
@@ -582,7 +563,7 @@ $rosfont: montserrat;
 
 .rightPageContentLogo {
   height: 80px;
-  margin: 10px;
+  margin: 15px;
   position: absolute;
 }
 
