@@ -13,12 +13,17 @@
         id="imageX"
         @click="updateAccountSliderState"
       />
-      <router-link to="/">
-        <img src="@/assets/logout.png" width="35" height="35" class="logout" />
-      </router-link>
+      <div class="logout">
+        <img src="@/assets/logout.png" width="35" height="35"  @click="logout" />
+      </div>
       <h1>Account</h1>
       <p>Hier sind ihre Accountinformationen zu sehen</p>
-      <input type="text" :placeholder="user.vorname + ' ' + user.nachname" class="accountInfos" readonly />
+      <input
+        type="text"
+        :placeholder="user.vorname + ' ' + user.nachname"
+        class="accountInfos"
+        readonly
+      />
       <input type="text" :placeholder="user.email" class="accountInfos" readonly />
       <h3>Passwort zurücksetzen?</h3>
       <input
@@ -58,14 +63,16 @@
       </a>
       <h3>Hilfe</h3>
       <router-link to="/impressum">
-            <a href="#">Impressum</a>
-          </router-link>
+        <a href="#">Impressum</a>
+      </router-link>
       <a href="#">Support</a>
     </div>
   </div>
 </template>
 
 <script>
+
+import firebase from "firebase";
 export default {
   data: function() {
     return {
@@ -74,19 +81,18 @@ export default {
       regexPassword: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
       passwordStrongCreate: false,
       disabledButton: true,
-      user: {} 
+      user: {}
     };
   },
-   mounted() {
-    this.user = this.$cookies.get("user")
+  mounted() {
+    this.user = this.$cookies.get("user");
   },
   methods: {
     updateAccountSliderState() {
       this.$store.dispatch("startUpdateAccountSliderState");
       this.$emit("closeAccountSlider");
     },
-     passwordStrongTestCreate() {
-
+    passwordStrongTestCreate() {
       if (
         this.regexPassword.test(this.password1) &&
         this.regexPassword.test(this.password2)
@@ -94,7 +100,6 @@ export default {
         this.passwordStrongCreate = true;
       } else {
         this.passwordStrongCreate = false;
-       
       }
     },
     validOrInvalidPasswordCreate1() {
@@ -110,19 +115,37 @@ export default {
       if (this.regexPassword.test(this.password2)) {
         document.getElementById("password2").classList.add("inputValid");
         document.getElementById("password2").classList.remove("inputInvalid");
-        
       } else {
         document.getElementById("password2").classList.add("inputInvalid");
         document.getElementById("password2").classList.remove("inputValid");
       }
     },
-    isDisabled(){
-      if(this.password1 == this.password2 && this.passwordStrongCreate === true){
+    isDisabled() {
+      if (
+        this.password1 == this.password2 &&
+        this.passwordStrongCreate === true
+      ) {
         this.disabledButton = false;
-      }
-      else{
+      } else {
         this.disabledButton = true;
       }
+    },
+    logout() {
+      let self = this;
+      firebase
+        .auth()
+        .signOut()
+        .catch(function(error) {
+          //Falls beim LogOut ein Fehler ist ->
+          console.log(error);
+        })
+        .then(function() {
+          //Falls beim LogOut kein Fehler ist:
+          // Lösche Cookie und leite auf Login weiter
+          self.$cookies.remove("user");
+          self.$cookies.remove("token");
+          self.$router.push("/");
+        });
     }
   }
 };
@@ -132,11 +155,11 @@ export default {
 $rosblue: #0044b2;
 $rosfont: montserrat;
 ::-webkit-scrollbar {
-    width: 0px;  /* Remove scrollbar space */
+  width: 0px; /* Remove scrollbar space */
 }
 * {
   font-family: $rosfont;
- overflow: hidden;
+  overflow: hidden;
 }
 .accountSlider {
   width: 400px;
@@ -155,7 +178,6 @@ $rosfont: montserrat;
   display: grid;
   align-content: center;
   justify-content: center;
-  
 }
 .buttonImg {
   position: relative;
@@ -230,9 +252,10 @@ a {
   height: 30px;
 }
 .logout {
-  float: right;
-  color: red;
-  
+  margin-left: 290px;
+}
+.logout:hover{
+  cursor: pointer;
 }
 .inputValid {
   border-color: $rosblue;

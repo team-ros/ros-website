@@ -546,6 +546,7 @@ $rosfont: montserrat;
   -moz-transition: opacity 0.5s ease-out;
   -webkit-transition: opacity 0.5s ease-out;
   -o-transition: opacity 0.5s ease-out;
+  
 }
 .rightPageContentLoginbutton:disabled {
   opacity: 40%;
