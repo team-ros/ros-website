@@ -239,4 +239,5 @@ $rosfont: montserrat;
   padding-left: 10px;
   color: rgb(117, 117, 117);
 }
+
 </style>
