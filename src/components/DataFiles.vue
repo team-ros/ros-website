@@ -184,7 +184,7 @@ $rosfont: montserrat;
   outline: none;
   list-style-type: none;
   padding: 0px;
-  width: 180px;
+  width: 240px;
   position: absolute;
   margin: 3px;
   border-radius: 4px;
@@ -239,5 +239,4 @@ $rosfont: montserrat;
   padding-left: 10px;
   color: rgb(117, 117, 117);
 }
-
 </style>
