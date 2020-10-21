@@ -1,17 +1,18 @@
 <template>
   <div
-    v-if="this.$store.state.ActiveID == file.parentid"
     @contextmenu.prevent="$refs.menu.open"
     :title="file.name"
   >
     <div
-      v-if="file.type == '.pdf'"
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
       :class="{fileDeleted: fileDeleted}"
     >
-      <img src="@/assets/pdf-logo.png" class="logo" />
+      <img v-if="filetype=='pdf'" src="@/assets/pdf-logo.png" class="logo" />
+      <img v-if="filetype=='docx'" src="@/assets/docx-logo.png" class="logo" />
+      <img v-if="filetype=='png'" src="@/assets/picture-icon.png" class="logo" />
+      
       <input
         type="text"
         class="dataName"
@@ -24,26 +25,7 @@
       />
       <p class="size">{{file.size | prettyBytes}}</p>
     </div>
-    <div
-      v-if="file.type == '.docx'"
-      class="wrapper"
-      @mouseover="addHoverName"
-      @mouseleave="removeHoverName"
-      :class="{fileDeleted: fileDeleted}"
-    >
-      <img src="@/assets/docx-logo.png" class="logo" style="padding-right: 10px" />
-      <input
-        type="text"
-        class="dataName"
-        v-bind:placeholder="file.name + file.type"
-        :disabled="changeNameActive == false"
-        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
-        @keypress.enter="finishNameChange"
-        @focusout="finishNameChange"
-        ref="search"
-      />
-      <p class="size">{{file.size | prettyBytes}}</p>
-    </div>
+    
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
         <p>
@@ -96,7 +78,8 @@ export default {
       hovername: false,
       seeWriteable: false,
       fileDeleted: false,
-      box: null
+      box: null,
+      filetype: ""
     };
   },
   components: {
@@ -104,7 +87,7 @@ export default {
   },
   props: {
     file: Object,
-    directorys: Array
+    directorys: Array,
   },
   methods: {
     onClick() {
@@ -137,6 +120,10 @@ export default {
       }
     },
     showMove() {}
+  },
+  mounted(){
+    const re = /(?:.([^.]+))?$/;
+    this.filetype = re.exec(this.file.name)[1];
   }
 };
 </script>

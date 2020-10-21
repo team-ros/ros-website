@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="responseLoaded">
     <div class="bigContainer">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
 
@@ -44,7 +44,7 @@
               <label>
                 <i class="fas fa-upload"></i> Hochladen
               </label>
-              <input type="file" name="my-upload-field" />
+              <input type="file" id="file" ref="file" v-on:change="uploadFile()"/>
             </div>
           </li>
           <li class="leiste-ul-li leiste-button">
@@ -58,50 +58,15 @@
         </ul>
       </div>
 
-      <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName == ''">
-        <Data
-          v-for="(directory, id) in orderBy(
-            directorys,
-            this.filterExpression,
-            this.filterDirection
-          )"
-          v-bind:key="id"
-          :directory="directory"
-          :directorys="directorys"
-          style="height:150px"
-        />
-
+      <div class="datencontainer" id="blurBackgroundData">
         <DataFiles
-          v-for="(file, id) in orderBy(
-            files,
-            this.filterExpression,
-            this.filterDirection
-          )"
-          v-bind:key="id + 100"
-          :file="file"
+          v-for="entry in directorys.listing"
+          :key="entry"
+          :file="entry"
           style="height:150px"
-          :directorys="directorys"
         />
       </div>
-      <div class="datencontainer" id="blurBackgroundData" v-if="this.filterByName != ''">
-        <Data
-          v-for="(directory, id) in filterBy(directorys, this.filterByName)"
-          v-bind:key="id"
-          :directory="directory"
-          style="height:150px"
-          :directorys="directorys"
-        />
-
-        <DataFiles
-          v-for="(file, id) in filterBy(files, this.filterByName)"
-          v-bind:key="id + 1000"
-          :file="file"
-          style="height:150px"
-          :directorys="directorys"
-        />
-
-        
-      </div>
+     
     </div>
     <accountSlider
       v-if="this.$store.state.activeSlider === true"
@@ -113,9 +78,7 @@
 <script>
 import Vue from "vue";
 import Vue2Filters from "vue2-filters";
-import Data from "@/components/Data.vue";
 import DataFiles from "@/components/DataFiles.vue";
-import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
 import api from "@/api";
@@ -134,6 +97,7 @@ export default {
       filterDirection: "",
       filterByName: "",
       user: {},
+      responseLoaded: false
     };
   },
   mounted() {
@@ -141,6 +105,8 @@ export default {
     api.token().set(localStorage.getItem('token')),
     api.object().get()
         .then(response => {
+          this.responseLoaded = true;
+          this.directorys = response;
           console.log(response)
         })
         .catch(err => {
@@ -196,30 +162,23 @@ export default {
       } else {
         this.filterByName = this.selectedFilter;
       }
-    }
+    },
+    async uploadFile() {
+      try {
+        console.log(this.$refs.file.files[0])
+        await api.object().upload(this.$refs.file.files[0])
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
   },
   components: {
-    Data,
     DataFiles,
     accountSlider,
     dropdown,
   },
-  created() {
-    EventService.getDirectorys()
-      .then(response => {
-        this.directorys = response.data;
-      })
-      .catch(error => {
-        console.log("There was an error:", error.response); // Logs out the error
-      });
-    EventService.getFiles()
-      .then(response => {
-        this.files = response.data;
-      })
-      .catch(error => {
-        console.log("There was an error:", error.response); // Logs out the error
-      });
-  },
+  
   
   
 };
