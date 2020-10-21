@@ -11,8 +11,19 @@
           <div class="leftPage">
             <div class="slidershow">
               <div class="slides">
-                <input type="radio" name="r" id="r1" checked @click="firstSlideActive()" />
-                <input type="radio" name="r" id="r2" @click="secondSlideActive()" />
+                <input
+                  type="radio"
+                  name="r"
+                  id="r1"
+                  checked
+                  @click="firstSlideActive()"
+                />
+                <input
+                  type="radio"
+                  name="r"
+                  id="r2"
+                  @click="secondSlideActive()"
+                />
 
                 <div class="slide s1">
                   <img src="@/assets/Slide1.png" alt />
@@ -22,7 +33,11 @@
                 </div>
 
                 <div class="navigation">
-                  <label for="r1" class="bar sliderButtonActive" id="navLabel1"></label>
+                  <label
+                    for="r1"
+                    class="bar sliderButtonActive"
+                    id="navLabel1"
+                  ></label>
                   <label for="r2" class="bar" id="navLabel2"></label>
                 </div>
               </div>
@@ -37,7 +52,12 @@
                 <h1>Willkommen zurück!</h1>
                 <br />
 
-                <p class="rightPageContentGrey" id="rightPageContentLoginEmailfield">E-Mail</p>
+                <p
+                  class="rightPageContentGrey"
+                  id="rightPageContentLoginEmailfield"
+                >
+                  E-Mail
+                </p>
                 <input
                   @blur="validOrInvalidEmail"
                   v-model="email"
@@ -64,10 +84,16 @@
                     :disabled="this.passwordStrong != true"
                     class="rightPageContentLoginbutton"
                     @click="regularLogin"
-                  >LOGIN</button>
+                  >
+                    LOGIN
+                  </button>
                 </router-link>
 
-                <button @click="loginWithGoogle" value="G+" class="rightPageContentGooglebutton">
+                <button
+                  @click="loginWithGoogle"
+                  value="G+"
+                  class="rightPageContentGooglebutton"
+                >
                   <i class="fa fa-google-plus" style="color: #db4a39"></i>
                 </button>
                 <p class="rightPageContentText">
@@ -77,8 +103,7 @@
                     id="createAccountButton"
                     @click="createSwitch()"
                   >
-                    Erstelle
-                    einen!
+                    Erstelle einen!
                   </span>
                 </p>
               </div>
@@ -135,7 +160,9 @@
                     :disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
-                  >REGISTRIEREN</button>
+                  >
+                    REGISTRIEREN
+                  </button>
 
                   <p class="rightPageContentText">
                     Du hast schon einen Account?
@@ -143,7 +170,8 @@
                       style="color:#002c6b; cursor: pointer;"
                       id="loginAccountButton"
                       @click="loginSwitch()"
-                    >Zum Login!</span>
+                      >Zum Login!</span
+                    >
                   </p>
                 </div>
                 <div class="passwordSafety" id="passwordSafety">
@@ -169,7 +197,9 @@
                     @mouseover="showPasswordSafety"
                     @mouseleave="leavePasswordSafety"
                     style="color:#002c6b; cursor: pointer;"
-                  >Mindestanforderungen</span> für ein Passwort
+                    >Mindestanforderungen</span
+                  >
+                  für ein Passwort
                 </p>
               </div>
             </div>
@@ -205,16 +235,10 @@
 <script>
 import * as firebase from "firebase/app";
 import "firebase/auth";
-//import { API } from "ros-sdk-js";
-
-// initialize the API class with the API endpoint URL in the constructor
-//const api = new API("http://localhost:8080/user/authenticate");
-
+import api from "@/api";
 
 export default {
-  components: {
-    
-  },
+  components: {},
   data: function() {
     return {
       passwordlogin: "",
@@ -375,59 +399,43 @@ export default {
       document.getElementById("blurDiv").classList.remove("blurBackground");
       document.getElementById("logo").classList.remove("blurBackground");
     },
-    loginWithGoogle: function () {
+    loginWithGoogle: function() {
       let self = this;
-      const GoogleProvider = new firebase.auth.GoogleAuthProvider()
-      GoogleProvider.addScope('profile')
-      GoogleProvider.addScope('email')
-      firebase.auth().useDeviceLanguage()
-      firebase.auth().signInWithPopup(GoogleProvider)
-          .catch(error => {
-            // Wenn ein Fehler beim Anmelden auftritt:
-            console.log(error)
-          }).then(function () {
-        //Wenn kein Fehler auftritt gehts hier weiter
-        firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            let tempUser = {
-              id: user.uid,
-              vorname: user.displayName.split(' ')[0],
-              nachname: user.displayName.split(' ')[1],
-              email: user.email
-            };
-            self.$cookies.set("user", tempUser);
-            user.getIdToken().then(token => {
-                self.$cookies.set("token", token);
-            })
-          }
+      const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+
+      GoogleProvider.addScope("profile");
+      GoogleProvider.addScope("email");
+
+      firebase.auth().useDeviceLanguage();
+
+      firebase
+        .auth()
+        .signInWithPopup(GoogleProvider)
+        .catch(error => {
+          // Wenn ein Fehler beim Anmelden auftritt:
+          console.log(error);
+        })
+        .then(function() {
+          //Wenn kein Fehler auftritt gehts hier weiter
+
+          firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              let tempUser = {
+                id: user.uid,
+                vorname: user.displayName.split(" ")[0],
+                nachname: user.displayName.split(" ")[1],
+                email: user.email
+              };
+
+              self.$cookies.set("user", tempUser);
+
+              user.getIdToken().then(token => {
+                api.token().set(token);
+                self.$router.push("/dashboard");
+              });
+            }
+          });
         });
-
-        console.log(self.$cookies.get('user'))
-
-        // const  api = new  API("https://api.dev.ros-cloud.at/")
-       // let token = null;
-       // api.storeToken(token)
-       // if(self.$cookies.isKey('cookiesAllowed')){
-        // this.token = this.$cookies.get('token')
-        // }else{
-        //  this.token = this.$session.get('token')
-        //
-        //
-        //
-        // api.user().authenticate("register")
-        //     .then( result  => {
-        //       if( result.status ) {
-        //         console.log(result)
-        //       }
-        //       if( !result.status ) {
-        //         console.log(result)
-        //       }
-        //     })
-        //     .catch(err => { console.log(err)})
-        //
-        // console.log("API")
-        self.$router.push("/dashboard");
-      });
     },
 
     loginTrue() {},
@@ -545,7 +553,6 @@ $rosfont: montserrat;
   -moz-transition: opacity 0.5s ease-out;
   -webkit-transition: opacity 0.5s ease-out;
   -o-transition: opacity 0.5s ease-out;
-  
 }
 .rightPageContentLoginbutton:disabled {
   opacity: 40%;

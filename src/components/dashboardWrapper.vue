@@ -118,6 +118,7 @@ import DataFiles from "@/components/DataFiles.vue";
 import EventService from "@/services/EventService.js";
 import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
+import api from "@/api";
 
 Vue.use(Vue2Filters);
 
@@ -136,7 +137,15 @@ export default {
     };
   },
   mounted() {
-    this.user = this.$cookies.get("user")
+    this.user = this.$cookies.get("user"),
+    api.token().set(localStorage.getItem('token')),
+    api.object().get()
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err)
+        })
   },
   methods: {
     loadSlider() {
@@ -211,6 +220,7 @@ export default {
         console.log("There was an error:", error.response); // Logs out the error
       });
   },
+  
   
 };
 </script>
