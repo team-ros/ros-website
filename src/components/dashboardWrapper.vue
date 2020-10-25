@@ -39,13 +39,12 @@
                 class="such_box"
                 placeholder="Suche nach Dateien"
                 v-model="filterByName"
-                @keypress.enter="sortData(filterByName)"
               />
               <img src="@/assets/searchIcon.png" class="such_box_icon" />
             </div>
           </li>
           <li class="leiste-ul-li" style="float: right">
-            <dropdown @newFilter="sortData" />
+            <dropdown  />
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
@@ -75,6 +74,7 @@
           :key="entry.id"
           :file="entry"
           style="height:150px"
+          @newPathMessage="newPath"
         />
       </div>
     </div>
@@ -140,8 +140,8 @@ export default {
           .classList.add("blurBackground");
       }
     },
-    test() {
-      alert("test");
+    newPath() {
+      this.directorys = this.newPath
     },
     closeAccountSlider() {
       document
@@ -154,33 +154,16 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
-    newDirectory() {},
-    sortData(filterByWhat) {
-      console.log(filterByWhat);
-      if (filterByWhat == "filterBySize") {
-        this.filterExpression = "size";
-        this.filterDirection = -1;
-      } else if (filterByWhat == "filterByName") {
-        this.filterExpression = "name";
-        this.filterDirection = 1;
-      } else if (filterByWhat == "filterByDate") {
-        this.filterExpression = "date";
-        this.filterDirection = -1;
-      } else if (filterByWhat == "filterByDatatype") {
-        this.filterExpression = "type";
-        this.filterDirection = 1;
-      } else {
-        this.filterByName = this.selectedFilter;
-      }
-    },
     async uploadFile() {
       try {
-        console.log(this.$refs.file.files[0]);
         await api.object().upload(this.$refs.file.files[0]);
       } catch (err) {
         console.log(err);
       }
-    }
+    },
+    async newDirectory(){
+    api.object().createDir("testOrdner3a8", null)
+   }
   },
   components: {
     DataFiles,

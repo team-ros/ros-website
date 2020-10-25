@@ -12,6 +12,7 @@
       <img v-if="filetype=='pdf'" src="@/assets/pdf-logo.png" class="logo" />
       <img v-if="filetype=='docx'" src="@/assets/docx-logo.png" class="logo" />
       <img v-if="filetype=='png'" src="@/assets/picture-icon.png" class="logo" />
+      <img v-if="this.file.type=='directory'" src="@/assets/Folder.png" class="logo" @click="newPath"/>
       <input
         type="text"
         class="dataName"
@@ -54,11 +55,8 @@
         <ul class="v-context">
           <li
             class="contextMenuEntries moveItems"
-            v-for="(directoryItem, id) in directorys"
-            v-bind:key="id"
-            :directorys="directorys"
           >
-            <span v-if="directoryItem.parentid == $store.state.ActiveID">{{directoryItem.name}}</span>
+            <span>Test</span>
           </li>
         </ul>
       </li>
@@ -68,6 +66,7 @@
 
 <script>
 import VueContext from "vue-context";
+import api from "@/api";
 
 export default {
   data() {
@@ -86,7 +85,6 @@ export default {
   },
   props: {
     file: Object,
-    directorys: Array,
   },
   methods: {
     onClick() {
@@ -113,12 +111,20 @@ export default {
         "Wollen sie die Datei " + this.file.name + " wirklich löschen?"
       );
       if (this.box == true) {
-        this.fileDeleted = true;
-      } else if (this.box == false) {
-        this.fileDeleted = false;
+        api.object().remove(this.file.id);
+      } 
+    },
+    async newPath(){
+      try {
+        const response = await api.object().get(this.file.id);
+        this.updatePath(response)
+      } catch (err) {
+        console.log(err);
       }
     },
-    showMove() {}
+    updatePath(newPath){
+      this.$emit('newPathMessage', newPath)
+    }
   },
   mounted(){
     const re = /(?:.([^.]+))?$/;
