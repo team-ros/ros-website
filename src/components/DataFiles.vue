@@ -12,11 +12,10 @@
       <img v-if="filetype=='pdf'" src="@/assets/pdf-logo.png" class="logo" />
       <img v-if="filetype=='docx'" src="@/assets/docx-logo.png" class="logo" />
       <img v-if="filetype=='png'" src="@/assets/picture-icon.png" class="logo" />
-      
       <input
         type="text"
         class="dataName"
-        v-bind:placeholder="file.name + file.type"
+        v-bind:placeholder="file.name"
         :disabled="changeNameActive == false"
         :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="finishNameChange"
@@ -138,7 +137,7 @@ $rosfont: montserrat;
   text-decoration: none;
 }
 .wrapper {
-  margin: 15px 20px 0px;
+  margin: 40px 20px 0px;
   padding: 5px;
   transition: 0.3s;
 }

@@ -1,21 +1,29 @@
 <template>
   <div v-if="responseLoaded">
     <div class="bigContainer">
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+      <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      />
 
       <nav>
         <div class="nav" id="blurBackgroundNav">
           <div>
             <a href>
-              <img :src="require('@/assets/ros-logo.png')" style=" height:50px; " />
+              <img
+                :src="require('@/assets/ros-logo.png')"
+                style=" height:50px; "
+              />
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
-            <span style="position: relative; ">{{user.vorname}} {{user.nachname}}</span>
+            <span style="position: relative; "
+              >{{ user.vorname }} {{ user.nachname }}</span
+            >
             <img
               :src="require('@/assets/user.png')"
               class="logo"
-              style=" cursor: pointer; height: 40px; margin: .5px"
+              style=" cursor: pointer; height: 40px; margin: .5px;padding-right:10px"
               @click="loadSlider"
             />
           </div>
@@ -36,15 +44,18 @@
               <img src="@/assets/searchIcon.png" class="such_box_icon" />
             </div>
           </li>
-          <li class="leiste-ul-li">
+          <li class="leiste-ul-li" style="float: right">
             <dropdown @newFilter="sortData" />
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
-              <label>
-                <i class="fas fa-upload"></i> Hochladen
-              </label>
-              <input type="file" id="file" ref="file" v-on:change="uploadFile()"/>
+              <label> <i class="fas fa-upload"></i> Hochladen </label>
+              <input
+                type="file"
+                id="file"
+                ref="file"
+                v-on:change="uploadFile()"
+              />
             </div>
           </li>
           <li class="leiste-ul-li leiste-button">
@@ -61,12 +72,11 @@
       <div class="datencontainer" id="blurBackgroundData">
         <DataFiles
           v-for="entry in directorys.listing"
-          :key="entry"
+          :key="entry.id"
           :file="entry"
           style="height:150px"
         />
       </div>
-     
     </div>
     <accountSlider
       v-if="this.$store.state.activeSlider === true"
@@ -101,17 +111,19 @@ export default {
     };
   },
   mounted() {
-    this.user = this.$cookies.get("user"),
-    api.token().set(localStorage.getItem('token')),
-    api.object().get()
+    (this.user = this.$cookies.get("user")),
+      api.token().set(localStorage.getItem("token")),
+      api
+        .object()
+        .get()
         .then(response => {
           this.responseLoaded = true;
           this.directorys = response;
-          console.log(response)
+          console.log(response);
         })
         .catch(err => {
-          console.log(err)
-        })
+          console.log(err);
+        });
   },
   methods: {
     loadSlider() {
@@ -128,8 +140,8 @@ export default {
           .classList.add("blurBackground");
       }
     },
-    test(){
-      alert("test")
+    test() {
+      alert("test");
     },
     closeAccountSlider() {
       document
@@ -142,9 +154,7 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
-    newDirectory() {
-      
-    },
+    newDirectory() {},
     sortData(filterByWhat) {
       console.log(filterByWhat);
       if (filterByWhat == "filterBySize") {
@@ -165,22 +175,18 @@ export default {
     },
     async uploadFile() {
       try {
-        console.log(this.$refs.file.files[0])
-        await api.object().upload(this.$refs.file.files[0])
+        console.log(this.$refs.file.files[0]);
+        await api.object().upload(this.$refs.file.files[0]);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    },
-
+    }
   },
   components: {
     DataFiles,
     accountSlider,
-    dropdown,
-  },
-  
-  
-  
+    dropdown
+  }
 };
 </script>
 
@@ -211,9 +217,11 @@ $rosfont: montserrat;
   position: absolute;
   width: 100%;
   background-image: linear-gradient(90deg, #4170b1, $rosblue);
-  height: 50px;
+  height: 60px;
   color: white;
   font-size: 25px;
+  padding-left: 10px;
+  padding-top: 5px;
 }
 
 .nav {
@@ -235,7 +243,7 @@ $rosfont: montserrat;
   z-index: 10;
   left: 0;
   position: absolute;
-  top: 50px;
+  top: 60px;
   background-color: #eee;
   width: 100%;
   height: 50px;
@@ -255,7 +263,7 @@ $rosfont: montserrat;
 }
 
 .leiste-ul-li {
-  float: right;
+  float: left;
 }
 
 .leiste-ul li {
@@ -279,41 +287,33 @@ $rosfont: montserrat;
 .datencontainer div {
   float: left;
 }
+.such_box_icon {
+  height: 20px;
+  position: absolute;
+  left: 42.5%;
+  transition: 0.5s;
+}
 
 .such_box {
   position: absolute;
-  width: 200px;
+  width: 250px;
   height: 35px;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 41px;
-  padding-left: 4px;
+  padding-left: 35px;
+  top: 15%;
+  transform: translate(-50%);
+  left: 50%;
   border-radius: 6px;
   border: 1px solid #eee;
   outline: none;
-  padding-left: 30px;
   transition: 0.5s;
   font-size: 15px;
   color: rgb(117, 117, 117);
   &:hover {
     width: 350px;
+    + .such_box_icon {
+      left: 39.5%;
+    }
   }
-}
-
-.such_box_icon {
-  height: 20px;
-  position: absolute;
-  left: 45px;
-  transition: 0.5s;
-}
-
-.fa-search {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 14px;
-  color: grey;
-  font-size: 15px;
 }
 
 .hideSlider {
@@ -324,7 +324,7 @@ $rosfont: montserrat;
   display: inline-block;
   cursor: pointer;
   height: 100%;
-  width: 150px;
+  width: 160px;
   text-align: center;
 }
 .upload-wrapper label {

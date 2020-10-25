@@ -169,7 +169,7 @@ $rosfont: montserrat;
   top: 0;
   color: black;
   background-color: #ffffff;
-  box-shadow: -6px 0px 16px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: -10px 0px 16px 1px rgba(0, 0, 0, 0.4);
   position: fixed;
   padding: 0px 35px 0px 35px;
   overflow-y: scroll;
@@ -214,7 +214,7 @@ h3 {
 }
 .resetButton {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 15px;
   height: 35px;
   background-color: $rosblue;
   border-radius: 3px;
