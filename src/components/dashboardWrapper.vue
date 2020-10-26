@@ -39,6 +39,8 @@
                 class="such_box"
                 placeholder="Suche nach Dateien"
                 v-model="filterByName"
+                          @keypress.enter="searchFiles()"
+
               />
             </div>
           </li>
@@ -73,6 +75,7 @@
           :key="entry.id"
           :file="entry"
           style="height:150px"
+          @deleteFolderInformation="deleteFolderField"
         />
       </div>
     </div>
@@ -100,6 +103,10 @@
           class="createDirectoryFieldInput"
           v-model="newDirectoryName"
           v-on:input="activateButton"
+          @keypress.enter="
+            newDirectory(newDirectoryName);
+            newFolderClose();
+          "
         />
 
         <input
@@ -107,8 +114,44 @@
           value="Erstellen"
           id="createDirectoryFieldButton"
           class="createDirectoryFieldButtonDisabled"
-          @click="newDirectory(newDirectoryName); newFolderClose();"
+          @click="
+            newDirectory(newDirectoryName);
+            newFolderClose();
+          "
           :disabled="this.newDirectoryName <= 1"
+        />
+      </div>
+    </div>
+    <div
+      class="deleteDirectoryScreen deleteDirectoryScreenInactive"
+      id="deleteFolderScreen"
+    >
+      <div class="deleteDirectoryField">
+        <img
+          src="@/assets/closeX.png"
+          width="16"
+          height="16"
+          class="deleteDirectoryFieldClose"
+          @click="deleteFolderFieldClose"
+        />
+        <b> Wirklich Löschen? </b>
+        <p class="deleteDirectoryFieldText">
+          Möchten sie
+          <span style="font-weight:bold">
+            {{ this.folderNameCache.name }}
+          </span>
+          wirklich Löschen?
+        </p>
+
+        <input
+          type="button"
+          value="Löschen"
+          id="deleteDirectoryFieldButton"
+          class="deleteDirectoryFieldButton"
+          @click="
+            deleteFolderFieldClose();
+            deleteFile();
+          "
         />
       </div>
     </div>
@@ -138,7 +181,8 @@ export default {
       filterByName: "",
       user: {},
       responseLoaded: false,
-      newDirectoryName: ""
+      newDirectoryName: "",
+      folderNameCache: JSON
     };
   },
   mounted() {
@@ -157,6 +201,9 @@ export default {
         });
   },
   methods: {
+    test() {
+      console.log("testfunction");
+    },
     loadSlider() {
       this.$store.dispatch("loadSlider");
       if (this.$store.state.activeSlider === true) {
@@ -171,14 +218,51 @@ export default {
           .classList.add("blurBackground");
       }
     },
-    activateButton(){
-      if(this.newDirectoryName.length>=1){
-        document.getElementById("createDirectoryFieldButton").classList.remove("createDirectoryFieldButtonDisabled");
-        document.getElementById("createDirectoryFieldButton").classList.add("createDirectoryFieldButtonAble");
-      } else{
-        document.getElementById("createDirectoryFieldButton").classList.add("createDirectoryFieldButtonDisabled");
-        document.getElementById("createDirectoryFieldButton").classList.remove("createDirectoryFieldButtonAble");
+    activateButton() {
+      if (this.newDirectoryName.length >= 1) {
+        document
+          .getElementById("createDirectoryFieldButton")
+          .classList.remove("createDirectoryFieldButtonDisabled");
+        document
+          .getElementById("createDirectoryFieldButton")
+          .classList.add("createDirectoryFieldButtonAble");
+      } else {
+        document
+          .getElementById("createDirectoryFieldButton")
+          .classList.add("createDirectoryFieldButtonDisabled");
+        document
+          .getElementById("createDirectoryFieldButton")
+          .classList.remove("createDirectoryFieldButtonAble");
       }
+    },
+    deleteFolderField(value) {
+      this.folderNameCache = value;
+      document
+        .getElementById("deleteFolderScreen")
+        .classList.remove("deleteDirectoryScreenInactive");
+      document
+        .getElementById("blurBackgroundNav")
+        .classList.add("blurBackground");
+      document
+        .getElementById("blurBackgroundData")
+        .classList.add("blurBackground");
+      document
+        .getElementById("blurBackgroundLeiste")
+        .classList.add("blurBackground");
+    },
+    deleteFolderFieldClose() {
+      document
+        .getElementById("deleteFolderScreen")
+        .classList.add("deleteDirectoryScreenInactive");
+      document
+        .getElementById("blurBackgroundNav")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundData")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundLeiste")
+        .classList.remove("blurBackground");
     },
     closeAccountSlider() {
       document
@@ -191,6 +275,7 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
+
     newFolder() {
       document
         .getElementById("newFolderScreen")
@@ -228,11 +313,21 @@ export default {
     },
     async newDirectory(name) {
       try {
-        const response = await api.object().createDir(name, null);
         console.log(response);
+        const response = await api.object().createDir(name, null);
       } catch (err) {
         console.log(err);
       }
+    },
+    async deleteFile() {
+      try {
+        api.object().remove(this.folderNameCache.id);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async searchFiles(){
+      console.log(this.filterByName)
     }
   },
   components: {
@@ -253,7 +348,6 @@ $rosfont: montserrat;
   padding: 0;
   margin: 0;
   font-family: $rosfont;
-  
 }
 
 .selectize-input {
@@ -471,10 +565,54 @@ $rosfont: montserrat;
   color: grey;
   font-weight: 500;
   border: 0;
+  cursor:not-allowed;
 }
 .createDirectoryFieldButtonAble {
   width: 100px;
   height: 35px;
+  background-color: $rosblue;
+  color: #e5e1e6;
+  font-weight: 500;
+  border: 0;
+  cursor: pointer;
+}
+.deleteDirectoryScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+.deleteDirectoryScreenInactive {
+  display: none;
+}
+.deleteDirectoryField {
+  position: relative;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%);
+  min-height: 160px;
+  width: 330px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+  padding: 30px;
+}
+.deleteDirectoryFieldText {
+  position: relative;
+  color: grey;
+  margin-top: 10px;
+  display: inline-block;
+  font-weight: 400;
+}
+.deleteDirectoryFieldClose {
+  float: right;
+  cursor: pointer;
+}
+.deleteDirectoryFieldButton {
+  width: 90px;
+  margin-top: 20px;
+  height: 34px;
   background-color: $rosblue;
   color: #e5e1e6;
   font-weight: 500;

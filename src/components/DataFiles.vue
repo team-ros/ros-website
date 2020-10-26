@@ -1,6 +1,7 @@
 <template>
   <div
     @contextmenu.prevent="$refs.menu.open"
+    
     :title="file.name"
   >
     <div
@@ -66,7 +67,7 @@
 
 <script>
 import VueContext from "vue-context";
-import api from "@/api";
+
 
 export default {
   data() {
@@ -87,9 +88,6 @@ export default {
     file: Object,
   },
   methods: {
-    onClick() {
-      (this.showChangeName = true), console.log("test");
-    },
     changeNameSet() {
       this.changeNameActive = true;
       this.seeWriteable = true;
@@ -107,12 +105,7 @@ export default {
       (this.changeNameActive = false), (this.seeWriteable = false);
     },
     deleteFile() {
-      this.box = window.confirm(
-        "Wollen sie die Datei " + this.file.name + " wirklich löschen?"
-      );
-      if (this.box == true) {
-        api.object().remove(this.file.id);
-      } 
+      this.$emit("deleteFolderInformation", this.file)
     }
   },
   mounted(){
@@ -215,9 +208,5 @@ $rosfont: montserrat;
   padding-left: 40px;
   margin-bottom: 2px;
 }
-.moveItems {
-  position: relative;
-  padding-left: 10px;
-  color: rgb(117, 117, 117);
-}
+
 </style>
