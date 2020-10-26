@@ -12,7 +12,7 @@
       <img v-if="filetype=='pdf'" src="@/assets/pdf-logo.png" class="logo" />
       <img v-if="filetype=='docx'" src="@/assets/docx-logo.png" class="logo" />
       <img v-if="filetype=='png'" src="@/assets/picture-icon.png" class="logo" />
-      <img v-if="this.file.type=='directory'" src="@/assets/Folder.png" class="logo" @click="newPath"/>
+      <img v-if="this.file.type=='directory'" src="@/assets/Folder.png" class="logo"/>
       <input
         type="text"
         class="dataName"
@@ -113,17 +113,6 @@ export default {
       if (this.box == true) {
         api.object().remove(this.file.id);
       } 
-    },
-    async newPath(){
-      try {
-        const response = await api.object().get(this.file.id);
-        this.updatePath(response)
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    updatePath(newPath){
-      this.$emit('newPathMessage', newPath)
     }
   },
   mounted(){
@@ -133,7 +122,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$rosblue: #0044b2;
+$rosblue: #0047bb;
 $rosfont: montserrat;
 * {
   font-family: $rosfont;

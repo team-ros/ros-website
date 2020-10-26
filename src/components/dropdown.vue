@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$rosblue: #0044b2;
+$rosblue: #0047bb;
 $rosfont: montserrat;
 
 :root {

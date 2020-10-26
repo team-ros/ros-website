@@ -40,11 +40,10 @@
                 placeholder="Suche nach Dateien"
                 v-model="filterByName"
               />
-              <img src="@/assets/searchIcon.png" class="such_box_icon" />
             </div>
           </li>
           <li class="leiste-ul-li" style="float: right">
-            <dropdown  />
+            <dropdown />
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
@@ -58,7 +57,7 @@
             </div>
           </li>
           <li class="leiste-ul-li leiste-button">
-            <div class="upload-wrapper" @click="newDirectory">
+            <div class="upload-wrapper" @click="newFolder">
               <label>
                 <i class="fas fa-plus"></i>
                 Neuer Ordner
@@ -74,7 +73,6 @@
           :key="entry.id"
           :file="entry"
           style="height:150px"
-          @newPathMessage="newPath"
         />
       </div>
     </div>
@@ -82,6 +80,38 @@
       v-if="this.$store.state.activeSlider === true"
       @closeAccountSlider="closeAccountSlider"
     />
+    <div
+      class="createDirectoryScreen createDirectoryScreenInactive"
+      id="newFolderScreen"
+    >
+      <div class="createDirectoryField">
+        <p class="createDirectoryFieldText">Ordner erstellen</p>
+        <img
+          src="@/assets/closeX.png"
+          width="16"
+          height="16"
+          class="createDirectoryFieldClose"
+          @click="newFolderClose"
+        />
+
+        <input
+          type="text"
+          placeholder="Ihren Ordnernamen eingeben"
+          class="createDirectoryFieldInput"
+          v-model="newDirectoryName"
+          v-on:input="activateButton"
+        />
+
+        <input
+          type="button"
+          value="Erstellen"
+          id="createDirectoryFieldButton"
+          class="createDirectoryFieldButtonDisabled"
+          @click="newDirectory(newDirectoryName); newFolderClose();"
+          :disabled="this.newDirectoryName <= 1"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -107,7 +137,8 @@ export default {
       filterDirection: "",
       filterByName: "",
       user: {},
-      responseLoaded: false
+      responseLoaded: false,
+      newDirectoryName: ""
     };
   },
   mounted() {
@@ -140,10 +171,44 @@ export default {
           .classList.add("blurBackground");
       }
     },
-    newPath() {
-      this.directorys = this.newPath
+    activateButton(){
+      if(this.newDirectoryName.length>=1){
+        document.getElementById("createDirectoryFieldButton").classList.remove("createDirectoryFieldButtonDisabled");
+        document.getElementById("createDirectoryFieldButton").classList.add("createDirectoryFieldButtonAble");
+      } else{
+        document.getElementById("createDirectoryFieldButton").classList.add("createDirectoryFieldButtonDisabled");
+        document.getElementById("createDirectoryFieldButton").classList.remove("createDirectoryFieldButtonAble");
+      }
     },
     closeAccountSlider() {
+      document
+        .getElementById("blurBackgroundNav")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundData")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundLeiste")
+        .classList.remove("blurBackground");
+    },
+    newFolder() {
+      document
+        .getElementById("newFolderScreen")
+        .classList.remove("createDirectoryScreenInactive");
+      document
+        .getElementById("blurBackgroundNav")
+        .classList.add("blurBackground");
+      document
+        .getElementById("blurBackgroundData")
+        .classList.add("blurBackground");
+      document
+        .getElementById("blurBackgroundLeiste")
+        .classList.add("blurBackground");
+    },
+    newFolderClose() {
+      document
+        .getElementById("newFolderScreen")
+        .classList.add("createDirectoryScreenInactive");
       document
         .getElementById("blurBackgroundNav")
         .classList.remove("blurBackground");
@@ -161,9 +226,14 @@ export default {
         console.log(err);
       }
     },
-    async newDirectory(){
-    api.object().createDir("testOrdner3a8", null)
-   }
+    async newDirectory(name) {
+      try {
+        const response = await api.object().createDir(name, null);
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   },
   components: {
     DataFiles,
@@ -176,13 +246,14 @@ export default {
 <style lang="scss" scoped>
 @import "~selectize/dist/css/selectize.bootstrap3.css";
 
-$rosblue: #0044b2;
+$rosblue: #0047bb;
 $rosfont: montserrat;
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-family: $rosfont;
+  
 }
 
 .selectize-input {
@@ -281,7 +352,7 @@ $rosfont: montserrat;
   position: absolute;
   width: 250px;
   height: 35px;
-  padding-left: 35px;
+  text-align: center;
   top: 15%;
   transform: translate(-50%);
   left: 50%;
@@ -293,9 +364,6 @@ $rosfont: montserrat;
   color: rgb(117, 117, 117);
   &:hover {
     width: 350px;
-    + .such_box_icon {
-      left: 39.5%;
-    }
   }
 }
 
@@ -350,5 +418,66 @@ $rosfont: montserrat;
   -ms-transition: 0.2s -ms-filter linear;
   -o-transition: 0.2s -o-filter linear;
   filter: brightness(40%);
+}
+.createDirectoryScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+.createDirectoryScreenInactive {
+  display: none;
+}
+.createDirectoryField {
+  position: relative;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%);
+  height: 200px;
+  width: 350px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+  padding: 30px;
+}
+.createDirectoryFieldText {
+  position: relative;
+  font-size: 20px;
+  letter-spacing: 1.2px;
+  display: inline-block;
+  font-weight: 500;
+}
+.createDirectoryFieldInput {
+  position: relative;
+  width: 100%;
+  height: 35px;
+  padding: 10px;
+  border: 0px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 1px solid;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.createDirectoryFieldClose {
+  float: right;
+  cursor: pointer;
+}
+.createDirectoryFieldButtonDisabled {
+  width: 100px;
+  height: 35px;
+  background-color: #eee;
+  color: grey;
+  font-weight: 500;
+  border: 0;
+}
+.createDirectoryFieldButtonAble {
+  width: 100px;
+  height: 35px;
+  background-color: $rosblue;
+  color: #e5e1e6;
+  font-weight: 500;
+  border: 0;
 }
 </style>
