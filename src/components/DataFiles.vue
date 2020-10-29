@@ -1,32 +1,76 @@
 <template>
   <div
     @contextmenu.prevent="$refs.menu.open"
-    
     :title="file.name"
+    @mouseover="getSingleFileURL()"
   >
     <div
       class="wrapper"
       @mouseover="addHoverName"
       @mouseleave="removeHoverName"
-      :class="{fileDeleted: fileDeleted}"
+      :class="{ fileDeleted: fileDeleted }"
     >
-      <img v-if="filetype=='pdf'" src="@/assets/pdf-logo.png" class="logo" />
-      <img v-if="filetype=='docx'" src="@/assets/docx-logo.png" class="logo" />
-      <img v-if="filetype=='png'" src="@/assets/picture-icon.png" class="logo" />
-      <img v-if="this.file.type=='directory'" src="@/assets/Folder.png" class="logo"/>
+      <img
+        v-if="this.file.type == 'directory'"
+        src="@/assets/Folder2.png"
+        class="logo logo2"
+        @click="getNewPath()"
+      />
+      <img v-if="filetype == 'docx'" src="@/assets/doc.png" class="logo" />
+      <img v-if="filetype == 'png'" src="@/assets/png.png" class="logo" />
+      <img
+        v-if="filetype == 'jpg' || filetype == 'jpeg'"
+        src="@/assets/jpg.png"
+        class="logo"
+      />
+
+      <img v-if="filetype == 'html'" src="@/assets/html.png" class="logo" />
+      <img v-if="filetype == 'js'" src="@/assets/javascript.png" class="logo" />
+      <img v-if="filetype == 'xml'" src="@/assets/xml.png" class="logo" />
+      <img v-if="filetype == 'rtf'" src="@/assets/rtf.png" class="logo" />
+      <img v-if="filetype == 'iso'" src="@/assets/iso.png" class="logo" />
+      <img v-if="filetype == 'pdf'" src="@/assets/pdf.png" class="logo" />
+      <img
+        v-if="filetype == 'json'"
+        src="@/assets/json-file.png"
+        class="logo"
+      />
+      <img v-if="filetype == 'ai'" src="@/assets/ai.png" class="logo" />
+      <img v-if="filetype == 'csv'" src="@/assets/csv.png" class="logo" />
+      <img v-if="filetype == 'exe'" src="@/assets/exe.png" class="logo" />
+      <img v-if="filetype == 'mp3'" src="@/assets/mp3.png" class="logo" />
+      <img v-if="filetype == 'mp4'" src="@/assets/mp4.png" class="logo" />
+      <img v-if="filetype == 'ppt'" src="@/assets/ppt.png" class="logo" />
+      <img v-if="filetype == 'psd'" src="@/assets/psd.png" class="logo" />
+      <img v-if="filetype == 'txt'" src="@/assets/txt.png" class="logo" />
+      <img v-if="filetype == 'xls'" src="@/assets/xls.png" class="logo" />
+      <img v-if="filetype == 'zip'" src="@/assets/zip.png" class="logo" />
+
       <input
         type="text"
         class="dataName"
+        v-model="newName"
         v-bind:placeholder="file.name"
         :disabled="changeNameActive == false"
-        :class="{dataNameHover: hovername, seeWriteable: seeWriteable }"
-        @keypress.enter="finishNameChange"
-        @focusout="finishNameChange"
+        :class="{ dataNameHover: hovername, seeWriteable: seeWriteable }"
+        @keypress.enter="
+          finishNameChange();
+          changeName(newName);
+        "
+        @focusout="
+          finishNameChange();
+          changeName(newName);
+        "
         ref="search"
       />
-      <p class="size">{{file.size | prettyBytes}}</p>
+      <p v-if="file.type != 'directory'" class="size">
+        {{ file.size | prettyBytes }}
+      </p>
+      <p v-if="file.type == 'directory'" class="size">
+        {{ getHumanDate(this.file.date) }}
+      </p>
     </div>
-    
+
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
         <p>
@@ -44,20 +88,45 @@
         <li class="contextMenuEntries">
           <p>
             <i class="fas fa-download"></i>
-            <span class="contextMenuText">Herunterladen</span>
+            <span class="contextMenuText">
+              <a :href="this.singleFileURL" :download="file.name" >
+                Herunterladen
+              </a>
+            </span>
           </p>
         </li>
       </a>
+
       <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
-          <span class="contextMenuText">Verschieben nach</span>
+          <span class="contextMenuText" style="margin-left: 3px;"
+            >Verschieben nach</span
+          >
         </p>
         <ul class="v-context">
-          <li
-            class="contextMenuEntries moveItems"
-          >
-            <span>Test</span>
+          <li v-for="directory in directoryList.listing" :key="directory.id">
+            <a
+              v-if="directory.type == 'directory' && directory.id != file.id"
+              @click="moveFile(file.parent, file.id, file.name)"
+              style="color:black"
+            >
+              {{ directory.name }}
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="contextMenuEntries v-context__sub">
+        <p>
+          <i class="fas fa-info-circle"></i>
+          <span class="contextMenuText">Info</span>
+        </p>
+        <ul class="v-context">
+          <li style="color:black; padding: 5px; padding-right: 10px">
+            <p>Erstellt am: {{ getHumanDate(this.file.date) }}</p>
+            <p v-if="file.type != 'directory'">Typus: {{ this.filetype }}</p>
+            <p>Object-ID: {{ this.file.id }}</p>
+            <p>Dateigröße: {{ file.size | prettyBytes }}</p>
           </li>
         </ul>
       </li>
@@ -65,9 +134,13 @@
   </div>
 </template>
 
+
 <script>
 import VueContext from "vue-context";
+import "vue-context/src/sass/vue-context.scss";
+import moment from "moment";
 
+import api from "@/api";
 
 export default {
   data() {
@@ -78,7 +151,9 @@ export default {
       seeWriteable: false,
       fileDeleted: false,
       box: null,
-      filetype: ""
+      filetype: "",
+      newName: "",
+      singleFileURL: ""
     };
   },
   components: {
@@ -86,6 +161,7 @@ export default {
   },
   props: {
     file: Object,
+    directoryList: Object
   },
   methods: {
     changeNameSet() {
@@ -105,10 +181,45 @@ export default {
       (this.changeNameActive = false), (this.seeWriteable = false);
     },
     deleteFile() {
-      this.$emit("deleteFolderInformation", this.file)
+      this.$emit("deleteFolderInformation", this.file);
+    },
+    async changeName(newName) {
+      try {
+        await api.object().move(this.file.parent, newName, this.file.id);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async moveFile(parentID, ID, name) {
+      try {
+        await api.object().move(parentID, name, ID);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    getHumanDate(date) {
+      return moment(date).format("DD.MM.YYYY");
+    },
+    async getNewPath() {
+      try {
+        const response = await api.object().get(this.file.id);
+        this.$emit("newCurrentPath", this.file.id);
+        this.$emit("newPath", response);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getSingleFileURL() {
+      try {
+        const response = await api.object().get(this.file.id);
+        this.singleFileURL = response.url;
+        
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
-  mounted(){
+  mounted() {
     const re = /(?:.([^.]+))?$/;
     this.filetype = re.exec(this.file.name)[1];
   }
@@ -139,6 +250,7 @@ $rosfont: montserrat;
   left: 50%;
   transform: translateX(-50%);
 }
+
 .name {
   font-size: 13px;
   text-align: center;
@@ -169,6 +281,9 @@ $rosfont: montserrat;
   background-color: #f4faff;
   color: $rosblue;
   cursor: pointer;
+  a {
+    color: $rosblue;
+  }
 }
 .contextMenuEntries p {
   margin: 0;
@@ -180,6 +295,10 @@ $rosfont: montserrat;
 .contextMenuText {
   position: relative;
   left: 12px;
+  a {
+    color: rgb(117, 117, 117);
+    text-decoration: none;
+  }
 }
 .dataName {
   border: 0;
@@ -208,5 +327,4 @@ $rosfont: montserrat;
   padding-left: 40px;
   margin-bottom: 2px;
 }
-
 </style>

@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$rosblue: #0047bb;
+$rosblue: #0044b2;
 $rosfont: montserrat;
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */

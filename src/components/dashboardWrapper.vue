@@ -32,6 +32,14 @@
 
       <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
+          <li class="leiste-ul-li leiste-button">
+            <div class="arrowBack" @click="lastPath()">
+              <i
+                class="fas fa-arrow-left"
+                style="margin-top:50%; transform: translateY(-50%);margin-left:30%"
+              ></i>
+            </div>
+          </li>
           <li>
             <div>
               <input
@@ -39,8 +47,7 @@
                 class="such_box"
                 placeholder="Suche nach Dateien"
                 v-model="filterByName"
-                          @keypress.enter="searchFiles()"
-
+                @keypress.enter="searchFiles()"
               />
             </div>
           </li>
@@ -74,8 +81,11 @@
           v-for="entry in directorys.listing"
           :key="entry.id"
           :file="entry"
+          :directoryList="directorys"
           style="height:150px"
           @deleteFolderInformation="deleteFolderField"
+          @newPath="updatePath"
+          @newCurrentPath="updateCurrentPath"
         />
       </div>
     </div>
@@ -159,14 +169,13 @@
 </template>
 
 <script>
-import Vue from "vue";
 import Vue2Filters from "vue2-filters";
 import DataFiles from "@/components/DataFiles.vue";
 import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
 import api from "@/api";
+import NProgress from 'nprogress'
 
-Vue.use(Vue2Filters);
 
 export default {
   mixins: [Vue2Filters.mixin],
@@ -182,7 +191,8 @@ export default {
       user: {},
       responseLoaded: false,
       newDirectoryName: "",
-      folderNameCache: JSON
+      folderNameCache: JSON,
+      currentPath: null
     };
   },
   mounted() {
@@ -201,9 +211,10 @@ export default {
         });
   },
   methods: {
-    test() {
-      console.log("testfunction");
+    updateCurrentPath(newPath) {
+      this.currentPath = newPath;
     },
+
     loadSlider() {
       this.$store.dispatch("loadSlider");
       if (this.$store.state.activeSlider === true) {
@@ -264,6 +275,9 @@ export default {
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
     },
+    updatePath(newPath) {
+      this.directorys = newPath;
+    },
     closeAccountSlider() {
       document
         .getElementById("blurBackgroundNav")
@@ -306,15 +320,14 @@ export default {
     },
     async uploadFile() {
       try {
-        await api.object().upload(this.$refs.file.files[0]);
+        await api.object().upload(this.$refs.file.files[0], this.currentPath);
       } catch (err) {
         console.log(err);
       }
     },
     async newDirectory(name) {
       try {
-        console.log(response);
-        const response = await api.object().createDir(name, null);
+        await api.object().createDir(name, this.currentPath);
       } catch (err) {
         console.log(err);
       }
@@ -326,8 +339,19 @@ export default {
         console.log(err);
       }
     },
-    async searchFiles(){
-      console.log(this.filterByName)
+    async searchFiles() {
+      console.log(this.filterByName);
+      NProgress.start();
+     
+
+    },
+    async lastPath() {
+      try {
+        const response = await api.object().get(this.currentPath);
+        this.directorys = response;
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
   components: {
@@ -341,7 +365,7 @@ export default {
 <style lang="scss" scoped>
 @import "~selectize/dist/css/selectize.bootstrap3.css";
 
-$rosblue: #0047bb;
+$rosblue: #0044b2;
 $rosfont: montserrat;
 * {
   box-sizing: border-box;
@@ -472,6 +496,12 @@ $rosfont: montserrat;
   width: 160px;
   text-align: center;
 }
+.arrowBack {
+  position: relative;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+}
 .upload-wrapper label {
   display: inline-block;
   height: 35px;
@@ -565,7 +595,7 @@ $rosfont: montserrat;
   color: grey;
   font-weight: 500;
   border: 0;
-  cursor:not-allowed;
+  cursor: not-allowed;
 }
 .createDirectoryFieldButtonAble {
   width: 100px;
