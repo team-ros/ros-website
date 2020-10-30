@@ -30,7 +30,8 @@
         </div>
       </nav>
 
-      <div class="leiste" id="blurBackgroundLeiste">
+      <div class="leiste" id="blurBackgroundLeiste" >
+        
         <ul class="leiste-ul">
           <li class="leiste-ul-li leiste-button">
             <div class="arrowBack" @click="lastPath()">
@@ -76,7 +77,7 @@
         </ul>
       </div>
 
-      <div class="datencontainer" id="blurBackgroundData">
+      <div class="datencontainer" id="blurBackgroundData" >
         <DataFiles
           v-for="entry in directorys.listing"
           :key="entry.id"
@@ -86,6 +87,7 @@
           @deleteFolderInformation="deleteFolderField"
           @newPath="updatePath"
           @newCurrentPath="updateCurrentPath"
+          @newParentPath="newParentPath"
         />
       </div>
     </div>
@@ -174,7 +176,6 @@ import DataFiles from "@/components/DataFiles.vue";
 import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
 import api from "@/api";
-import NProgress from 'nprogress'
 
 
 export default {
@@ -192,6 +193,7 @@ export default {
       responseLoaded: false,
       newDirectoryName: "",
       folderNameCache: JSON,
+      currentParentPath: null,
       currentPath: null
     };
   },
@@ -214,7 +216,9 @@ export default {
     updateCurrentPath(newPath) {
       this.currentPath = newPath;
     },
-
+    newParentPath(newParentPath){
+      this.currentParentPath=newParentPath;
+    },
     loadSlider() {
       this.$store.dispatch("loadSlider");
       if (this.$store.state.activeSlider === true) {
@@ -340,14 +344,11 @@ export default {
       }
     },
     async searchFiles() {
-      console.log(this.filterByName);
-      NProgress.start();
-     
-
+      console.log(this.filterByName)
     },
     async lastPath() {
       try {
-        const response = await api.object().get(this.currentPath);
+        const response = await api.object().get(this.currentParentPath);
         this.directorys = response;
       } catch (err) {
         console.log(err);

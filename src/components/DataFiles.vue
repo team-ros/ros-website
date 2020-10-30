@@ -205,6 +205,7 @@ export default {
         const response = await api.object().get(this.file.id);
         this.$emit("newCurrentPath", this.file.id);
         this.$emit("newPath", response);
+        this.$emit("newParentPath", this.file.parent)
       } catch (err) {
         console.log(err);
       }

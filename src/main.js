@@ -7,6 +7,8 @@ import firebase from "firebase";
 Vue.use(require('vue-filter-pretty-bytes'))
 Vue.use(cookies);
 
+
+
 Vue.config.productionTip = false;
 
 const firebaseConfig = {
