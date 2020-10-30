@@ -84,19 +84,18 @@
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <a href download style="color: rgb(117, 117, 117); text-decoration: none">
+      <a :href="this.singleFileURL" :download="file.name" style="color: rgb(117, 117, 117); text-decoration: none">
         <li class="contextMenuEntries">
           <p>
             <i class="fas fa-download"></i>
             <span class="contextMenuText">
-              <a :href="this.singleFileURL" :download="file.name" >
+              <a >
                 Herunterladen
               </a>
             </span>
           </p>
         </li>
       </a>
-
       <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
@@ -139,6 +138,7 @@
 import VueContext from "vue-context";
 import "vue-context/src/sass/vue-context.scss";
 import moment from "moment";
+import NProgress from "nprogress";
 
 import api from "@/api";
 
@@ -201,11 +201,14 @@ export default {
       return moment(date).format("DD.MM.YYYY");
     },
     async getNewPath() {
+      NProgress.start();
+
       try {
         const response = await api.object().get(this.file.id);
         this.$emit("newCurrentPath", this.file.id);
         this.$emit("newPath", response);
-        this.$emit("newParentPath", this.file.parent)
+        this.$emit("newParentPath", this.file.parent);
+        NProgress.done();
       } catch (err) {
         console.log(err);
       }
@@ -214,7 +217,6 @@ export default {
       try {
         const response = await api.object().get(this.file.id);
         this.singleFileURL = response.url;
-        
       } catch (err) {
         console.log(err);
       }

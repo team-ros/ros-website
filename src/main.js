@@ -6,6 +6,7 @@ import cookies from "vue-cookies"
 import firebase from "firebase";
 Vue.use(require('vue-filter-pretty-bytes'))
 Vue.use(cookies);
+import "nprogress/nprogress.css";
 
 
 

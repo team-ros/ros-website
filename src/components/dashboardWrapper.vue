@@ -30,8 +30,7 @@
         </div>
       </nav>
 
-      <div class="leiste" id="blurBackgroundLeiste" >
-        
+      <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
           <li class="leiste-ul-li leiste-button">
             <div class="arrowBack" @click="lastPath()">
@@ -76,8 +75,7 @@
           </li>
         </ul>
       </div>
-
-      <div class="datencontainer" id="blurBackgroundData" >
+      <div class="datencontainer" id="blurBackgroundData">
         <DataFiles
           v-for="entry in directorys.listing"
           :key="entry.id"
@@ -176,7 +174,8 @@ import DataFiles from "@/components/DataFiles.vue";
 import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
 import api from "@/api";
-
+import NProgress from "nprogress";
+NProgress.configure({ parent: "#blurBackgroundData" });
 
 export default {
   mixins: [Vue2Filters.mixin],
@@ -216,8 +215,8 @@ export default {
     updateCurrentPath(newPath) {
       this.currentPath = newPath;
     },
-    newParentPath(newParentPath){
-      this.currentParentPath=newParentPath;
+    newParentPath(newParentPath) {
+      this.currentParentPath = newParentPath;
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");
@@ -323,33 +322,41 @@ export default {
         .classList.remove("blurBackground");
     },
     async uploadFile() {
+      NProgress.start();
       try {
         await api.object().upload(this.$refs.file.files[0], this.currentPath);
+        NProgress.done();
       } catch (err) {
         console.log(err);
       }
     },
     async newDirectory(name) {
+      NProgress.start();
       try {
         await api.object().createDir(name, this.currentPath);
+        NProgress.done();
       } catch (err) {
         console.log(err);
       }
     },
     async deleteFile() {
+      NProgress.start();
       try {
         api.object().remove(this.folderNameCache.id);
+        NProgress.done();
       } catch (err) {
         console.log(err);
       }
     },
     async searchFiles() {
-      console.log(this.filterByName)
+      console.log(this.filterByName);
     },
     async lastPath() {
+      NProgress.start();
       try {
         const response = await api.object().get(this.currentParentPath);
         this.directorys = response;
+        NProgress.done();
       } catch (err) {
         console.log(err);
       }
@@ -449,12 +456,11 @@ $rosfont: montserrat;
   position: absolute;
   background-color: white;
   overflow: auto;
-  height: 100%;
+  bottom: 0;
   width: 100%;
-  top: 0;
   left: 0;
   overflow-wrap: break-word;
-  padding-top: 95px;
+  top: 110px;
 }
 
 .datencontainer div {
@@ -625,9 +631,12 @@ $rosfont: montserrat;
   transform: translate(-50%);
   min-height: 160px;
   width: 330px;
+  word-break: break-word;
   background-color: white;
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
   padding: 30px;
+  
+
 }
 .deleteDirectoryFieldText {
   position: relative;
