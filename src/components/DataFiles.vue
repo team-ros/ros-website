@@ -273,12 +273,14 @@ $rosfont: montserrat;
   outline: none;
   list-style-type: none;
   padding: 0px;
+  
   width: 240px;
   position: absolute;
   margin: 3px;
   border-radius: 4px;
   z-index: 10;
   color: rgb(117, 117, 117);
+  
 }
 .contextMenuEntries:hover {
   background-color: #f4faff;

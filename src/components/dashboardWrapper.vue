@@ -212,6 +212,9 @@ export default {
         });
   },
   methods: {
+    testfunction(){
+        console.log(this.directorys)
+    },
     updateCurrentPath(newPath) {
       this.currentPath = newPath;
     },
@@ -325,7 +328,10 @@ export default {
       NProgress.start();
       try {
         await api.object().upload(this.$refs.file.files[0], this.currentPath);
+        const response = await api.object().get(this.currentPath);
+        this.directorys = response;
         NProgress.done();
+        this.testfunction();
       } catch (err) {
         console.log(err);
       }
@@ -333,7 +339,9 @@ export default {
     async newDirectory(name) {
       NProgress.start();
       try {
-        await api.object().createDir(name, this.currentPath);
+        await api.object().createDir(name, this.currentParentPath);
+        const response = await api.object().get(this.currentPath);
+        this.directorys = response;
         NProgress.done();
       } catch (err) {
         console.log(err);
@@ -342,7 +350,9 @@ export default {
     async deleteFile() {
       NProgress.start();
       try {
-        api.object().remove(this.folderNameCache.id);
+        await api.object().remove(this.folderNameCache.id);
+        const response = await api.object().get(this.currentPath);
+        this.directorys = response;
         NProgress.done();
       } catch (err) {
         console.log(err);
