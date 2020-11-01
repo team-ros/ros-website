@@ -33,7 +33,13 @@
       <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
           <li class="leiste-ul-li leiste-button">
-            <div class="arrowBack" @click="lastPath()">
+            <div v-if="this.pathIterator == -1" class="arrowBack" style="cursor: not-allowed">
+              <i
+                class="fas fa-arrow-left"
+                style="margin-top:50%; transform: translateY(-50%);margin-left:30%"
+              ></i>
+            </div>
+            <div v-if="this.pathIterator != -1" class="arrowBack" @click="lastPath()">
               <i
                 class="fas fa-arrow-left"
                 style="margin-top:50%; transform: translateY(-50%);margin-left:30%"
@@ -193,6 +199,8 @@ export default {
       newDirectoryName: "",
       folderNameCache: JSON,
       currentParentPath: null,
+      pathHistory: [],
+      pathIterator: -1,
       currentPath: null
     };
   },
@@ -212,14 +220,13 @@ export default {
         });
   },
   methods: {
-    testfunction(){
-        console.log(this.directorys)
-    },
     updateCurrentPath(newPath) {
       this.currentPath = newPath;
+      this.pathIterator++;
     },
     newParentPath(newParentPath) {
       this.currentParentPath = newParentPath;
+      this.pathHistory.push(newParentPath);
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");
@@ -331,7 +338,6 @@ export default {
         const response = await api.object().get(this.currentPath);
         this.directorys = response;
         NProgress.done();
-        this.testfunction();
       } catch (err) {
         console.log(err);
       }
@@ -339,7 +345,7 @@ export default {
     async newDirectory(name) {
       NProgress.start();
       try {
-        await api.object().createDir(name, this.currentParentPath);
+        await api.object().createDir(name, this.currentPath);
         const response = await api.object().get(this.currentPath);
         this.directorys = response;
         NProgress.done();
@@ -364,7 +370,9 @@ export default {
     async lastPath() {
       NProgress.start();
       try {
-        const response = await api.object().get(this.currentParentPath);
+        const response = await api.object().get(this.pathHistory[this.pathIterator]);
+        this.pathHistory.pop();
+        this.pathIterator--;
         this.directorys = response;
         NProgress.done();
       } catch (err) {
@@ -645,8 +653,6 @@ $rosfont: montserrat;
   background-color: white;
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
   padding: 30px;
-  
-
 }
 .deleteDirectoryFieldText {
   position: relative;

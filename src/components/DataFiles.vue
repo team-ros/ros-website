@@ -202,7 +202,6 @@ export default {
     },
     async getNewPath() {
       NProgress.start();
-
       try {
         const response = await api.object().get(this.file.id);
         this.$emit("newCurrentPath", this.file.id);
