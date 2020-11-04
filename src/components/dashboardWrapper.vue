@@ -33,13 +33,21 @@
       <div class="leiste" id="blurBackgroundLeiste">
         <ul class="leiste-ul">
           <li class="leiste-ul-li leiste-button">
-            <div v-if="this.pathIterator == -1" class="arrowBack" style="cursor: not-allowed">
+            <div
+              v-if="this.pathIterator == -1"
+              class="arrowBack"
+              style="cursor: not-allowed"
+            >
               <i
                 class="fas fa-arrow-left"
                 style="margin-top:50%; transform: translateY(-50%);margin-left:30%"
               ></i>
             </div>
-            <div v-if="this.pathIterator != -1" class="arrowBack" @click="lastPath()">
+            <div
+              v-if="this.pathIterator != -1"
+              class="arrowBack"
+              @click="lastPath()"
+            >
               <i
                 class="fas fa-arrow-left"
                 style="margin-top:50%; transform: translateY(-50%);margin-left:30%"
@@ -82,7 +90,7 @@
         </ul>
       </div>
       <div class="datencontainer" id="blurBackgroundData">
-        <DataFiles
+        <DataObjects
           v-for="entry in directorys.listing"
           :key="entry.id"
           :file="entry"
@@ -176,7 +184,7 @@
 
 <script>
 import Vue2Filters from "vue2-filters";
-import DataFiles from "@/components/DataFiles.vue";
+import DataObjects from "@/components/DataObjects.vue";
 import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
 import api from "@/api";
@@ -332,8 +340,8 @@ export default {
         .classList.remove("blurBackground");
     },
     async uploadFile() {
-      NProgress.start();
       try {
+        NProgress.start();
         await api.object().upload(this.$refs.file.files[0], this.currentPath);
         const response = await api.object().get(this.currentPath);
         this.directorys = response;
@@ -370,7 +378,9 @@ export default {
     async lastPath() {
       NProgress.start();
       try {
-        const response = await api.object().get(this.pathHistory[this.pathIterator]);
+        const response = await api
+          .object()
+          .get(this.pathHistory[this.pathIterator]);
         this.pathHistory.pop();
         this.pathIterator--;
         this.directorys = response;
@@ -381,7 +391,7 @@ export default {
     }
   },
   components: {
-    DataFiles,
+    DataObjects,
     accountSlider,
     dropdown
   }

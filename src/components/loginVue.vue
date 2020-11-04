@@ -459,7 +459,7 @@ export default {
 
 
 <style lang="scss" scoped>
-$rosblue: #0047bb;
+$rosblue: #0044B2;
 $rosfont: montserrat;
 
 * {

@@ -8,8 +8,6 @@ Vue.use(require('vue-filter-pretty-bytes'))
 Vue.use(cookies);
 import "nprogress/nprogress.css";
 
-
-
 Vue.config.productionTip = false;
 
 const firebaseConfig = {
