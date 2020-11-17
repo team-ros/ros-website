@@ -99,7 +99,7 @@
                 <p class="rightPageContentText">
                   Noch keinen Account?
                   <span
-                    style="color:#002c6b; cursor: pointer;"
+                    style="color: #002c6b; cursor: pointer"
                     id="createAccountButton"
                     @click="createSwitch()"
                   >
@@ -160,6 +160,7 @@
                     :disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
+                    @click="registerAccount()"
                   >
                     REGISTRIEREN
                   </button>
@@ -167,22 +168,29 @@
                   <p class="rightPageContentText">
                     Du hast schon einen Account?
                     <span
-                      style="color:#002c6b; cursor: pointer;"
+                      style="color: #002c6b; cursor: pointer"
                       id="loginAccountButton"
-                      @click="loginSwitch()"
+                      @click="loginSwitch(), closeErrorBlock()"
                       >Zum Login!</span
                     >
                   </p>
                 </div>
                 <div class="passwordSafety" id="passwordSafety">
-                  <p style="margin-top:0">
+                  <p style="margin-top: 0">
                     Aufgrund der Sicherheit Ihrere Daten stellen wir folgende
                     Mindestanforderungen für Passwörter
                   </p>
                   <hr
-                    style="border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));"
+                    style="
+                      border: 0;
+                      height: 1px;
+                      background-image: linear-gradient(
+                        to right,
+                        rgba(0, 0, 0, 0),
+                        rgba(0, 0, 0, 0.75),
+                        rgba(0, 0, 0, 0)
+                      );
+                    "
                   />
                   <ul>
                     <li>mindestens 8 Zeichen lang</li>
@@ -196,7 +204,7 @@
                   <span
                     @mouseover="showPasswordSafety"
                     @mouseleave="leavePasswordSafety"
-                    style="color:#002c6b; cursor: pointer;"
+                    style="color: #002c6b; cursor: pointer"
                     >Mindestanforderungen</span
                   >
                   für ein Passwort
@@ -204,6 +212,11 @@
               </div>
             </div>
           </div>
+          <errorBlock
+            v-if="this.errorCode"
+            :errorCode="this.errorCode"
+            @closeErrorBlock="closeErrorBlock"
+          />
         </div>
       </div>
 
@@ -214,7 +227,7 @@
             width="100%"
             height="300"
             frameborder="0"
-            style="border:0;"
+            style="border: 0"
             allowfullscreen
             aria-hidden="false"
             tabindex="0"
@@ -222,7 +235,7 @@
         </div>
         <div class="copyright">
           © ROS 2020
-          <span style="margin: 5px;">|</span>
+          <span style="margin: 5px">|</span>
           <router-link to="/impressum">
             <a href="#">Impressum</a>
           </router-link>
@@ -236,10 +249,11 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import api from "@/api";
+import ErrorBlock from "./errorBlock.vue";
 
 export default {
-  components: {},
-  data: function() {
+  components: { ErrorBlock },
+  data: function () {
     return {
       passwordlogin: "",
       password1: "",
@@ -254,7 +268,8 @@ export default {
       passwordStrongCreate: false,
       emailStrong: false,
       nameValid: false,
-      passwordSafety: false
+      passwordSafety: false,
+      errorCode: "",
     };
   },
   methods: {
@@ -399,7 +414,7 @@ export default {
       document.getElementById("blurDiv").classList.remove("blurBackground");
       document.getElementById("logo").classList.remove("blurBackground");
     },
-    loginWithGoogle: function() {
+    loginWithGoogle: function () {
       let self = this;
       const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -411,25 +426,25 @@ export default {
       firebase
         .auth()
         .signInWithPopup(GoogleProvider)
-        .catch(error => {
+        .catch((error) => {
           // Wenn ein Fehler beim Anmelden auftritt:
           console.log(error);
         })
-        .then(function() {
+        .then(function () {
           //Wenn kein Fehler auftritt gehts hier weiter
 
-          firebase.auth().onAuthStateChanged(function(user) {
+          firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
               let tempUser = {
                 id: user.uid,
                 vorname: user.displayName.split(" ")[0],
                 nachname: user.displayName.split(" ")[1],
-                email: user.email
+                email: user.email,
               };
 
               self.$cookies.set("user", tempUser);
 
-              user.getIdToken().then(token => {
+              user.getIdToken().then((token) => {
                 api.token().set(token);
                 self.$router.push("/dashboard");
               });
@@ -448,12 +463,39 @@ export default {
           firebase
             .auth()
             .currentUser.getIdToken()
-            .then(result => {
+            .then((result) => {
               console.log(result);
             });
         });
+    },
+    async registerAccount() {
+      try {
+        await api
+          .firebase()
+          .auth()
+          .createUserWithEmailAndPassword(this.emailCreate, this.password2);
+          let err = "no";
+          this.errorRegister(err)
+      } catch (err) {
+        console.log(err);
+        this.errorRegister(err);
+      }
+    },
+    errorRegister(err) {
+      this.errorCode = err.code || err;
+      console.log(this.errorCode)
+      this.emptyFields()
+    },
+    closeErrorBlock(){
+      this.errorCode = ""
+    },
+    emptyFields(){
+      this.name=""
+      this.emailCreate=""
+      this.password1=""
+      this.password2=""
     }
-  }
+  },
 };
 </script>
 

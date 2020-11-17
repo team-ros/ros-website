@@ -80,18 +80,23 @@
       </li>
       <li class="contextMenuEntries" @click="deleteFile">
         <p>
-          <i class="far fa-trash-alt" style="margin-left:2px"></i>
+          <i class="far fa-trash-alt" style="margin-left: 2px"></i>
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <a :href="this.singleFileURL" :download="file.name" style="color: rgb(117, 117, 117); text-decoration: none">
+      <a
+        :href="this.singleFileURL"
+        :download="file.name"
+        style="color: rgb(117, 117, 117); text-decoration: none"
+      >
+        <form method="get" :action="this.singleFileURL">
+          <button type="submit">Download!</button>
+        </form>
         <li class="contextMenuEntries">
           <p>
             <i class="fas fa-download"></i>
             <span class="contextMenuText">
-              <a >
-                Herunterladen
-              </a>
+              <a> Herunterladen </a>
             </span>
           </p>
         </li>
@@ -99,7 +104,7 @@
       <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
-          <span class="contextMenuText" style="margin-left: 3px;"
+          <span class="contextMenuText" style="margin-left: 3px"
             >Verschieben nach</span
           >
         </p>
@@ -108,7 +113,7 @@
             <a
               v-if="directory.type == 'directory' && directory.id != file.id"
               @click="moveFile(file.parent, file.id, file.name)"
-              style="color:black"
+              style="color: black"
             >
               {{ directory.name }}
             </a>
@@ -121,7 +126,7 @@
           <span class="contextMenuText">Info</span>
         </p>
         <ul class="v-context">
-          <li style="color:black; padding: 5px; padding-right: 10px">
+          <li style="color: black; padding: 5px; padding-right: 10px">
             <p>Erstellt am: {{ getHumanDate(this.file.date) }}</p>
             <p v-if="file.type != 'directory'">Typus: {{ this.filetype }}</p>
             <p>Object-ID: {{ this.file.id }}</p>
@@ -153,21 +158,21 @@ export default {
       box: null,
       filetype: "",
       newName: "",
-      singleFileURL: ""
+      singleFileURL: "",
     };
   },
   components: {
-    VueContext
+    VueContext,
   },
   props: {
     file: Object,
-    directoryList: Object
+    directoryList: Object,
   },
   methods: {
     changeNameSet() {
       this.changeNameActive = true;
       this.seeWriteable = true;
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.$refs.search.focus();
       });
     },
@@ -219,12 +224,12 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   },
   mounted() {
     const re = /(?:.([^.]+))?$/;
     this.filetype = re.exec(this.file.name)[1];
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -272,14 +277,13 @@ $rosfont: montserrat;
   outline: none;
   list-style-type: none;
   padding: 0px;
-  
+
   width: 240px;
   position: absolute;
   margin: 3px;
   border-radius: 4px;
   z-index: 10;
   color: rgb(117, 117, 117);
-  
 }
 .contextMenuEntries:hover {
   background-color: #f4faff;

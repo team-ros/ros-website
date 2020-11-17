@@ -21,7 +21,9 @@ const firebaseConfig = {
   measurementId: "G-ZZXD7PLMCP"
 }
 
+if (!firebase.apps.length) {
 firebase.initializeApp(firebaseConfig)
+}
 
 new Vue({
   router,

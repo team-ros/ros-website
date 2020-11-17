@@ -66,7 +66,7 @@
             </div>
           </li>
           <li class="leiste-ul-li" style="float: right">
-            <dropdown />
+            <dropdown @newFilter="sortData" />
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
@@ -387,6 +387,24 @@ export default {
         NProgress.done();
       } catch (err) {
         console.log(err);
+      }
+    },
+    sortData(filterByWhat) {
+      console.log(filterByWhat);
+      if (filterByWhat == "filterBySize") {
+        this.filterExpression = "size";
+        this.filterDirection = -1;
+      } else if (filterByWhat == "filterByName") {
+        this.filterExpression = "name";
+        this.filterDirection = 1;
+      } else if (filterByWhat == "filterByDate") {
+        this.filterExpression = "date";
+        this.filterDirection = -1;
+      } else if (filterByWhat == "filterByDatatype") {
+        this.filterExpression = "type";
+        this.filterDirection = 1;
+      } else {
+        this.filterByName = this.selectedFilter;
       }
     }
   },

@@ -1,17 +1,22 @@
 <template>
-    <div>
-        <p> Team {{teamname}} </p>
-    </div>
+  <div>
+    <DataObjects @changeName="newName" />
+  </div>
 </template>
 
 <script>
     export default {
-        data: function(){
+        data(){
             return{
-                teamName: "ROS"
-            }
+                name: "ROS"
+            	}
+            },
+        methods: {
+         newName(value){
+          this.name = value 
+         }
         }
-    }
+      }
 </script>
 
 <style scoped>
