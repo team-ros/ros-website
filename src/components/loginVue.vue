@@ -156,6 +156,7 @@
                     @input="validOrInvalidPasswordCreate2"
                   />
                   <br />
+                  <router-link to="/dashboard">
                   <button
                     :disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
@@ -164,7 +165,7 @@
                   >
                     REGISTRIEREN
                   </button>
-
+                  </router-link>
                   <p class="rightPageContentText">
                     Du hast schon einen Account?
                     <span
