@@ -59,7 +59,7 @@
                   E-Mail
                 </p>
                 <input
-                  @blur="validOrInvalidEmail"
+                  @input="validOrInvalidEmail"
                   v-model="email"
                   class="rightPageContentInputfield"
                   type="text"
@@ -69,7 +69,7 @@
                 />
                 <p class="rightPageContentGrey">Passwort</p>
                 <input
-                  @blur="validOrInvalidPassword"
+                  @input="validOrInvalidPassword"
                   v-on:input="passwordStrongTestLogin"
                   v-model="passwordlogin"
                   class="rightPageContentInputfield"
@@ -121,11 +121,11 @@
                     type="text"
                     placeholder
                     required
-                    @blur="validOrInvalidName"
+                    @input="validOrInvalidName"
                   />
                   <p class="rightPageContentGrey">E-Mail</p>
                   <input
-                    @blur="validOrInvalidEmailCreate"
+                    @input="validOrInvalidEmailCreate"
                     v-model="emailCreate"
                     class="rightPageContentInputfield"
                     type="text"
@@ -142,7 +142,7 @@
                     placeholder
                     required
                     id="password1"
-                    @blur="validOrInvalidPasswordCreate1"
+                    @input="validOrInvalidPasswordCreate1"
                   />
                   <p class="rightPageContentGrey">Passwort wiederholen</p>
                   <input
@@ -153,7 +153,7 @@
                     placeholder
                     required
                     id="password2"
-                    @blur="validOrInvalidPasswordCreate2"
+                    @input="validOrInvalidPasswordCreate2"
                   />
                   <br />
                   <button
@@ -326,7 +326,7 @@ export default {
       if (
         this.regexPassword.test(this.password1) &&
         this.regexPassword.test(this.password2) &&
-        this.password1 == this.password2
+        this.password1 === this.password2
       ) {
         this.passwordStrongCreate = true;
       } else {
@@ -336,7 +336,7 @@ export default {
 
     validOrInvalidEmail() {
       if (this.email == "") {
-        console.log("0");
+        document.getElementById("email").classList.remove("inputInvalid");
       } else if (this.regexEmail.test(this.email)) {
         document.getElementById("email").classList.add("inputValid");
         document.getElementById("email").classList.remove("inputInvalid");
@@ -347,7 +347,7 @@ export default {
     },
     validOrInvalidPassword() {
       if (this.passwordlogin == "") {
-        console.log("0");
+        document.getElementById("password").classList.remove("inputInvalid");
       } else if (this.regexPassword.test(this.passwordlogin)) {
         document.getElementById("password").classList.add("inputValid");
         document.getElementById("password").classList.remove("inputInvalid");
@@ -358,7 +358,7 @@ export default {
     },
     validOrInvalidName() {
       if (this.name == "") {
-        console.log("0");
+        document.getElementById("name").classList.remove("inputInvalid");
       } else if (this.regexName.test(this.name)) {
         document.getElementById("name").classList.add("inputValid");
         document.getElementById("name").classList.remove("inputInvalid");
@@ -369,7 +369,7 @@ export default {
     },
     validOrInvalidEmailCreate() {
       if (this.emailCreate == "") {
-        console.log("0");
+        document.getElementById("emailCreate").classList.remove("inputInvalid");
       } else if (this.regexEmail.test(this.emailCreate)) {
         document.getElementById("emailCreate").classList.add("inputValid");
         document.getElementById("emailCreate").classList.remove("inputInvalid");
@@ -380,7 +380,7 @@ export default {
     },
     validOrInvalidPasswordCreate1() {
       if (this.password1 == "") {
-        console.log("0");
+        document.getElementById("password1").classList.remove("inputInvalid");
       } else if (this.regexPassword.test(this.password1)) {
         document.getElementById("password1").classList.add("inputValid");
         document.getElementById("password1").classList.remove("inputInvalid");
@@ -391,7 +391,7 @@ export default {
     },
     validOrInvalidPasswordCreate2() {
       if (this.password2 == "") {
-        console.log("0");
+        document.getElementById("password2").classList.remove("inputInvalid");
       } else if (this.regexPassword.test(this.password2)) {
         document.getElementById("password2").classList.add("inputValid");
         document.getElementById("password2").classList.remove("inputInvalid");
@@ -474,8 +474,8 @@ export default {
           .firebase()
           .auth()
           .createUserWithEmailAndPassword(this.emailCreate, this.password2);
-          let err = "no";
-          this.errorRegister(err)
+        let err = "no";
+        this.errorRegister(err);
       } catch (err) {
         console.log(err);
         this.errorRegister(err);
@@ -483,18 +483,18 @@ export default {
     },
     errorRegister(err) {
       this.errorCode = err.code || err;
-      console.log(this.errorCode)
-      this.emptyFields()
+      console.log(this.errorCode);
+      this.emptyFields();
     },
-    closeErrorBlock(){
-      this.errorCode = ""
+    closeErrorBlock() {
+      this.errorCode = "";
     },
-    emptyFields(){
-      this.name=""
-      this.emailCreate=""
-      this.password1=""
-      this.password2=""
-    }
+    emptyFields() {
+      this.name = "";
+      this.emailCreate = "";
+      this.password1 = "";
+      this.password2 = "";
+    },
   },
 };
 </script>
