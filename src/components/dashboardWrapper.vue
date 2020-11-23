@@ -203,7 +203,7 @@ export default {
       filterDirection: "",
       filterByName: "",
       user: {},
-      responseLoaded: false,
+      responseLoaded: true,
       newDirectoryName: "",
       folderNameCache: JSON,
       currentParentPath: null,
@@ -394,7 +394,14 @@ export default {
       }
     }
   },
-  
+  async mounted() {
+    try {
+      const response = await api.object().get(this.currentPath);
+      this.directorys = response;
+    } catch (err) {
+      console.log(err);
+    }
+  },
   components: {
     DataObjects,
     accountSlider,

@@ -157,14 +157,14 @@
                   />
                   <br />
                   <router-link to="/dashboard">
-                  <button
-                    :disabled="this.passwordStrongCreate != true"
-                    class="rightPageContentLoginbutton"
-                    style="width: 100%"
-                    @click="registerAccount()"
-                  >
-                    REGISTRIEREN
-                  </button>
+                    <button
+                      :disabled="this.passwordStrongCreate != true"
+                      class="rightPageContentLoginbutton"
+                      style="width: 100%"
+                      @click="registerAccount()"
+                    >
+                      REGISTRIEREN
+                    </button>
                   </router-link>
                   <p class="rightPageContentText">
                     Du hast schon einen Account?
@@ -247,9 +247,8 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
 import api from "@/api";
+import "firebase/auth";
 import ErrorBlock from "./errorBlock.vue";
 
 export default {
@@ -264,7 +263,7 @@ export default {
       name: "",
       regexPassword: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
       regexEmail: /^\S+@\S+\.\S+$/,
-      regexName: /^[a-z ,.'-]+$/i,
+      regexName: /^[a-zäÄöÖüÜß ,.'-]+$/i,
       passwordStrong: false,
       passwordStrongCreate: false,
       emailStrong: false,
@@ -417,14 +416,16 @@ export default {
     },
     loginWithGoogle: function () {
       let self = this;
-      const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+      const PreGoogleProvider = api.firebase().auth;
+      const GoogleProvider = new PreGoogleProvider.GoogleAuthProvider();
 
       GoogleProvider.addScope("profile");
       GoogleProvider.addScope("email");
 
-      firebase.auth().useDeviceLanguage();
+      api.firebase().auth().useDeviceLanguage();
 
-      firebase
+      api
+        .firebase()
         .auth()
         .signInWithPopup(GoogleProvider)
         .catch((error) => {
@@ -434,35 +435,29 @@ export default {
         .then(function () {
           //Wenn kein Fehler auftritt gehts hier weiter
 
-          firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-              let tempUser = {
-                id: user.uid,
-                vorname: user.displayName.split(" ")[0],
-                nachname: user.displayName.split(" ")[1],
-                email: user.email,
-              };
-
-              self.$cookies.set("user", tempUser);
-
-              user.getIdToken().then((token) => {
-                api.token().set(token);
+          api
+            .firebase()
+            .auth()
+            .onAuthStateChanged(function(user) {
+              if (user) {
                 self.$router.push("/dashboard");
-              });
-            }
-          });
+              }
+            });
         });
     },
 
     loginTrue() {},
     regularLogin() {
-      api.firebase().auth().signInWithEmailAndPassword(this.email, this.passwordlogin)
-          .then((user) => {
-           console.log(user)
-          })
-          .catch((error) => {
-            console.log(error)
-          });
+      api
+        .firebase()
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.passwordlogin)
+        .then((user) => {
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     async registerAccount() {
       try {
@@ -470,8 +465,12 @@ export default {
           .firebase()
           .auth()
           .createUserWithEmailAndPassword(this.emailCreate, this.password2);
-        let err = "no";
-        this.errorRegister(err);
+
+        api.firebase().auth().currentUser.updateProfile({
+            displayName: this.name
+        })
+        .catch(err => this.errorRegister(err))
+        this.errorRegister("no");
       } catch (err) {
         console.log(err);
         this.errorRegister(err);
@@ -497,7 +496,7 @@ export default {
 
 
 <style lang="scss" scoped>
-$rosblue: #0044B2;
+$rosblue: #0044b2;
 $rosfont: montserrat;
 
 * {

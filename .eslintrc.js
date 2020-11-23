@@ -1,7 +1,12 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    browser: true
+  },
+  globals: {
+    "browser": "writable",
+    "chrome": "writable"
   },
   extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
   parserOptions: {

@@ -1,9 +1,5 @@
 <template>
-  <div
-    @contextmenu.prevent="$refs.menu.open"
-    :title="file.name"
-    @mouseover="getSingleFileURL()"
-  >
+  <div @contextmenu.prevent="$refs.menu.open" :title="file.name">
     <div
       class="wrapper"
       @mouseover="addHoverName"
@@ -84,14 +80,12 @@
           <span class="contextMenuText">Löschen</span>
         </p>
       </li>
-      <a
-        :href="this.singleFileURL"
-        :download="file.name"
+      <div
+        @click="downloadFile"
         style="color: rgb(117, 117, 117); text-decoration: none"
+        :href="singleFileURL"
+        :download="file.name"
       >
-        <form method="get" :action="this.singleFileURL">
-          <button type="submit">Download!</button>
-        </form>
         <li class="contextMenuEntries">
           <p>
             <i class="fas fa-download"></i>
@@ -100,7 +94,7 @@
             </span>
           </p>
         </li>
-      </a>
+      </div>
       <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
@@ -225,8 +219,41 @@ export default {
         console.log(err);
       }
     },
+    async getFileURL() {
+      try {
+        const response = await api.object().get(this.file.id);
+        console.log(response.url);
+        if (response.url) this.singleFileURL = response.url;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    downloadFile() {
+      fetch(this.singleFileURL)
+      .then(response => response.blob())
+      .then(blob => {
+        blob.lastModifiedDate = new Date();
+        blob.name = this.file.name;
+        const url = URL.createObjectURL(blob);
+        this.singleFileURL = url
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      // This works only in chromw and firefox 
+      // const API = browser || chrome;
+      // API.downloads.download({
+      //   url: this.singleFileURL,
+      //   filename: this.file.name
+      // })
+      // .then(response => console.log(response))
+      // .catch(err => {
+      //   console.log(err)
+      // })
+    }
   },
-  mounted() {
+  async mounted() {
+    await this.getFileURL();
     const re = /(?:.([^.]+))?$/;
     this.filetype = re.exec(this.file.name)[1];
   },
