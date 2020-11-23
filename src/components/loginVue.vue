@@ -438,17 +438,8 @@ export default {
           api
             .firebase()
             .auth()
-            .onAuthStateChanged(function (user) {
+            .onAuthStateChanged(function(user) {
               if (user) {
-                let tempUser = {
-                  id: user.uid,
-                  vorname: user.displayName.split(" ")[0],
-                  nachname: user.displayName.split(" ")[1],
-                  email: user.email,
-                };
-
-                self.$cookies.set("user", tempUser);
-
                 self.$router.push("/dashboard");
               }
             });
@@ -474,8 +465,12 @@ export default {
           .firebase()
           .auth()
           .createUserWithEmailAndPassword(this.emailCreate, this.password2);
-        let err = "no";
-        this.errorRegister(err);
+
+        api.firebase().auth().currentUser.updateProfile({
+            displayName: this.name
+        })
+        .catch(err => this.errorRegister(err))
+        this.errorRegister("no");
       } catch (err) {
         console.log(err);
         this.errorRegister(err);
