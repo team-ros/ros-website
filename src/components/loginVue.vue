@@ -456,18 +456,13 @@ export default {
 
     loginTrue() {},
     regularLogin() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.passwordlogin)
-        .then(() => {
-          this.loginTrue();
-          firebase
-            .auth()
-            .currentUser.getIdToken()
-            .then((result) => {
-              console.log(result);
-            });
-        });
+      api.firebase().auth().signInWithEmailAndPassword(this.email, this.passwordlogin)
+          .then((user) => {
+           console.log(user)
+          })
+          .catch((error) => {
+            console.log(error)
+          });
     },
     async registerAccount() {
       try {

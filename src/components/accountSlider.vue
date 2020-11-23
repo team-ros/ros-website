@@ -14,7 +14,7 @@
         @click="updateAccountSliderState"
       />
       <div class="logout">
-        <img src="@/assets/logout.png" width="35" height="35"  @click="logout" />
+        <img src="@/assets/logout.png" width="35" height="35" @click="logout" />
       </div>
       <h1>Account</h1>
       <p>Hier sind ihre Accountinformationen zu sehen</p>
@@ -24,7 +24,12 @@
         class="accountInfos"
         readonly
       />
-      <input type="text" :placeholder="user.email" class="accountInfos" readonly />
+      <input
+        type="text"
+        :placeholder="user.email"
+        class="accountInfos"
+        readonly
+      />
       <h3>Passwort zurücksetzen?</h3>
       <input
         v-on:input="passwordStrongTestCreate"
@@ -48,17 +53,25 @@
         @blur="validOrInvalidPasswordCreate2"
       />
 
-      <button :disabled="disabledButton" class="resetButton">PASSWORT ÄNDERN</button>
+      <button :disabled="disabledButton" class="resetButton">
+        PASSWORT ÄNDERN
+      </button>
       <h3>Projektwebsite</h3>
       <a href="http://ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
-      <a href="https://www.instagram.com/ros_cloud/?hl=de" class="fa fa-instagram">
+      <a
+        href="https://www.instagram.com/ros_cloud/?hl=de"
+        class="fa fa-instagram"
+      >
         <span style="margin-left: 4px">Instagram</span>
       </a>
       <a href="https://twitter.com/cloud_ros" class="fa fa-twitter">
         <span style="margin-left: 4px">Twitter</span>
       </a>
-      <a href="https://at.linkedin.com/in/ros-cloud-5b53aa1b0" class="fa fa-linkedin">
+      <a
+        href="https://at.linkedin.com/in/ros-cloud-5b53aa1b0"
+        class="fa fa-linkedin"
+      >
         <span style="margin-left: 4px">LinkedIn</span>
       </a>
       <h3>Hilfe</h3>
@@ -71,17 +84,17 @@
 </template>
 
 <script>
-
 import firebase from "firebase";
+import api from "@/api";
 export default {
-  data: function() {
+  data: function () {
     return {
       password1: null,
       password2: "",
       regexPassword: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
       passwordStrongCreate: false,
       disabledButton: true,
-      user: {}
+      user: {},
     };
   },
   mounted() {
@@ -132,22 +145,30 @@ export default {
     },
     logout() {
       let self = this;
-      firebase
+      api
+        .firebase()
         .auth()
         .signOut()
-        .catch(function(error) {
+        .catch(function (error) {
           //Falls beim LogOut ein Fehler ist ->
           console.log(error);
         })
-        .then(function() {
+        .then(function () {
           //Falls beim LogOut kein Fehler ist:
           // Lösche Cookie und leite auf Login weiter
-          self.$cookies.remove("user");
-          self.$cookies.remove("token");
+          firebase
+            .auth()
+            .signOut()
+            .then(function () {
+              // Sign-out successful.
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
           self.$router.push("/");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -254,7 +275,7 @@ a {
 .logout {
   margin-left: 290px;
 }
-.logout:hover{
+.logout:hover {
   cursor: pointer;
 }
 .inputValid {

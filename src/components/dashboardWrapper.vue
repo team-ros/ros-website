@@ -212,21 +212,7 @@ export default {
       currentPath: null
     };
   },
-  mounted() {
-    (this.user = this.$cookies.get("user")),
-      api.token().set(localStorage.getItem("token")),
-      api
-        .object()
-        .get()
-        .then(response => {
-          this.responseLoaded = true;
-          this.directorys = response;
-          console.log(response);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-  },
+  
   methods: {
     updateCurrentPath(newPath) {
       this.currentPath = newPath;
@@ -342,7 +328,7 @@ export default {
     async uploadFile() {
       try {
         NProgress.start();
-        await api.object().upload(this.$refs.file.files[0], this.currentPath);
+        await api.object().upload(this.$refs.file.files[0], undefined,  this.currentPath);
         const response = await api.object().get(this.currentPath);
         this.directorys = response;
         NProgress.done();
@@ -408,6 +394,7 @@ export default {
       }
     }
   },
+  
   components: {
     DataObjects,
     accountSlider,

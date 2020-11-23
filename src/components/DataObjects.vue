@@ -190,14 +190,14 @@ export default {
     },
     async changeName(newName) {
       try {
-        await api.object().move(this.file.parent, newName, this.file.id);
+        await api.object().move(this.file.id, this.file.parent, newName);
       } catch (err) {
         console.log(err);
       }
     },
     async moveFile(parentID, ID, name) {
       try {
-        await api.object().move(parentID, name, ID);
+        await api.object().move(ID, parentID, name);
       } catch (err) {
         console.log(err);
       }
