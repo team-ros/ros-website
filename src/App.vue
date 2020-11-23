@@ -5,27 +5,31 @@
 </template>
 
 <script>
+import api from "@/api";
+
 export default {
-  data() {
-    return {
-      directorys: {},
-      files: {}
-    };
-  },
-  components: {},
-  created() {
-    // Falls beim Öffnen der Website auf EGAL WELCHER Seite (AUSSER LOGIN!!) kein Cookie ist -> auf Login leiten.
-    if (this.$route.path != "/") {
-      if (!this.$cookies.isKey("user")) {
-        this.$router.push('/')
+  methods: {
+    async CheckIfUserIsSignedIn(n) {
+      for (let i = 0; i <= n; i++) {
+        console.log("USER:", api.firebase().auth().currentUser);
+        if (api.firebase().auth().currentUser) return true;
+        await this.timeout(300);
       }
+      return false;
+    },
+    timeout(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
     }
   },
-  
+
+  async created() {
+    if (!(await this.CheckIfUserIsSignedIn(3))) {
+      this.$router.push("/login");
+    } else {
+      if (this.$route.path != "/dashboard") this.$router.push("/dashboard");
+    }
+  }
 };
 </script>
-<style scoped>
 
-
-</style>
-
+<style scoped></style>
