@@ -17,11 +17,11 @@
             </a>
           </div>
           <div style="display: flex; align-items:center; ">
-            <span style="position: relative; "
-              >{{ user.vorname }} {{ user.nachname }}</span
+            <span style="position: relative; margin-right: 10px"
+              >{{ user.displayName}}</span
             >
             <img
-              :src="require('@/assets/user.png')"
+              :src="user.photoURL"
               class="logo"
               style=" cursor: pointer; height: 40px; margin: .5px;padding-right:10px"
               @click="loadSlider"
@@ -111,6 +111,7 @@
       class="createDirectoryScreen createDirectoryScreenInactive"
       id="newFolderScreen"
     >
+    
       <div class="createDirectoryField">
         <p class="createDirectoryFieldText">Ordner erstellen</p>
         <img
@@ -359,7 +360,13 @@ export default {
       }
     },
     async searchFiles() {
-      console.log(this.filterByName);
+      try{
+        const response = await api.object().search(this.filterByName);
+        this.directorys = response;
+        console.log(this.directorys)
+      }catch(err){
+        console.log(err)
+      }
     },
     async lastPath() {
       NProgress.start();
@@ -397,7 +404,9 @@ export default {
   async mounted() {
     try {
       const response = await api.object().get(this.currentPath);
+      this.user = api.firebase().auth().currentUser;
       this.directorys = response;
+      console.log(this.directorys)
     } catch (err) {
       console.log(err);
     }
@@ -457,6 +466,9 @@ $rosfont: montserrat;
 .logo {
   height: 30px;
   margin: auto;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+-moz-border-radius: 100%;
 }
 
 .leiste {
