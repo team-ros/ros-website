@@ -20,7 +20,7 @@
       <p>Hier sind ihre Accountinformationen zu sehen</p>
       <input
         type="text"
-        :placeholder="user.vorname + ' ' + user.nachname"
+        :placeholder="user.displayName"
         class="accountInfos"
         readonly
       />
@@ -84,8 +84,8 @@
 </template>
 
 <script>
-import firebase from "firebase";
 import api from "@/api";
+import "firebase/auth";
 export default {
   data: function () {
     return {
@@ -98,7 +98,8 @@ export default {
     };
   },
   mounted() {
-    this.user = this.$cookies.get("user");
+    this.user = api.firebase().auth().currentUser;
+    console.log(this.user);
   },
   methods: {
     updateAccountSliderState() {
@@ -144,7 +145,6 @@ export default {
       }
     },
     logout() {
-      let self = this;
       api
         .firebase()
         .auth()
@@ -153,19 +153,11 @@ export default {
           //Falls beim LogOut ein Fehler ist ->
           console.log(error);
         })
-        .then(function () {
+        .then(() => {
           //Falls beim LogOut kein Fehler ist:
           // Lösche Cookie und leite auf Login weiter
-          firebase
-            .auth()
-            .signOut()
-            .then(function () {
-              // Sign-out successful.
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          self.$router.push("/");
+
+          this.$router.push("/");
         });
     },
   },
