@@ -416,7 +416,7 @@ export default {
     },
     loginWithGoogle: function () {
       let self = this;
-      const PreGoogleProvider = api.firebase().auth
+      const PreGoogleProvider = api.firebase().auth;
       const GoogleProvider = new PreGoogleProvider.GoogleAuthProvider();
 
       GoogleProvider.addScope("profile");
