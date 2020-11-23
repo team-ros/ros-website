@@ -263,7 +263,7 @@ export default {
       name: "",
       regexPassword: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
       regexEmail: /^\S+@\S+\.\S+$/,
-      regexName: /^[a-z ,.'-]+$/i,
+      regexName: /^[a-zäÄöÖüÜß ,.'-]+$/i,
       passwordStrong: false,
       passwordStrongCreate: false,
       emailStrong: false,
