@@ -21,7 +21,7 @@
               user.displayName
             }}</span>
             <img
-              :src="user.photoURL"
+              :src="this.photoURL ? this.photoURL : require('@/assets/user.png')"
               class="logo"
               style="
                 cursor: pointer;
@@ -224,6 +224,7 @@ export default {
       pathHistory: [],
       pathIterator: -1,
       currentPath: null,
+      photoURL: false,
     };
   },
 
@@ -444,6 +445,7 @@ export default {
       this.user = api.firebase().auth().currentUser;
       this.directorys = response;
       console.log(this.directorys);
+      this.photoURL = api.firebase().auth().currentUser.photoURL;
     } catch (err) {
       console.log(err);
     }
