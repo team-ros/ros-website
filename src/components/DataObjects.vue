@@ -106,7 +106,7 @@
           <li v-for="directory in directoryList.listing" :key="directory.id">
             <a
               v-if="directory.type == 'directory' && directory.id != file.id"
-              @click="moveFile(file.parent, file.id, file.name)"
+              @click="moveFile(file.id, directory.id, file.name)"
               style="color: black"
             >
               {{ directory.name }}
@@ -189,9 +189,11 @@ export default {
         console.log(err);
       }
     },
-    async moveFile(parentID, ID, name) {
+    async moveFile(ID, directoryID, name) {
       try {
-        await api.object().move(ID, parentID, name);
+        const response = await api.object().move(ID, directoryID, name);
+        console.log(response)
+        this.$emit("fileMoved")
       } catch (err) {
         console.log(err);
       }
@@ -211,18 +213,9 @@ export default {
         console.log(err);
       }
     },
-    async getSingleFileURL() {
-      try {
-        const response = await api.object().get(this.file.id);
-        this.singleFileURL = response.url;
-      } catch (err) {
-        console.log(err);
-      }
-    },
     async getFileURL() {
       try {
         const response = await api.object().get(this.file.id);
-        console.log(response.url);
         if (response.url) this.singleFileURL = response.url;
       } catch (err) {
         console.log(err);

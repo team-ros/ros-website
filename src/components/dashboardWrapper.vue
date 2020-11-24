@@ -12,18 +12,23 @@
             <a href>
               <img
                 :src="require('@/assets/ros-logo.png')"
-                style=" height:50px; "
+                style="height: 50px"
               />
             </a>
           </div>
-          <div style="display: flex; align-items:center; ">
-            <span style="position: relative; margin-right: 10px"
-              >{{ user.displayName}}</span
-            >
+          <div style="display: flex; align-items: center">
+            <span style="position: relative; margin-right: 10px">{{
+              user.displayName
+            }}</span>
             <img
               :src="user.photoURL"
               class="logo"
-              style=" cursor: pointer; height: 40px; margin: .5px;padding-right:10px"
+              style="
+                cursor: pointer;
+                height: 40px;
+                margin: 0.5px;
+                padding-right: 10px;
+              "
               @click="loadSlider"
             />
           </div>
@@ -40,7 +45,11 @@
             >
               <i
                 class="fas fa-arrow-left"
-                style="margin-top:50%; transform: translateY(-50%);margin-left:30%"
+                style="
+                  margin-top: 50%;
+                  transform: translateY(-50%);
+                  margin-left: 30%;
+                "
               ></i>
             </div>
             <div
@@ -50,7 +59,11 @@
             >
               <i
                 class="fas fa-arrow-left"
-                style="margin-top:50%; transform: translateY(-50%);margin-left:30%"
+                style="
+                  margin-top: 50%;
+                  transform: translateY(-50%);
+                  margin-left: 30%;
+                "
               ></i>
             </div>
           </li>
@@ -91,15 +104,16 @@
       </div>
       <div class="datencontainer" id="blurBackgroundData">
         <DataObjects
-          v-for="entry in directorys.listing"
+          v-for="entry in directorys.listing || directorys.search"
           :key="entry.id"
           :file="entry"
           :directoryList="directorys"
-          style="height:150px"
+          style="height: 150px"
           @deleteFolderInformation="deleteFolderField"
           @newPath="updatePath"
           @newCurrentPath="updateCurrentPath"
           @newParentPath="newParentPath"
+          @fileMoved="fileMoved"
         />
       </div>
     </div>
@@ -111,7 +125,6 @@
       class="createDirectoryScreen createDirectoryScreenInactive"
       id="newFolderScreen"
     >
-    
       <div class="createDirectoryField">
         <p class="createDirectoryFieldText">Ordner erstellen</p>
         <img
@@ -162,7 +175,7 @@
         <b> Wirklich Löschen? </b>
         <p class="deleteDirectoryFieldText">
           Möchten sie
-          <span style="font-weight:bold">
+          <span style="font-weight: bold">
             {{ this.folderNameCache.name }}
           </span>
           wirklich Löschen?
@@ -210,10 +223,10 @@ export default {
       currentParentPath: null,
       pathHistory: [],
       pathIterator: -1,
-      currentPath: null
+      currentPath: null,
     };
   },
-  
+
   methods: {
     updateCurrentPath(newPath) {
       this.currentPath = newPath;
@@ -222,6 +235,7 @@ export default {
     newParentPath(newParentPath) {
       this.currentParentPath = newParentPath;
       this.pathHistory.push(newParentPath);
+      console.log("Pathhistory new: "+this.pathHistory)
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");
@@ -329,9 +343,12 @@ export default {
     async uploadFile() {
       try {
         NProgress.start();
-        await api.object().upload(this.$refs.file.files[0], undefined,  this.currentPath);
+        await api
+          .object()
+          .upload(this.$refs.file.files[0], undefined, this.currentPath);
         const response = await api.object().get(this.currentPath);
         this.directorys = response;
+        console.log(this.currentPath);
         NProgress.done();
       } catch (err) {
         console.log(err);
@@ -359,17 +376,35 @@ export default {
         console.log(err);
       }
     },
-    async searchFiles() {
-      try{
-        const response = await api.object().search(this.filterByName);
+    async fileMoved() {
+      NProgress.start();
+      try {
+        const response = await api.object().get(this.currentPath);
         this.directorys = response;
-        console.log(this.directorys)
-      }catch(err){
-        console.log(err)
+
+        NProgress.done();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async searchFiles() {
+      try {
+        if (this.filterByName == "") {
+          const response = await api.object().get(this.currentPath);
+          this.directorys = response;
+          console.log(response);
+        } else {
+          const response = await api.object().search(this.filterByName);
+          this.directorys = response;
+          console.log(this.directorys);
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
     async lastPath() {
       NProgress.start();
+
       try {
         const response = await api
           .object()
@@ -377,6 +412,8 @@ export default {
         this.pathHistory.pop();
         this.pathIterator--;
         this.directorys = response;
+        this.currentPath = this.currentParentPath
+        this.currentParentPath = this.pathHistory[this.pathIterator]
         NProgress.done();
       } catch (err) {
         console.log(err);
@@ -399,14 +436,14 @@ export default {
       } else {
         this.filterByName = this.selectedFilter;
       }
-    }
+    },
   },
   async mounted() {
     try {
       const response = await api.object().get(this.currentPath);
       this.user = api.firebase().auth().currentUser;
       this.directorys = response;
-      console.log(this.directorys)
+      console.log(this.directorys);
     } catch (err) {
       console.log(err);
     }
@@ -414,8 +451,8 @@ export default {
   components: {
     DataObjects,
     accountSlider,
-    dropdown
-  }
+    dropdown,
+  },
 };
 </script>
 
@@ -468,7 +505,7 @@ $rosfont: montserrat;
   margin: auto;
   border-radius: 100%;
   -webkit-border-radius: 100%;
--moz-border-radius: 100%;
+  -moz-border-radius: 100%;
 }
 
 .leiste {
