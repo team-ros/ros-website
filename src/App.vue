@@ -24,7 +24,7 @@ export default {
 
   async created() {
     if (!(await this.CheckIfUserIsSignedIn(3))) {
-      this.$router.push("/");
+      /* this.$router.push("/"); */
     } else {
       if (this.$route.path != "/dashboard") this.$router.push("/dashboard");
     }

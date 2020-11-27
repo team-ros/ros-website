@@ -29,7 +29,7 @@
                   <img src="@/assets/Slide1.png" alt />
                 </div>
                 <div class="slide">
-                  <img src="@/assets/Slide2.png" alt />
+                  <img src="@/assets/Slide2.jpg" alt />
                 </div>
 
                 <div class="navigation">
@@ -156,7 +156,7 @@
                     @input="validOrInvalidPasswordCreate2"
                   />
                   <br />
-                  <router-link to="/dashboard">
+                  
                     <button
                       :disabled="this.passwordStrongCreate != true"
                       class="rightPageContentLoginbutton"
@@ -165,7 +165,7 @@
                     >
                       REGISTRIEREN
                     </button>
-                  </router-link>
+                  
                   <p class="rightPageContentText">
                     Du hast schon einen Account?
                     <span
@@ -529,7 +529,6 @@ $rosfont: montserrat;
   width: 50%;
   height: 100%;
   background-color: $rosblue;
-  /*  background-color: grey; */
   float: left;
   display: flex;
 }

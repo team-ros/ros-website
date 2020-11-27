@@ -11,7 +11,7 @@
         height="30"
         class="buttonImg"
         id="imageX"
-        @click="updateAccountSliderState"
+        @click="updateAccountSliderState(); closeBlock()"
       />
       <div class="logout">
         <img src="@/assets/logout.png" width="35" height="35" @click="logout" />
@@ -30,32 +30,13 @@
         class="accountInfos"
         readonly
       />
-      <h3>Passwort zurücksetzen?</h3>
-      <input
-        v-on:input="passwordStrongTestCreate"
-        class="rightPageContentInputfield"
-        v-model="password1"
-        type="password"
-        placeholder
-        required
-        id="password1"
-        @blur="validOrInvalidPasswordCreate1"
-      />
-      <input
-        v-on:input="passwordStrongTestCreate"
-        @change="isDisabled"
-        class="rightPageContentInputfield"
-        v-model="password2"
-        type="password"
-        placeholder
-        required
-        id="password2"
-        @blur="validOrInvalidPasswordCreate2"
-      />
 
-      <button :disabled="disabledButton" class="resetButton">
-        PASSWORT ÄNDERN
+      <h3>Passwort zurücksetzen?</h3>
+
+      <button class="resetButton" @click="resetPassword()">
+        PASSWORT ZURÜCKSETZEN
       </button>
+
       <h3>Projektwebsite</h3>
       <a href="http://ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
@@ -80,6 +61,19 @@
       </router-link>
       <a href="#">Support</a>
     </div>
+    <div class="emailMessage" v-if="this.emailSent">
+      <img
+        src="@/assets/closeX.png"
+        width="16"
+        height="16"
+        class="closeIcon"
+        @click="closeBlock()"
+      />
+      <p>
+        Eine E-Mail zum Passwort zurücksetzen wurde erfolgreich an
+       <b> {{ this.user.email }} </b> gesendet.
+      </p>
+    </div>
   </div>
 </template>
 
@@ -95,6 +89,7 @@ export default {
       passwordStrongCreate: false,
       disabledButton: true,
       user: {},
+      emailSent: false,
     };
   },
   mounted() {
@@ -160,6 +155,17 @@ export default {
           this.$router.push("/");
         });
     },
+    async resetPassword() {
+      const self = this;
+            api.firebase().auth().sendPasswordResetEmail(this.user.email).then(function () {
+                self.emailSent = true
+            }).catch(function (error) {
+                console.log(error)
+            });
+    },
+    closeBlock(){
+      this.emailSent = false;
+    }
   },
 };
 </script>
@@ -277,5 +283,26 @@ a {
 .inputInvalid {
   border-color: #cc0000;
   transition: ease-in-out 0.5s;
+}
+.emailMessage {
+  background-color: #5cb85c;
+  position: absolute;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  left: 0;
+  bottom: 0;
+  min-height: 80px;
+}
+.closeIcon {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  margin: 5px;
+  padding: 5px;
+  padding-top: 10px;
+
+  cursor: pointer;
 }
 </style>
