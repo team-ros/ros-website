@@ -90,7 +90,7 @@
           <p>
             <i class="fas fa-download"></i>
             <span class="contextMenuText">
-              <a> Herunterladen </a>
+              <a :href="this.sameOriginURL" :download="this.file.name" > Herunterladen </a>
             </span>
           </p>
         </li>
@@ -153,6 +153,7 @@ export default {
       filetype: "",
       newName: "",
       singleFileURL: "",
+      sameOriginURL: ""
     };
   },
   components: {
@@ -221,28 +222,15 @@ export default {
         console.log(err);
       }
     },
-    downloadFile() {
-      fetch(this.singleFileURL)
-      .then(response => response.blob())
-      .then(blob => {
-        blob.lastModifiedDate = new Date();
-        blob.name = this.file.name;
-        const url = URL.createObjectURL(blob);
-        this.singleFileURL = url
-      })
-      .catch(err => {
+    async downloadFile() {
+      try{
+      const response =  await api.object().download(this.singleFileURL)
+      this.sameOriginURL = response;
+      console.log(response)
+      }
+      catch(err){
         console.log(err)
-      })
-      // This works only in chromw and firefox 
-      // const API = browser || chrome;
-      // API.downloads.download({
-      //   url: this.singleFileURL,
-      //   filename: this.file.name
-      // })
-      // .then(response => console.log(response))
-      // .catch(err => {
-      //   console.log(err)
-      // })
+      }
     }
   },
   async mounted() {

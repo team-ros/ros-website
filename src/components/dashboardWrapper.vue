@@ -21,7 +21,9 @@
               user.displayName
             }}</span>
             <img
-              :src="this.photoURL ? this.photoURL : require('@/assets/user.png')"
+              :src="
+                this.photoURL ? this.photoURL : require('@/assets/user.png')
+              "
               class="logo"
               style="
                 cursor: pointer;
@@ -104,7 +106,7 @@
       </div>
       <div class="datencontainer" id="blurBackgroundData">
         <DataObjects
-          v-for="entry in directorys.listing || directorys.search"
+          v-for="entry in directorysOrdered || directorys.search"
           :key="entry.id"
           :file="entry"
           :directoryList="directorys"
@@ -203,6 +205,7 @@ import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
 import api from "@/api";
 import NProgress from "nprogress";
+import _ from "lodash";
 NProgress.configure({ parent: "#blurBackgroundData" });
 
 export default {
@@ -236,7 +239,7 @@ export default {
     newParentPath(newParentPath) {
       this.currentParentPath = newParentPath;
       this.pathHistory.push(newParentPath);
-      console.log("Pathhistory new: "+this.pathHistory)
+      console.log("Pathhistory new: " + this.pathHistory);
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");
@@ -344,12 +347,12 @@ export default {
     async uploadFile() {
       try {
         NProgress.start();
-        await api
+        const test123 = await api
           .object()
           .upload(this.$refs.file.files[0], undefined, this.currentPath);
         const response = await api.object().get(this.currentPath);
         this.directorys = response;
-        console.log(this.currentPath);
+        console.log(test123);
         NProgress.done();
       } catch (err) {
         console.log(err);
@@ -413,8 +416,8 @@ export default {
         this.pathHistory.pop();
         this.pathIterator--;
         this.directorys = response;
-        this.currentPath = this.currentParentPath
-        this.currentParentPath = this.pathHistory[this.pathIterator]
+        this.currentPath = this.currentParentPath;
+        this.currentParentPath = this.pathHistory[this.pathIterator];
         NProgress.done();
       } catch (err) {
         console.log(err);
@@ -424,16 +427,16 @@ export default {
       console.log(filterByWhat);
       if (filterByWhat == "filterBySize") {
         this.filterExpression = "size";
-        this.filterDirection = -1;
+        this.filterDirection = 'desc';
       } else if (filterByWhat == "filterByName") {
         this.filterExpression = "name";
-        this.filterDirection = 1;
+        this.filterDirection = 'asc';
       } else if (filterByWhat == "filterByDate") {
         this.filterExpression = "date";
-        this.filterDirection = -1;
+        this.filterDirection = 'desc';
       } else if (filterByWhat == "filterByDatatype") {
         this.filterExpression = "type";
-        this.filterDirection = 1;
+        this.filterDirection = 'asc';
       } else {
         this.filterByName = this.selectedFilter;
       }
@@ -448,6 +451,12 @@ export default {
       this.photoURL = api.firebase().auth().currentUser.photoURL;
     } catch (err) {
       console.log(err);
+    }
+    
+  },
+  computed: {
+    directorysOrdered() {
+      return _.orderBy(this.directorys.listing, this.filterExpression, this.filterDirection);
     }
   },
   components: {

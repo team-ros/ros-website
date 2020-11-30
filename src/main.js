@@ -6,7 +6,8 @@ import cookies from "vue-cookies";
 Vue.use(require('vue-filter-pretty-bytes'));
 Vue.use(cookies);
 import "nprogress/nprogress.css";
-
+const _ = require('lodash');
+Vue.use(_)
 Vue.config.productionTip = false;
 
 new Vue({
