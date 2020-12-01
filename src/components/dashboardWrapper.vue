@@ -76,7 +76,7 @@
                 class="such_box"
                 placeholder="Suche nach Dateien"
                 v-model="filterByName"
-                @keypress.enter="searchFiles()"
+                @input="searchFiles()"
               />
             </div>
           </li>

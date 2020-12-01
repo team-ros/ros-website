@@ -38,7 +38,7 @@
       </button>
 
       <h3>Projektwebsite</h3>
-      <a href="http://ros-cloud.at/">ROS Cloud</a>
+      <a href="https://project.ros-cloud.at/">ROS Cloud</a>
       <h3>Social Media</h3>
       <a
         href="https://www.instagram.com/ros_cloud/?hl=de"
@@ -59,7 +59,7 @@
       <router-link to="/impressum">
         <a href="#">Impressum</a>
       </router-link>
-      <a href="#">Support</a>
+      <a href="mailto:support@ros-cloud.at?subject=Supportanfrage">Support</a>
     </div>
     <div class="emailMessage" v-if="this.emailSent">
       <img

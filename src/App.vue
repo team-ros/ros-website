@@ -23,11 +23,12 @@ export default {
   },
 
   async created() {
-    if (!(await this.CheckIfUserIsSignedIn(3))) {
-      /* this.$router.push("/"); */
-    } else {
-      if (this.$route.path != "/dashboard") this.$router.push("/dashboard");
-    }
+    api.util().persistSession({
+      loginUrl: "/",
+      dashboardUrl: "/dashboard",
+      reloads: 3,
+      timeout: 300
+    })
   }
 };
 </script>

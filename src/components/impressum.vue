@@ -16,16 +16,26 @@
       <strong>E-Mail: </strong>
       <a href="mailto:team@ros-cloud.at">team@ros-cloud.at</a>
     </p>
+    <br />
+    <br />
+    <br />
+
+    <b> Folgende Libraries oder Templates unterliegen der MIT-Lizenz </b>
     <p>
-      Kontextmenü erstellt von
+      Kontextmenü-template von
       <a href="https://github.com/rawilk/vue-context">rawilk </a>
     </p>
     <p>
-      <a href="https://randallwilk.dev/docs/vue-context/v6/introduction">
-        Website von rawilk
-      </a>
+      progressBar von
+      <a href="https://www.npmjs.com/package/nprogress"> nprogress </a>
+    </p>
+    <p>
+      <a href="https://momentjs.com/"> moment.js </a> zum konvertieren eines Unix timestamps in eine,
+      für Menschen, lesbare Form
     </p>
     <br />
+        <b> restliche Quellenangaben  </b>
+
     <div>
       Icons erstellt von
       <a
@@ -38,21 +48,16 @@
         >www.flaticon.com</a
       >
     </div>
-    <p>
-      <a href=""> moment.js </a> zum konvertieren eines Unix timestamps in eine,
-      für Menschen, lesbare Form
-    </p>
+    <p>  <a href="https://www.flaticon.com/de/packs/file-types">exakte Quelle </a>der Icons </p>
+    
     <p>
       Das Grundgerüst des
       <a href="https://vuejsexamples.com/animated-dropdown-menu-with-vue-js/">
         dropdown Menüs
       </a>
     </p>
-    <p>
-      die progressBar von
-      <a href="https://www.npmjs.com/package/nprogress"> nprogress </a>
-    </p>
-    <p></p>
+    
+
   </div>
 </template>
 

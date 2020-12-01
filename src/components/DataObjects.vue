@@ -87,12 +87,14 @@
         :download="file.name"
       >
         <li class="contextMenuEntries">
+          <a :href="this.sameOriginURL" :download="this.file.name" >
           <p>
             <i class="fas fa-download"></i>
             <span class="contextMenuText">
-              <a :href="this.sameOriginURL" :download="this.file.name" > Herunterladen </a>
+               Herunterladen 
             </span>
           </p>
+          </a>
         </li>
       </div>
       <li class="contextMenuEntries v-context__sub">
@@ -226,7 +228,6 @@ export default {
       try{
       const response =  await api.object().download(this.singleFileURL)
       this.sameOriginURL = response;
-      console.log(response)
       }
       catch(err){
         console.log(err)
@@ -307,14 +308,18 @@ $rosfont: montserrat;
   height: 40px;
   display: flex;
   align-items: center;
+  
 }
-.contextMenuText {
-  position: relative;
-  left: 12px;
+.contextMenuEntries{
   a {
     color: rgb(117, 117, 117);
     text-decoration: none;
   }
+}
+.contextMenuText {
+  position: relative;
+  left: 12px;
+  
 }
 .dataName {
   border: 0;
