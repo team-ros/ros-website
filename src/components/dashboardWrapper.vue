@@ -435,7 +435,7 @@ export default {
         this.filterExpression = "date";
         this.filterDirection = 'desc';
       } else if (filterByWhat == "filterByDatatype") {
-        this.filterExpression = "type";
+        this.filterExpression = "fileExtention";
         this.filterDirection = 'asc';
       } else {
         this.filterByName = this.selectedFilter;

@@ -106,6 +106,15 @@
                     Erstelle einen!
                   </span>
                 </p>
+                <p
+                  class="rightPageContentText"
+                  style="margin-top: -5px"
+                  @click="resetPassword()"
+                >
+                  <span style="color: #002c6b; cursor: pointer">
+                    Passwort vergessen?
+                  </span>
+                </p>
               </div>
 
               <div class="registerInactive" id="rightPageContentRegister">
@@ -156,16 +165,16 @@
                     @input="validOrInvalidPasswordCreate2"
                   />
                   <br />
-                  
-                    <button
-                      :disabled="this.passwordStrongCreate != true"
-                      class="rightPageContentLoginbutton"
-                      style="width: 100%"
-                      @click="registerAccount()"
-                    >
-                      REGISTRIEREN
-                    </button>
-                  
+
+                  <button
+                    :disabled="this.passwordStrongCreate != true"
+                    class="rightPageContentLoginbutton"
+                    style="width: 100%"
+                    @click="registerAccount()"
+                  >
+                    REGISTRIEREN
+                  </button>
+
                   <p class="rightPageContentText">
                     Du hast schon einen Account?
                     <span
@@ -212,6 +221,16 @@
                 </p>
               </div>
             </div>
+          </div>
+          <div class="passwortRecoveryBlock" v-if="this.emailSent">
+            <p class="passwortRecoveryBlockMessage"> Eine E-Mail zum Passwort ändern wurde an {{this.email}} gesendet</p>
+            <img
+              src="@/assets/closeX.png"
+              width="16"
+              height="16"
+              class="closeIcon"
+              @click="closeErrorBlock()"
+            />
           </div>
           <errorBlock
             v-if="this.errorCode"
@@ -266,10 +285,10 @@ export default {
       regexName: /^[a-zäÄöÖüÜß ,.'-]+$/i,
       passwordStrong: false,
       passwordStrongCreate: false,
-      emailStrong: false,
-      nameValid: false,
       passwordSafety: false,
       errorCode: "",
+      emailSent: false,
+      passwordRecoveryMessage: ""
     };
   },
   methods: {
@@ -438,7 +457,7 @@ export default {
           api
             .firebase()
             .auth()
-            .onAuthStateChanged(function(user) {
+            .onAuthStateChanged(function (user) {
               if (user) {
                 self.$router.push("/dashboard");
               }
@@ -466,14 +485,39 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.emailCreate, this.password2);
 
-        api.firebase().auth().currentUser.updateProfile({
-            displayName: this.name
-        })
-        .catch(err => this.errorRegister(err))
+        api
+          .firebase()
+          .auth()
+          .currentUser.updateProfile({
+            displayName: this.name,
+          })
+          .catch((err) => this.errorRegister(err));
         this.errorRegister("no");
       } catch (err) {
         console.log(err);
         this.errorRegister(err);
+      }
+    },
+    async resetPassword() {
+      if (this.regexEmail.test(this.email)) {
+        const self = this;
+        api
+          .firebase()
+          .auth()
+          .sendPasswordResetEmail(this.email)
+          .then(function () {
+            self.emailSent = true;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        document.getElementById("email").classList.remove("inputInvalid");
+        document.getElementById("email").classList.remove("inputValid");
+        document.getElementById("email").value = "";
+      } else {
+        console.log("er");
+        document.getElementById("email").classList.add("inputInvalid");
+        document.getElementById("email").classList.remove("inputValid");
       }
     },
     errorRegister(err) {
@@ -483,6 +527,7 @@ export default {
     },
     closeErrorBlock() {
       this.errorCode = "";
+      this.emailSent=false
     },
     emptyFields() {
       this.name = "";
@@ -766,5 +811,25 @@ a {
   -o-filter: blur(2px);
   -ms-filter: blur(2px);
   filter: blur(2px);
+}
+.passwortRecoveryBlock {
+  width: 40vw;
+  height: 80px;
+  left: 50%;
+  bottom: 0;
+  position: absolute;
+  background-color: #5cb85c;
+}
+.closeIcon {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  cursor: pointer;
+}
+.passwortRecoveryBlockMessage {
+  text-align: center;
+  position: relative;
+  top: 25%;
+  transform: translateY(-25%);
 }
 </style>
