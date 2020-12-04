@@ -515,7 +515,6 @@ export default {
         document.getElementById("email").classList.remove("inputValid");
         document.getElementById("email").value = "";
       } else {
-        console.log("er");
         document.getElementById("email").classList.add("inputInvalid");
         document.getElementById("email").classList.remove("inputValid");
       }
