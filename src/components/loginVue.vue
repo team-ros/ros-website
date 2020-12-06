@@ -291,6 +291,7 @@ export default {
       passwordRecoveryMessage: ""
     };
   },
+
   methods: {
     firstSlideActive() {
       document.getElementById("navLabel1").classList.add("sliderButtonActive");
@@ -634,9 +635,9 @@ $rosfont: montserrat;
   -webkit-transition: opacity 0.5s ease-out;
   -o-transition: opacity 0.5s ease-out;
 }
-.rightPageContentLoginbutton:disabled {
+/*.rightPageContentLoginbutton:disabled {
   opacity: 100%;
-}
+}*/
 .rightPageContentGooglebutton {
   margin-top: 20px;
   font-size: 18px;
