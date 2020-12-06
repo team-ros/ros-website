@@ -223,7 +223,9 @@
             </div>
           </div>
           <div class="passwortRecoveryBlock" v-if="this.emailSent">
-            <p class="passwortRecoveryBlockMessage"> Eine E-Mail zum Passwort ändern wurde an {{this.email}} gesendet</p>
+            <p class="passwortRecoveryBlockMessage">
+              Eine E-Mail zum Passwort ändern wurde an {{ this.email }} gesendet
+            </p>
             <img
               src="@/assets/closeX.png"
               width="16"
@@ -269,6 +271,9 @@
 import api from "@/api";
 import "firebase/auth";
 import ErrorBlock from "./errorBlock.vue";
+import VueMobileDetection from "vue-mobile-detection";
+Vue.use(VueMobileDetection);
+import Vue from "vue";
 
 export default {
   components: { ErrorBlock },
@@ -288,10 +293,14 @@ export default {
       passwordSafety: false,
       errorCode: "",
       emailSent: false,
-      passwordRecoveryMessage: ""
+      passwordRecoveryMessage: "",
     };
   },
-
+  created() {
+  if(this.$isMobile()){
+    window.location.href = "https://app.ros-cloud.at/";
+  };
+  },
   methods: {
     firstSlideActive() {
       document.getElementById("navLabel1").classList.add("sliderButtonActive");
@@ -527,7 +536,7 @@ export default {
     },
     closeErrorBlock() {
       this.errorCode = "";
-      this.emailSent=false
+      this.emailSent = false;
     },
     emptyFields() {
       this.name = "";
