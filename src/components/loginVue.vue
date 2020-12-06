@@ -167,7 +167,7 @@
                   <br />
 
                   <button
-                    :disabled="this.passwordStrongCreate != true"
+                    disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
                     @click="registerAccount()"
@@ -635,7 +635,7 @@ $rosfont: montserrat;
   -o-transition: opacity 0.5s ease-out;
 }
 .rightPageContentLoginbutton:disabled {
-  opacity: 40%;
+  opacity: 100%;
 }
 .rightPageContentGooglebutton {
   margin-top: 20px;
