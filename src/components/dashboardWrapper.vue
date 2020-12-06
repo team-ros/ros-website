@@ -239,7 +239,7 @@ export default {
     newParentPath(newParentPath) {
       this.currentParentPath = newParentPath;
       this.pathHistory.push(newParentPath);
-      console.log("Pathhistory new: " + this.pathHistory);
+      
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");

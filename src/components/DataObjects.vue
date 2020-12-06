@@ -12,35 +12,36 @@
         class="logo logo2"
         @click="getNewPath()"
       />
-      <img v-if="filetype == 'docx'" src="@/assets/doc.png" class="logo" />
-      <img v-if="filetype == 'png'" src="@/assets/png.png" class="logo" />
+      <img v-else-if="filetype == 'docx'" src="@/assets/doc.png" class="logo" />
+      <img v-else-if="filetype == 'png'" src="@/assets/png.png" class="logo" />
       <img
-        v-if="filetype == 'jpg' || filetype == 'jpeg'"
+        v-else-if="filetype == 'jpg' || filetype == 'jpeg'"
         src="@/assets/jpg.png"
         class="logo"
       />
 
-      <img v-if="filetype == 'html'" src="@/assets/html.png" class="logo" />
-      <img v-if="filetype == 'js'" src="@/assets/javascript.png" class="logo" />
-      <img v-if="filetype == 'xml'" src="@/assets/xml.png" class="logo" />
-      <img v-if="filetype == 'rtf'" src="@/assets/rtf.png" class="logo" />
-      <img v-if="filetype == 'iso'" src="@/assets/iso.png" class="logo" />
-      <img v-if="filetype == 'pdf'" src="@/assets/pdf.png" class="logo" />
+      <img v-else-if="filetype == 'html'" src="@/assets/html.png" class="logo" />
+      <img v-else-if="filetype == 'js'" src="@/assets/javascript.png" class="logo" />
+      <img v-else-if="filetype == 'xml'" src="@/assets/xml.png" class="logo" />
+      <img v-else-if="filetype == 'rtf'" src="@/assets/rtf.png" class="logo" />
+      <img v-else-if="filetype == 'iso'" src="@/assets/iso.png" class="logo" />
+      <img v-else-if="filetype == 'pdf'" src="@/assets/pdf.png" class="logo" />
       <img
-        v-if="filetype == 'json'"
+        v-else-if="filetype == 'json'"
         src="@/assets/json-file.png"
         class="logo"
       />
-      <img v-if="filetype == 'ai'" src="@/assets/ai.png" class="logo" />
-      <img v-if="filetype == 'csv'" src="@/assets/csv.png" class="logo" />
-      <img v-if="filetype == 'exe'" src="@/assets/exe.png" class="logo" />
-      <img v-if="filetype == 'mp3'" src="@/assets/mp3.png" class="logo" />
-      <img v-if="filetype == 'mp4'" src="@/assets/mp4.png" class="logo" />
-      <img v-if="filetype == 'ppt'" src="@/assets/ppt.png" class="logo" />
-      <img v-if="filetype == 'psd'" src="@/assets/psd.png" class="logo" />
-      <img v-if="filetype == 'txt'" src="@/assets/txt.png" class="logo" />
-      <img v-if="filetype == 'xls'" src="@/assets/xls.png" class="logo" />
-      <img v-if="filetype == 'zip'" src="@/assets/zip.png" class="logo" />
+      <img v-else-if="filetype == 'ai'" src="@/assets/ai.png" class="logo" />
+      <img v-else-if="filetype == 'csv'" src="@/assets/csv.png" class="logo" />
+      <img v-else-if="filetype == 'exe'" src="@/assets/exe.png" class="logo" />
+      <img v-else-if="filetype == 'mp3'" src="@/assets/mp3.png" class="logo" />
+      <img v-else-if="filetype == 'mp4'" src="@/assets/mp4.png" class="logo" />
+      <img v-else-if="filetype == 'ppt'" src="@/assets/ppt.png" class="logo" />
+      <img v-else-if="filetype == 'psd'" src="@/assets/psd.png" class="logo" />
+      <img v-else-if="filetype == 'txt'" src="@/assets/txt.png" class="logo" />
+      <img v-else-if="filetype == 'xls'" src="@/assets/xls.png" class="logo" />
+      <img v-else-if="filetype == 'zip'" src="@/assets/zip.png" class="logo" />
+      <img v-else src="@/assets/file.png" class="logo">
 
       <input
         type="text"
@@ -86,14 +87,12 @@
         :href="singleFileURL"
         :download="file.name"
       >
-        <li class="contextMenuEntries">
-          <a :href="this.sameOriginURL" :download="this.file.name" >
-          <p>
-            <i class="fas fa-download"></i>
-            <span class="contextMenuText">
-               Herunterladen 
-            </span>
-          </p>
+        <li class="contextMenuEntries" v-if="file.type != 'directory'">
+          <a :href="this.sameOriginURL" :download="this.file.name">
+            <p>
+              <i class="fas fa-download"></i>
+              <span class="contextMenuText"> Herunterladen </span>
+            </p>
           </a>
         </li>
       </div>
@@ -155,7 +154,7 @@ export default {
       filetype: "",
       newName: "",
       singleFileURL: "",
-      sameOriginURL: ""
+      sameOriginURL: "",
     };
   },
   components: {
@@ -195,8 +194,8 @@ export default {
     async moveFile(ID, directoryID, name) {
       try {
         const response = await api.object().move(ID, directoryID, name);
-        console.log(response)
-        this.$emit("fileMoved")
+        console.log(response);
+        this.$emit("fileMoved");
       } catch (err) {
         console.log(err);
       }
@@ -225,14 +224,13 @@ export default {
       }
     },
     async downloadFile() {
-      try{
-      const response =  await api.object().download(this.singleFileURL)
-      this.sameOriginURL = response;
+      try {
+        const response = await api.object().download(this.singleFileURL);
+        this.sameOriginURL = response;
+      } catch (err) {
+        console.log(err);
       }
-      catch(err){
-        console.log(err)
-      }
-    }
+    },
   },
   async mounted() {
     await this.getFileURL();
@@ -308,9 +306,8 @@ $rosfont: montserrat;
   height: 40px;
   display: flex;
   align-items: center;
-  
 }
-.contextMenuEntries{
+.contextMenuEntries {
   a {
     color: rgb(117, 117, 117);
     text-decoration: none;
@@ -319,7 +316,6 @@ $rosfont: montserrat;
 .contextMenuText {
   position: relative;
   left: 12px;
-  
 }
 .dataName {
   border: 0;
