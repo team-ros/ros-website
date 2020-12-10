@@ -12,35 +12,35 @@
         class="logo logo2"
         @click="getNewPath()"
       />
-      <img v-else-if="filetype == 'docx'" src="@/assets/doc.png" class="logo" />
-      <img v-else-if="filetype == 'png'" src="@/assets/png.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'docx'" src="@/assets/doc.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'png'" src="@/assets/png.png" class="logo" />
       <img
-        v-else-if="filetype == 'jpg' || filetype == 'jpeg'"
+        v-else-if="this.file.fileExtention == 'jpg' || this.file.fileExtention == 'jpeg'"
         src="@/assets/jpg.png"
         class="logo"
       />
 
-      <img v-else-if="filetype == 'html'" src="@/assets/html.png" class="logo" />
-      <img v-else-if="filetype == 'js'" src="@/assets/javascript.png" class="logo" />
-      <img v-else-if="filetype == 'xml'" src="@/assets/xml.png" class="logo" />
-      <img v-else-if="filetype == 'rtf'" src="@/assets/rtf.png" class="logo" />
-      <img v-else-if="filetype == 'iso'" src="@/assets/iso.png" class="logo" />
-      <img v-else-if="filetype == 'pdf'" src="@/assets/pdf.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'html'" src="@/assets/html.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'js'" src="@/assets/javascript.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'xml'" src="@/assets/xml.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'rtf'" src="@/assets/rtf.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'iso'" src="@/assets/iso.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'pdf'" src="@/assets/pdf.png" class="logo" />
       <img
-        v-else-if="filetype == 'json'"
+        v-else-if="this.file.fileExtention == 'json'"
         src="@/assets/json-file.png"
         class="logo"
       />
-      <img v-else-if="filetype == 'ai'" src="@/assets/ai.png" class="logo" />
-      <img v-else-if="filetype == 'csv'" src="@/assets/csv.png" class="logo" />
-      <img v-else-if="filetype == 'exe'" src="@/assets/exe.png" class="logo" />
-      <img v-else-if="filetype == 'mp3'" src="@/assets/mp3.png" class="logo" />
-      <img v-else-if="filetype == 'mp4'" src="@/assets/mp4.png" class="logo" />
-      <img v-else-if="filetype == 'ppt'" src="@/assets/ppt.png" class="logo" />
-      <img v-else-if="filetype == 'psd'" src="@/assets/psd.png" class="logo" />
-      <img v-else-if="filetype == 'txt'" src="@/assets/txt.png" class="logo" />
-      <img v-else-if="filetype == 'xls'" src="@/assets/xls.png" class="logo" />
-      <img v-else-if="filetype == 'zip'" src="@/assets/zip.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'ai'" src="@/assets/ai.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'csv'" src="@/assets/csv.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'exe'" src="@/assets/exe.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'mp3'" src="@/assets/mp3.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'mp4'" src="@/assets/mp4.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'ppt'" src="@/assets/ppt.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'psd'" src="@/assets/psd.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'txt'" src="@/assets/txt.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'xls'" src="@/assets/xls.png" class="logo" />
+      <img v-else-if="this.file.fileExtention == 'zip'" src="@/assets/zip.png" class="logo" />
       <img v-else src="@/assets/file.png" class="logo">
 
       <input
@@ -123,7 +123,7 @@
         <ul class="v-context">
           <li style="color: black; padding: 5px; padding-right: 10px">
             <p>Erstellt am: {{ getHumanDate(this.file.date) }}</p>
-            <p v-if="file.type != 'directory'">Typus: {{ this.filetype }}</p>
+            <p v-if="file.type != 'directory'">Typus: {{ this.file.fileExtention}}</p>
             <p>Object-ID: {{ this.file.id }}</p>
             <p>Dateigröße: {{ file.size | prettyBytes }}</p>
           </li>
@@ -135,8 +135,8 @@
 
 
 <script>
-import VueContext from "vue-context";
-import "vue-context/src/sass/vue-context.scss";
+import VueContext from "ros-vue-context";
+import "ros-vue-context/src/sass/vue-context.scss";
 import moment from "moment";
 import NProgress from "nprogress";
 
@@ -151,7 +151,6 @@ export default {
       seeWriteable: false,
       fileDeleted: false,
       box: null,
-      filetype: "",
       newName: "",
       singleFileURL: "",
       sameOriginURL: "",
@@ -234,8 +233,6 @@ export default {
   },
   async mounted() {
     await this.getFileURL();
-    const re = /(?:.([^.]+))?$/;
-    this.filetype = re.exec(this.file.name)[1];
   },
 };
 </script>
