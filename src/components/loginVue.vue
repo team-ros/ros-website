@@ -46,10 +46,20 @@
           <div class="rightPage" id="rightPage">
             <div id="logo">
               <img src="@/assets/ros-logo.png" class="rightPageContentLogo" />
+              <p class="languageBox">
+                <span @click="languageDE()" class="language"> Deutsch </span>|
+                <span @click="languageEN()" class="language"> Englisch </span>
+              </p>
             </div>
+
             <div class="rightPageContent">
               <div class="loginActive" id="rightPageContentLogin">
-                <h1>Willkommen zurück!</h1>
+                <h1 v-show="this.$store.state.language == 'de'">
+                  Willkommen zurück!
+                </h1>
+                <h1 v-show="this.$store.state.language == 'en'">
+                  Welcome Back!
+                </h1>
                 <br />
 
                 <p
@@ -67,7 +77,18 @@
                   required
                   id="email"
                 />
-                <p class="rightPageContentGrey">Passwort</p>
+                <p
+                  v-show="this.$store.state.language == 'de'"
+                  class="rightPageContentGrey"
+                >
+                  Passwort
+                </p>
+                <p
+                  v-show="this.$store.state.language == 'en'"
+                  class="rightPageContentGrey"
+                >
+                  Password
+                </p>
                 <input
                   @input="validOrInvalidPassword"
                   v-on:input="passwordStrongTestLogin"
@@ -96,7 +117,10 @@
                 >
                   <i class="fa fa-google-plus" style="color: #db4a39"></i>
                 </button>
-                <p class="rightPageContentText">
+                <p
+                  v-show="this.$store.state.language == 'de'"
+                  class="rightPageContentText"
+                >
                   Noch keinen Account?
                   <span
                     style="color: #002c6b; cursor: pointer"
@@ -107,6 +131,20 @@
                   </span>
                 </p>
                 <p
+                  v-show="this.$store.state.language == 'en'"
+                  class="rightPageContentText"
+                >
+                  No account yet?
+                  <span
+                    style="color: #002c6b; cursor: pointer"
+                    id="createAccountButton"
+                    @click="createSwitch()"
+                  >
+                    Create one!
+                  </span>
+                </p>
+                <p
+                  v-show="this.$store.state.language == 'de'"
                   class="rightPageContentText"
                   style="margin-top: -5px"
                   @click="resetPassword()"
@@ -115,11 +153,24 @@
                     Passwort vergessen?
                   </span>
                 </p>
+                <p
+                  v-show="this.$store.state.language == 'en'"
+                  class="rightPageContentText"
+                  style="margin-top: -5px"
+                  @click="resetPassword()"
+                >
+                  <span style="color: #002c6b; cursor: pointer">
+                    Forgot Password?
+                  </span>
+                </p>
               </div>
 
               <div class="registerInactive" id="rightPageContentRegister">
                 <div id="blurDiv">
-                  <h1>Willkommen!</h1>
+                  <h1 v-show="this.$store.state.language == 'de'">
+                    Willkommen!
+                  </h1>
+                  <h1 v-show="this.$store.state.language == 'en'">Welcome!</h1>
                   <br />
 
                   <p class="rightPageContentGrey">Name</p>
@@ -142,7 +193,18 @@
                     required
                     id="emailCreate"
                   />
-                  <p class="rightPageContentGrey">Passwort</p>
+                  <p
+                    v-show="this.$store.state.language == 'de'"
+                    class="rightPageContentGrey"
+                  >
+                    Passwort
+                  </p>
+                  <p
+                    v-show="this.$store.state.language == 'en'"
+                    class="rightPageContentGrey"
+                  >
+                    Password
+                  </p>
                   <input
                     v-on:input="passwordStrongTestCreate"
                     class="rightPageContentInputfield"
@@ -153,7 +215,18 @@
                     id="password1"
                     @input="validOrInvalidPasswordCreate1"
                   />
-                  <p class="rightPageContentGrey">Passwort wiederholen</p>
+                  <p
+                    v-show="this.$store.state.language == 'de'"
+                    class="rightPageContentGrey"
+                  >
+                    Passwort wiederholen
+                  </p>
+                  <p
+                    v-show="this.$store.state.language == 'en'"
+                    class="rightPageContentGrey"
+                  >
+                    Repeat password
+                  </p>
                   <input
                     v-on:input="passwordStrongTestCreate"
                     class="rightPageContentInputfield"
@@ -167,6 +240,7 @@
                   <br />
 
                   <button
+                    v-show="this.$store.state.language == 'de'"
                     disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
@@ -174,8 +248,19 @@
                   >
                     REGISTRIEREN
                   </button>
-
-                  <p class="rightPageContentText">
+                  <button
+                    v-show="this.$store.state.language == 'en'"
+                    disabled="this.passwordStrongCreate != true"
+                    class="rightPageContentLoginbutton"
+                    style="width: 100%"
+                    @click="registerAccount()"
+                  >
+                    REGISTER
+                  </button>
+                  <p
+                    v-show="this.$store.state.language == 'de'"
+                    class="rightPageContentText"
+                  >
                     Du hast schon einen Account?
                     <span
                       style="color: #002c6b; cursor: pointer"
@@ -184,8 +269,25 @@
                       >Zum Login!</span
                     >
                   </p>
+                  <p
+                    v-show="this.$store.state.language == 'en'"
+                    class="rightPageContentText"
+                  >
+                    Already have an account?
+                    <span
+                      style="color: #002c6b; cursor: pointer"
+                      id="loginAccountButton"
+                      @click="loginSwitch(), closeErrorBlock()"
+                    >
+                      Login!</span
+                    >
+                  </p>
                 </div>
-                <div class="passwordSafety" id="passwordSafety">
+                <div
+                  v-show="this.$store.state.language == 'de'"
+                  class="passwordSafety"
+                  id="passwordSafety"
+                >
                   <p style="margin-top: 0">
                     Aufgrund der Sicherheit Ihrere Daten stellen wir folgende
                     Mindestanforderungen für Passwörter
@@ -209,7 +311,41 @@
                     <li>mindestens ein Sonderzeichen</li>
                   </ul>
                 </div>
-                <p class="rightPageContentText">
+
+
+                <div
+                  v-show="this.$store.state.language == 'en'"
+                  class="passwordSafety"
+                  id="passwordSafetyEn"
+                >
+                  <p style="margin-top: 0">
+                    Due to the security of your data, we set the following
+                    minimum requirements for passwords
+                  </p>
+                  <hr
+                    style="
+                      border: 0;
+                      height: 1px;
+                      background-image: linear-gradient(
+                        to right,
+                        rgba(0, 0, 0, 0),
+                        rgba(0, 0, 0, 0.75),
+                        rgba(0, 0, 0, 0)
+                      );
+                    "
+                  />
+                  <ul>
+                    <li>at least 8 characters lonag</li>
+                    <li>at least one capital letter</li>
+                    <li>at least one lower case letter</li>
+                    <li>at least one special character</li>
+                  </ul>
+                </div>
+                
+                <p
+                  v-show="this.$store.state.language == 'de'"
+                  class="rightPageContentText"
+                >
                   unsere
                   <span
                     @mouseover="showPasswordSafety"
@@ -218,6 +354,19 @@
                     >Mindestanforderungen</span
                   >
                   für ein Passwort
+                </p>
+                <p
+                  v-show="this.$store.state.language == 'en'"
+                  class="rightPageContentText"
+                >
+                  our
+                  <span
+                    @mouseover="showPasswordSafetyEn"
+                    @mouseleave="leavePasswordSafetyEn"
+                    style="color: #002c6b; cursor: pointer"
+                    >minimum requirements</span
+                  >
+                  for a password
                 </p>
               </div>
             </div>
@@ -259,7 +408,8 @@
           © ROS 2020
           <span style="margin: 5px">|</span>
           <router-link to="/impressum">
-            <a href="#">Impressum</a>
+            <a v-show="this.$store.state.language == 'de'" href="#">Impressum</a>
+            <a v-show="this.$store.state.language == 'en'" href="#">imprint</a>
           </router-link>
         </div>
       </div>
@@ -297,9 +447,9 @@ export default {
     };
   },
   created() {
-  if(this.$isMobile()){
-    window.location.href = "https://app.ros-cloud.at/";
-  };
+    if (this.$isMobile()) {
+      window.location.href = "https://app.ros-cloud.at/";
+    }
   },
   methods: {
     firstSlideActive() {
@@ -443,6 +593,20 @@ export default {
       document.getElementById("blurDiv").classList.remove("blurBackground");
       document.getElementById("logo").classList.remove("blurBackground");
     },
+    showPasswordSafetyEn() {
+      document
+        .getElementById("passwordSafetyEn")
+        .classList.add("showPasswordSafety");
+      document.getElementById("blurDiv").classList.add("blurBackground");
+      document.getElementById("logo").classList.add("blurBackground");
+    },
+    leavePasswordSafetyEn() {
+      document
+        .getElementById("passwordSafetyEn")
+        .classList.remove("showPasswordSafety");
+      document.getElementById("blurDiv").classList.remove("blurBackground");
+      document.getElementById("logo").classList.remove("blurBackground");
+    },
     loginWithGoogle: function () {
       let self = this;
       const PreGoogleProvider = api.firebase().auth;
@@ -544,13 +708,19 @@ export default {
       this.password1 = "";
       this.password2 = "";
     },
+    languageDE() {
+      this.$store.dispatch("changeLanguage", "de");
+    },
+    languageEN() {
+      this.$store.dispatch("changeLanguage", "en");
+    },
   },
 };
 </script>
 
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 $rosblue: #0044b2;
 $rosfont: montserrat;
 
@@ -841,5 +1011,13 @@ a {
   position: relative;
   top: 25%;
   transform: translateY(-25%);
+}
+.languageBox {
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+.language {
+  cursor: pointer;
 }
 </style>

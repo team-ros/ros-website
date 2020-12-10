@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     ActiveID: "",
-    activeSlider: false
+    activeSlider: false,
+    language: "de"
   },
 
   mutations: {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     loadSliderActive(state) {
       state.activeSlider = true;
+    },
+    changeLanguage(state, newLang){
+      state.language = newLang
     }
   },
   actions: {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     },
     loadSlider({ commit }) {
       commit("loadSliderActive");
+    },
+    changeLanguage({ commit }, newLanguage) {
+      commit("changeLanguage", newLanguage)
     }
   },
   modules: {}

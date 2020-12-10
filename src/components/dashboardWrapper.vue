@@ -177,9 +177,9 @@
         <b> Wirklich Löschen? </b>
         <p class="deleteDirectoryFieldText">
           Möchten sie
-          <span style="font-weight: bold">
+         <b>
             {{ this.folderNameCache.name }}
-          </span>
+          </b>
           wirklich Löschen?
         </p>
 
