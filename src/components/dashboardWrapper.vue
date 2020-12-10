@@ -72,9 +72,18 @@
           <li>
             <div>
               <input
+              v-if="this.$store.state.language == 'de'"
                 type="text"
                 class="such_box"
                 placeholder="Suche nach Dateien"
+                v-model="filterByName"
+                @input="searchFiles()"
+              />
+              <input
+              v-if="this.$store.state.language == 'en'"
+                type="text"
+                class="such_box"
+                placeholder="Search for files"
                 v-model="filterByName"
                 @input="searchFiles()"
               />
@@ -85,7 +94,12 @@
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
-              <label> <i class="fas fa-upload"></i> Hochladen </label>
+              <label v-if="this.$store.state.language == 'de'">
+                <i class="fas fa-upload"></i> Hochladen
+              </label>
+              <label v-if="this.$store.state.language == 'en'">
+                <i class="fas fa-upload"></i> Upload
+              </label>
               <input
                 type="file"
                 id="file"
@@ -96,9 +110,13 @@
           </li>
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper" @click="newFolder">
-              <label>
+              <label v-if="this.$store.state.language == 'de'">
                 <i class="fas fa-plus"></i>
                 Neuer Ordner
+              </label>
+              <label v-if="this.$store.state.language == 'en'">
+                <i class="fas fa-plus"></i>
+                New Folder
               </label>
             </div>
           </li>
@@ -128,7 +146,18 @@
       id="newFolderScreen"
     >
       <div class="createDirectoryField">
-        <p class="createDirectoryFieldText">Ordner erstellen</p>
+        <p
+          v-if="this.$store.state.language == 'de'"
+          class="createDirectoryFieldText"
+        >
+          Ordner erstellen
+        </p>
+        <p
+          v-if="this.$store.state.language == 'en'"
+          class="createDirectoryFieldText"
+        >
+          Create Folder
+        </p>
         <img
           src="@/assets/closeX.png"
           width="16"
@@ -138,6 +167,7 @@
         />
 
         <input
+          v-if="this.$store.state.language == 'de'"
           type="text"
           placeholder="Ihren Ordnernamen eingeben"
           class="createDirectoryFieldInput"
@@ -148,10 +178,34 @@
             newFolderClose();
           "
         />
-
         <input
+          v-if="this.$store.state.language == 'en'"
+          type="text"
+          placeholder="Enter your folder name"
+          class="createDirectoryFieldInput"
+          v-model="newDirectoryName"
+          v-on:input="activateButton"
+          @keypress.enter="
+            newDirectory(newDirectoryName);
+            newFolderClose();
+          "
+        />
+        <input
+          v-if="this.$store.state.language == 'de'"
           type="button"
           value="Erstellen"
+          id="createDirectoryFieldButton"
+          class="createDirectoryFieldButtonDisabled"
+          @click="
+            newDirectory(newDirectoryName);
+            newFolderClose();
+          "
+          :disabled="this.newDirectoryName <= 1"
+        />
+        <input
+          v-if="this.$store.state.language == 'en'"
+          type="button"
+          value="Create"
           id="createDirectoryFieldButton"
           class="createDirectoryFieldButtonDisabled"
           @click="
@@ -174,15 +228,28 @@
           class="deleteDirectoryFieldClose"
           @click="deleteFolderFieldClose"
         />
-        <b> Wirklich Löschen? </b>
-        <p class="deleteDirectoryFieldText">
+        <b v-if="this.$store.state.language == 'de'"> Wirklich Löschen? </b>
+        <b v-if="this.$store.state.language == 'en'"> Delete? </b>
+        <p
+          v-if="this.$store.state.language == 'de'"
+          class="deleteDirectoryFieldText"
+        >
           Möchten sie
-         <b>
+          <b>
             {{ this.folderNameCache.name }}
           </b>
           wirklich Löschen?
         </p>
-
+        <p
+          v-if="this.$store.state.language == 'en'"
+          class="deleteDirectoryFieldText"
+        >
+          Do you really want to delete
+          <b>
+            {{ this.folderNameCache.name }}
+          </b>
+          ?
+        </p>
         <input
           type="button"
           value="Löschen"
@@ -239,7 +306,6 @@ export default {
     newParentPath(newParentPath) {
       this.currentParentPath = newParentPath;
       this.pathHistory.push(newParentPath);
-      
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");
@@ -427,16 +493,16 @@ export default {
       console.log(filterByWhat);
       if (filterByWhat == "filterBySize") {
         this.filterExpression = "size";
-        this.filterDirection = 'desc';
+        this.filterDirection = "desc";
       } else if (filterByWhat == "filterByName") {
         this.filterExpression = "name";
-        this.filterDirection = 'asc';
+        this.filterDirection = "asc";
       } else if (filterByWhat == "filterByDate") {
         this.filterExpression = "date";
-        this.filterDirection = 'desc';
+        this.filterDirection = "desc";
       } else if (filterByWhat == "filterByDatatype") {
         this.filterExpression = "fileExtention";
-        this.filterDirection = 'asc';
+        this.filterDirection = "asc";
       } else {
         this.filterByName = this.selectedFilter;
       }
@@ -452,12 +518,15 @@ export default {
     } catch (err) {
       console.log(err);
     }
-    
   },
   computed: {
     directorysOrdered() {
-      return _.orderBy(this.directorys.listing, this.filterExpression, this.filterDirection);
-    }
+      return _.orderBy(
+        this.directorys.listing,
+        this.filterExpression,
+        this.filterDirection
+      );
+    },
   },
   components: {
     DataObjects,

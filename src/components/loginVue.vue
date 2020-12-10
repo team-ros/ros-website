@@ -48,16 +48,16 @@
               <img src="@/assets/ros-logo.png" class="rightPageContentLogo" />
               <p class="languageBox">
                 <span @click="languageDE()" class="language"> Deutsch </span>|
-                <span @click="languageEN()" class="language"> Englisch </span>
+                <span @click="languageEN()" class="language"> English </span>
               </p>
             </div>
 
             <div class="rightPageContent">
               <div class="loginActive" id="rightPageContentLogin">
-                <h1 v-show="this.$store.state.language == 'de'">
+                <h1 v-if="this.$store.state.language == 'de'">
                   Willkommen zurück!
                 </h1>
-                <h1 v-show="this.$store.state.language == 'en'">
+                <h1 v-if="this.$store.state.language == 'en'">
                   Welcome Back!
                 </h1>
                 <br />
@@ -78,13 +78,13 @@
                   id="email"
                 />
                 <p
-                  v-show="this.$store.state.language == 'de'"
+                  v-if="this.$store.state.language == 'de'"
                   class="rightPageContentGrey"
                 >
                   Passwort
                 </p>
                 <p
-                  v-show="this.$store.state.language == 'en'"
+                  v-if="this.$store.state.language == 'en'"
                   class="rightPageContentGrey"
                 >
                   Password
@@ -118,7 +118,7 @@
                   <i class="fa fa-google-plus" style="color: #db4a39"></i>
                 </button>
                 <p
-                  v-show="this.$store.state.language == 'de'"
+                  v-if="this.$store.state.language == 'de'"
                   class="rightPageContentText"
                 >
                   Noch keinen Account?
@@ -131,7 +131,7 @@
                   </span>
                 </p>
                 <p
-                  v-show="this.$store.state.language == 'en'"
+                  v-if="this.$store.state.language == 'en'"
                   class="rightPageContentText"
                 >
                   No account yet?
@@ -144,7 +144,7 @@
                   </span>
                 </p>
                 <p
-                  v-show="this.$store.state.language == 'de'"
+                  v-if="this.$store.state.language == 'de'"
                   class="rightPageContentText"
                   style="margin-top: -5px"
                   @click="resetPassword()"
@@ -154,7 +154,7 @@
                   </span>
                 </p>
                 <p
-                  v-show="this.$store.state.language == 'en'"
+                  v-if="this.$store.state.language == 'en'"
                   class="rightPageContentText"
                   style="margin-top: -5px"
                   @click="resetPassword()"
@@ -167,10 +167,10 @@
 
               <div class="registerInactive" id="rightPageContentRegister">
                 <div id="blurDiv">
-                  <h1 v-show="this.$store.state.language == 'de'">
+                  <h1 v-if="this.$store.state.language == 'de'">
                     Willkommen!
                   </h1>
-                  <h1 v-show="this.$store.state.language == 'en'">Welcome!</h1>
+                  <h1 v-if="this.$store.state.language == 'en'">Welcome!</h1>
                   <br />
 
                   <p class="rightPageContentGrey">Name</p>
@@ -194,13 +194,13 @@
                     id="emailCreate"
                   />
                   <p
-                    v-show="this.$store.state.language == 'de'"
+                    v-if="this.$store.state.language == 'de'"
                     class="rightPageContentGrey"
                   >
                     Passwort
                   </p>
                   <p
-                    v-show="this.$store.state.language == 'en'"
+                    v-if="this.$store.state.language == 'en'"
                     class="rightPageContentGrey"
                   >
                     Password
@@ -216,13 +216,13 @@
                     @input="validOrInvalidPasswordCreate1"
                   />
                   <p
-                    v-show="this.$store.state.language == 'de'"
+                    v-if="this.$store.state.language == 'de'"
                     class="rightPageContentGrey"
                   >
                     Passwort wiederholen
                   </p>
                   <p
-                    v-show="this.$store.state.language == 'en'"
+                    v-if="this.$store.state.language == 'en'"
                     class="rightPageContentGrey"
                   >
                     Repeat password
@@ -240,7 +240,7 @@
                   <br />
 
                   <button
-                    v-show="this.$store.state.language == 'de'"
+                    v-if="this.$store.state.language == 'de'"
                     disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
@@ -249,7 +249,7 @@
                     REGISTRIEREN
                   </button>
                   <button
-                    v-show="this.$store.state.language == 'en'"
+                    v-if="this.$store.state.language == 'en'"
                     disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
@@ -258,7 +258,7 @@
                     REGISTER
                   </button>
                   <p
-                    v-show="this.$store.state.language == 'de'"
+                    v-if="this.$store.state.language == 'de'"
                     class="rightPageContentText"
                   >
                     Du hast schon einen Account?
@@ -270,7 +270,7 @@
                     >
                   </p>
                   <p
-                    v-show="this.$store.state.language == 'en'"
+                    v-if="this.$store.state.language == 'en'"
                     class="rightPageContentText"
                   >
                     Already have an account?
@@ -284,7 +284,7 @@
                   </p>
                 </div>
                 <div
-                  v-show="this.$store.state.language == 'de'"
+                  v-if="this.$store.state.language == 'de'"
                   class="passwordSafety"
                   id="passwordSafety"
                 >
@@ -314,7 +314,7 @@
 
 
                 <div
-                  v-show="this.$store.state.language == 'en'"
+                  v-if="this.$store.state.language == 'en'"
                   class="passwordSafety"
                   id="passwordSafetyEn"
                 >
@@ -343,7 +343,7 @@
                 </div>
                 
                 <p
-                  v-show="this.$store.state.language == 'de'"
+                  v-if="this.$store.state.language == 'de'"
                   class="rightPageContentText"
                 >
                   unsere
@@ -356,7 +356,7 @@
                   für ein Passwort
                 </p>
                 <p
-                  v-show="this.$store.state.language == 'en'"
+                  v-if="this.$store.state.language == 'en'"
                   class="rightPageContentText"
                 >
                   our
@@ -408,8 +408,8 @@
           © ROS 2020
           <span style="margin: 5px">|</span>
           <router-link to="/impressum">
-            <a v-show="this.$store.state.language == 'de'" href="#">Impressum</a>
-            <a v-show="this.$store.state.language == 'en'" href="#">imprint</a>
+            <a v-if="this.$store.state.language == 'de'" href="#">Impressum</a>
+            <a v-if="this.$store.state.language == 'en'" href="#">imprint</a>
           </router-link>
         </div>
       </div>

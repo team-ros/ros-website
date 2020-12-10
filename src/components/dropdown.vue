@@ -8,7 +8,12 @@
               <a href="#" class="header__link">
                 <transition name="slide-fade">
                   <!-- Header Navigation Menu Icons -->
-                  <button class="header--button" v-if="show" key="on" @click="show = false">
+                  <button
+                    class="header--button"
+                    v-if="show"
+                    key="on"
+                    @click="show = false"
+                  >
                     <svg viewBox="0 0 24 24" class="header--icon">
                       <title>Close</title>
                       <path d="M0 0h24v24H0V0z" fill="none" />
@@ -17,17 +22,33 @@
                       />
                     </svg>
                   </button>
-                  <button class="header--button" v-else key="off" @click="show = true">
-                    <img src="@/assets/filterLogo.png" class="header--icon"/>
+                  <button
+                    class="header--button"
+                    v-else
+                    key="off"
+                    @click="show = true"
+                  >
+                    <img src="@/assets/filterLogo.png" class="header--icon" />
                   </button>
                 </transition>
               </a>
               <!-- Dropdown Menu -->
               <transition name="dropdown">
-                <div class="dropdown__menu" v-bind:class="{ active: show }" v-if="show">
+                <div
+                  class="dropdown__menu"
+                  v-bind:class="{ active: show }"
+                  v-if="show"
+                >
                   <ul class="dropdown__menu-nav">
-                    <li class="dropdown__menu-item" @click="startFiltering('filterByName')">
-                      <a href="#" class="dropdown__menu-link" @click="show = false">
+                    <li
+                      class="dropdown__menu-item"
+                      @click="startFiltering('filterByName')"
+                    >
+                      <a
+                        href="#"
+                        class="dropdown__menu-link"
+                        @click="show = false"
+                      >
                         <div class="dropdown__menu-svg">
                           <svg viewBox="0 0 20 20">
                             <path
@@ -36,11 +57,29 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">Alphabetisch ordnen</div>
+                        <div
+                          v-if="this.$store.state.language == 'de'"
+                          class="dropdown__menu-text"
+                        >
+                          Alphabetisch ordnen
+                        </div>
+                        <div
+                          v-if="this.$store.state.language == 'en'"
+                          class="dropdown__menu-text"
+                        >
+                          Sort alphabetically
+                        </div>
                       </a>
                     </li>
-                    <li class="dropdown__menu-item" @click="startFiltering('filterByDate')">
-                      <a href="#" class="dropdown__menu-link"  @click="show = false">
+                    <li
+                      class="dropdown__menu-item"
+                      @click="startFiltering('filterByDate')"
+                    >
+                      <a
+                        href="#"
+                        class="dropdown__menu-link"
+                        @click="show = false"
+                      >
                         <div class="dropdown__menu-svg">
                           <svg viewBox="2 2 16 16">
                             <path
@@ -49,11 +88,23 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">nach Datum sortieren</div>
+                        <div v-if="this.$store.state.language == 'de'" class="dropdown__menu-text">
+                          Nach Datum sortieren
+                        </div>
+                        <div v-if="this.$store.state.language == 'en'" class="dropdown__menu-text">
+                          Sort by date
+                        </div>
                       </a>
                     </li>
-                    <li class="dropdown__menu-item" @click="startFiltering('filterByDatatype')">
-                      <a href="#" class="dropdown__menu-link"  @click="show = false">
+                    <li
+                      class="dropdown__menu-item"
+                      @click="startFiltering('filterByDatatype')"
+                    >
+                      <a
+                        href="#"
+                        class="dropdown__menu-link"
+                        @click="show = false"
+                      >
                         <div class="dropdown__menu-svg">
                           <svg class="svg-icon" viewBox="2 2 16 16">
                             <path
@@ -62,11 +113,23 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">nach Dateityp sortieren</div>
+                        <div v-if="this.$store.state.language == 'de'" class="dropdown__menu-text">
+                          Nach Dateityp sortieren
+                        </div>
+                        <div v-if="this.$store.state.language == 'en'" class="dropdown__menu-text">
+                          Sort by datatype
+                        </div>
                       </a>
                     </li>
-                    <li class="dropdown__menu-item" @click="startFiltering('filterBySize')">
-                      <a href="#" class="dropdown__menu-link"  @click="show = false">
+                    <li
+                      class="dropdown__menu-item"
+                      @click="startFiltering('filterBySize')"
+                    >
+                      <a
+                        href="#"
+                        class="dropdown__menu-link"
+                        @click="show = false"
+                      >
                         <div class="dropdown__menu-svg">
                           <svg class="svg-icon" viewBox="2 2 16 16">
                             <path
@@ -75,7 +138,12 @@
                             />
                           </svg>
                         </div>
-                        <div class="dropdown__menu-text">nach Dateigröße sortieren</div>
+                        <div v-if="this.$store.state.language == 'de'" class="dropdown__menu-text">
+                          Nach Dateigröße sortieren
+                        </div>
+                        <div v-if="this.$store.state.language == 'en'" class="dropdown__menu-text">
+                         Sort by file size
+                        </div>
                       </a>
                     </li>
                   </ul>
@@ -93,14 +161,14 @@
 export default {
   data() {
     return {
-      show: false
+      show: false,
     };
   },
   methods: {
     startFiltering(filterByWhat) {
       this.$emit("newFilter", filterByWhat);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -116,8 +184,7 @@ $rosfont: montserrat;
 // Global
 * {
   list-style-type: none;
-    font-family: $rosfont;
-
+  font-family: $rosfont;
 }
 *,
 ::after,
@@ -142,7 +209,7 @@ hr {
 
 .header {
   padding: 11px;
-  
+
   &__nav {
     position: relative;
   }

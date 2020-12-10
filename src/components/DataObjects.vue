@@ -72,13 +72,15 @@
       <li class="contextMenuEntries" @click="changeNameSet">
         <p>
           <i class="fas fa-eraser"></i>
-          <span class="contextMenuText">Umbenennen</span>
+          <span v-if="this.$store.state.language == 'de'" class="contextMenuText">Umbenennen</span>
+          <span v-if="this.$store.state.language == 'en'" class="contextMenuText">Rename</span>
         </p>
       </li>
       <li class="contextMenuEntries" @click="deleteFile">
         <p>
           <i class="far fa-trash-alt" style="margin-left: 2px"></i>
-          <span class="contextMenuText">Löschen</span>
+          <span v-if="this.$store.state.language == 'de'" class="contextMenuText">Löschen</span>
+          <span v-if="this.$store.state.language == 'en'" class="contextMenuText">Delete</span>
         </p>
       </li>
       <div
@@ -91,7 +93,8 @@
           <a :href="this.sameOriginURL" :download="this.file.name">
             <p>
               <i class="fas fa-download"></i>
-              <span class="contextMenuText"> Herunterladen </span>
+              <span v-if="this.$store.state.language == 'de'" class="contextMenuText"> Herunterladen </span>
+              <span v-if="this.$store.state.language == 'en'" class="contextMenuText"> Download </span>
             </p>
           </a>
         </li>
@@ -99,8 +102,11 @@
       <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
-          <span class="contextMenuText" style="margin-left: 3px"
+          <span v-if="this.$store.state.language == 'de'" class="contextMenuText" style="margin-left: 3px"
             >Verschieben nach</span
+          >
+          <span v-if="this.$store.state.language == 'en'" class="contextMenuText" style="margin-left: 3px"
+            >Move to</span
           >
         </p>
         <ul class="v-context">
@@ -121,11 +127,17 @@
           <span class="contextMenuText">Info</span>
         </p>
         <ul class="v-context">
-          <li style="color: black; padding: 5px; padding-right: 10px">
+          <li v-if="this.$store.state.language == 'de'" style="color: black; padding: 5px; padding-right: 10px">
             <p>Erstellt am: {{ getHumanDate(this.file.date) }}</p>
             <p v-if="file.type != 'directory'">Typus: {{ this.file.fileExtention}}</p>
             <p>Object-ID: {{ this.file.id }}</p>
             <p>Dateigröße: {{ file.size | prettyBytes }}</p>
+          </li>
+          <li v-if="this.$store.state.language == 'en'" style="color: black; padding: 5px; padding-right: 10px">
+            <p>Created: {{ getHumanDate(this.file.date) }}</p>
+            <p v-if="file.type != 'directory'">Type: {{ this.file.fileExtention}}</p>
+            <p>Object-ID: {{ this.file.id }}</p>
+            <p>File size: {{ file.size | prettyBytes }}</p>
           </li>
         </ul>
       </li>

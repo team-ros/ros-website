@@ -11,13 +11,23 @@
         height="30"
         class="buttonImg"
         id="imageX"
-        @click="updateAccountSliderState(); closeBlock()"
+        @click="
+          updateAccountSliderState();
+          closeBlock();
+        "
       />
       <div class="logout">
         <img src="@/assets/logout.png" width="35" height="35" @click="logout" />
       </div>
+
       <h1>Account</h1>
-      <p>Hier sind ihre Accountinformationen zu sehen</p>
+
+      <p v-if="this.$store.state.language == 'de'">
+        Hier sind ihre Accountinformationen zu sehen
+      </p>
+      <p v-if="this.$store.state.language == 'en'">
+        Here you can see your account information
+      </p>
       <input
         type="text"
         :placeholder="user.displayName"
@@ -30,16 +40,35 @@
         class="accountInfos"
         readonly
       />
-
-      <h3>Passwort zurücksetzen?</h3>
-
-      <button class="resetButton" @click="resetPassword()">
+      <h3 v-if="this.$store.state.language == 'de'">Sprache</h3>
+      <h3 v-if="this.$store.state.language == 'en'">Language</h3>
+      <p class="languageBox">
+        <span @click="languageDE()" class="language"> Deutsch </span>|
+        <span @click="languageEN()" class="language"> English </span>
+      </p>
+      <h3 v-if="this.$store.state.language == 'de'">
+        Passwort zurücksetzen?
+      </h3>
+      <h3 v-if="this.$store.state.language == 'en'">RESET PASSWORD?</h3>
+      <button
+        class="resetButton"
+        @click="resetPassword()"
+        v-if="this.$store.state.language == 'de'"
+      >
         PASSWORT ZURÜCKSETZEN
       </button>
-
-      <h3>Projektwebsite</h3>
+      <button
+        class="resetButton"
+        @click="resetPassword()"
+        v-if="this.$store.state.language == 'en'"
+      >
+        RESET PASSWORD
+      </button>
+      <h3 v-if="this.$store.state.language == 'de'">Projektwebsite</h3>
+      <h3 v-if="this.$store.state.language == 'en'">Project website</h3>
       <a href="https://project.ros-cloud.at/">ROS Cloud</a>
-      <h3>Social Media</h3>
+      <h3 v-if="this.$store.state.language == 'de'">Soziale Medien</h3>
+      <h3 v-if="this.$store.state.language == 'en'">Social Media</h3>
       <a
         href="https://www.instagram.com/ros_cloud/?hl=de"
         class="fa fa-instagram"
@@ -55,9 +84,11 @@
       >
         <span style="margin-left: 4px">LinkedIn</span>
       </a>
-      <h3>Hilfe</h3>
+      <h3 v-if="this.$store.state.language == 'de'">Hilfe</h3>
+      <h3 v-if="this.$store.state.language == 'en'">Help</h3>
       <router-link to="/impressum">
-        <a href="#">Impressum</a>
+        <a v-if="this.$store.state.language == 'de'" href="#">Impressum</a>
+         <a v-if="this.$store.state.language == 'en'" href="#">imprint</a>
       </router-link>
       <a href="mailto:support@ros-cloud.at?subject=Supportanfrage">Support</a>
     </div>
@@ -71,7 +102,7 @@
       />
       <p>
         Eine E-Mail zum Passwort zurücksetzen wurde erfolgreich an
-       <b> {{ this.user.email }} </b> gesendet.
+        <b> {{ this.user.email }} </b> gesendet.
       </p>
     </div>
   </div>
@@ -157,15 +188,26 @@ export default {
     },
     async resetPassword() {
       const self = this;
-            api.firebase().auth().sendPasswordResetEmail(this.user.email).then(function () {
-                self.emailSent = true
-            }).catch(function (error) {
-                console.log(error)
-            });
+      api
+        .firebase()
+        .auth()
+        .sendPasswordResetEmail(this.user.email)
+        .then(function () {
+          self.emailSent = true;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-    closeBlock(){
+    closeBlock() {
       this.emailSent = false;
-    }
+    },
+    languageDE() {
+      this.$store.dispatch("changeLanguage", "de");
+    },
+    languageEN() {
+      this.$store.dispatch("changeLanguage", "en");
+    },
   },
 };
 </script>
@@ -303,6 +345,12 @@ a {
   padding: 5px;
   padding-top: 10px;
 
+  cursor: pointer;
+}
+.languageBox {
+  margin: 0px;
+}
+.language {
   cursor: pointer;
 }
 </style>
