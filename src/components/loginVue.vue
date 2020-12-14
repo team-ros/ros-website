@@ -241,7 +241,6 @@
 
                   <button
                     v-if="this.$store.state.language == 'de'"
-                    disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
                     @click="registerAccount()"
