@@ -98,7 +98,7 @@
                   id="password"
                 />
                 <br />
-                <!-- <router-link to="/dashboard"> -->
+
                 <button
                   :disabled="this.passwordStrong != true"
                   class="rightPageContentLoginbutton"
@@ -106,7 +106,7 @@
                 >
                   LOGIN
                 </button>
-                <!-- </router-link> -->
+
 
                 <button
                   @click="loginWithGoogle"
@@ -246,6 +246,7 @@
                   </button>
                   <button
                     v-if="this.$store.state.language == 'en'"
+                    :disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
                     @click="registerAccount()"
