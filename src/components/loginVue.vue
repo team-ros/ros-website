@@ -856,7 +856,7 @@ $rosfont: montserrat;
   -o-transition: opacity 0.5s ease-out;
 }
 .rightPageContentLoginbutton:disabled {
-  opacity: 50%;
+  opacity: 0.5;
 }
 .rightPageContentGooglebutton {
   margin-top: 20px;
