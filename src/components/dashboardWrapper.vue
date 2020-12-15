@@ -95,7 +95,7 @@
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
               <label v-if="this.$store.state.language == 'de'">
-                <i class="fas fa-upload"></i> Hochladen
+                <i class="fas fa-upload" style=""></i> Hochladen
               </label>
               <label v-if="this.$store.state.language == 'en'">
                 <i class="fas fa-upload"></i> Upload
@@ -562,7 +562,7 @@ $rosfont: montserrat;
   left: 0;
   position: absolute;
   width: 100%;
-  background-image: linear-gradient(90deg, #4170b1, $rosblue);
+  background-image: linear-gradient(60deg, #adadad, $rosblue);
   height: 60px;
   color: white;
   font-size: 25px;

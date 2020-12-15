@@ -57,9 +57,7 @@
                 <h1 v-if="this.$store.state.language == 'de'">
                   Willkommen zurück!
                 </h1>
-                <h1 v-if="this.$store.state.language == 'en'">
-                  Welcome Back!
-                </h1>
+                <h1 v-if="this.$store.state.language == 'en'">Welcome Back!</h1>
                 <br />
 
                 <p
@@ -100,15 +98,15 @@
                   id="password"
                 />
                 <br />
-                <router-link to="/dashboard">
-                  <button
-                    :disabled="this.passwordStrong != true"
-                    class="rightPageContentLoginbutton"
-                    @click="regularLogin"
-                  >
-                    LOGIN
-                  </button>
-                </router-link>
+                <!-- <router-link to="/dashboard"> -->
+                <button
+                  :disabled="this.passwordStrong != true"
+                  class="rightPageContentLoginbutton"
+                  @click="regularLogin"
+                >
+                  LOGIN
+                </button>
+                <!-- </router-link> -->
 
                 <button
                   @click="loginWithGoogle"
@@ -167,9 +165,7 @@
 
               <div class="registerInactive" id="rightPageContentRegister">
                 <div id="blurDiv">
-                  <h1 v-if="this.$store.state.language == 'de'">
-                    Willkommen!
-                  </h1>
+                  <h1 v-if="this.$store.state.language == 'de'">Willkommen!</h1>
                   <h1 v-if="this.$store.state.language == 'en'">Welcome!</h1>
                   <br />
 
@@ -241,6 +237,7 @@
 
                   <button
                     v-if="this.$store.state.language == 'de'"
+                    :disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
                     @click="registerAccount()"
@@ -249,7 +246,6 @@
                   </button>
                   <button
                     v-if="this.$store.state.language == 'en'"
-                    disabled="this.passwordStrongCreate != true"
                     class="rightPageContentLoginbutton"
                     style="width: 100%"
                     @click="registerAccount()"
@@ -311,7 +307,6 @@
                   </ul>
                 </div>
 
-
                 <div
                   v-if="this.$store.state.language == 'en'"
                   class="passwordSafety"
@@ -340,7 +335,7 @@
                     <li>at least one special character</li>
                   </ul>
                 </div>
-                
+
                 <p
                   v-if="this.$store.state.language == 'de'"
                   class="rightPageContentText"
@@ -382,11 +377,60 @@
               @click="closeErrorBlock()"
             />
           </div>
-          <errorBlock
-            v-if="this.errorCode"
-            :errorCode="this.errorCode"
-            @closeErrorBlock="closeErrorBlock"
-          />
+          <div class="loginError" v-if="this.userNotFound">
+            <p class="passwortRecoveryBlockMessage">
+              Die von Ihnen eingegebenen Benutzerdaten stimmen nicht überein
+            </p>
+            <img
+              src="@/assets/closeX.png"
+              width="16"
+              height="16"
+              class="closeIcon"
+              @click="closeErrorBlock()"
+            />
+          </div>
+
+          <div v-if="this.errorCode" class="loginError">
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="this.errorCode == 'auth/email-already-in-use'"
+            >
+              Diese E-Mail ist bereits bei uns registriert.
+            </p>
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="this.errorCode == 'auth/invalid-email'"
+            >
+              Diese E-Mail ist nicht valid.
+            </p>
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="this.errorCode == 'auth/weak-password'"
+            >
+              Das von Ihnen eingegebene Passwort ist zu schwach.
+            </p>
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="this.errorCode == 'auth/operation-not-allowed'"
+            >
+              Thrown if email/password accounts are not enabled. Enable
+              email/password accounts in the Firebase Console, under the Auth
+              tab.
+            </p>
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="this.errorCode == 'no'"
+            >
+              Erfolgreich registriert
+            </p>
+            <img
+              src="@/assets/closeX.png"
+              width="16"
+              height="16"
+              class="closeIcon"
+              @click="closeErrorBlock()"
+            />
+          </div>
         </div>
       </div>
 
@@ -419,13 +463,11 @@
 <script>
 import api from "@/api";
 import "firebase/auth";
-import ErrorBlock from "./errorBlock.vue";
 import VueMobileDetection from "vue-mobile-detection";
 Vue.use(VueMobileDetection);
 import Vue from "vue";
 
 export default {
-  components: { ErrorBlock },
   data: function () {
     return {
       passwordlogin: "",
@@ -440,9 +482,10 @@ export default {
       passwordStrong: false,
       passwordStrongCreate: false,
       passwordSafety: false,
-      errorCode: "",
+      errorCode: false,
       emailSent: false,
       passwordRecoveryMessage: "",
+      userNotFound: false,
     };
   },
   created() {
@@ -646,9 +689,12 @@ export default {
         .signInWithEmailAndPassword(this.email, this.passwordlogin)
         .then((user) => {
           console.log(user);
+          this.$router.push("/dashboard");
         })
         .catch((error) => {
-          console.log(error);
+          if (error.code === "auth/user-not-found") {
+            this.userNotFound = true;
+          }
         });
     },
     async registerAccount() {
@@ -656,19 +702,13 @@ export default {
         await api
           .firebase()
           .auth()
-          .createUserWithEmailAndPassword(this.emailCreate, this.password2);
-
-        api
-          .firebase()
-          .auth()
-          .currentUser.updateProfile({
-            displayName: this.name,
-          })
-          .catch((err) => this.errorRegister(err));
-        this.errorRegister("no");
+          .createUserWithEmailAndPassword(this.emailCreate, this.password2)
+          .catch((error) => {
+            console.log(error);
+            this.errorCode = error.code;
+          });
       } catch (err) {
         console.log(err);
-        this.errorRegister(err);
       }
     },
     async resetPassword() {
@@ -685,8 +725,8 @@ export default {
             console.log(error);
           });
         document.getElementById("email").classList.remove("inputInvalid");
-        document.getElementById("email").classList.remove("inputValid");
-        document.getElementById("email").value = "";
+        /* document.getElementById("email").classList.remove("inputValid"); */
+        /* document.getElementById("email").value = ""; */
       } else {
         document.getElementById("email").classList.add("inputInvalid");
         document.getElementById("email").classList.remove("inputValid");
@@ -698,8 +738,9 @@ export default {
       this.emptyFields();
     },
     closeErrorBlock() {
-      this.errorCode = "";
+      this.errorCode = false;
       this.emailSent = false;
+      this.userNotFound = false;
     },
     emptyFields() {
       this.name = "";
@@ -814,9 +855,9 @@ $rosfont: montserrat;
   -webkit-transition: opacity 0.5s ease-out;
   -o-transition: opacity 0.5s ease-out;
 }
-/*.rightPageContentLoginbutton:disabled {
-  opacity: 100%;
-}*/
+.rightPageContentLoginbutton:disabled {
+  opacity: 50%;
+}
 .rightPageContentGooglebutton {
   margin-top: 20px;
   font-size: 18px;
@@ -999,6 +1040,14 @@ a {
   position: absolute;
   background-color: #5cb85c;
 }
+.loginError {
+  width: 40vw;
+  height: 80px;
+  left: 50%;
+  bottom: 0;
+  position: absolute;
+  background-color: #ff0033;
+}
 .closeIcon {
   position: absolute;
   right: 5px;
@@ -1008,8 +1057,8 @@ a {
 .passwortRecoveryBlockMessage {
   text-align: center;
   position: relative;
-  top: 25%;
-  transform: translateY(-25%);
+  transform: translateY(-20%);
+  padding: 25px;
 }
 .languageBox {
   position: absolute;
