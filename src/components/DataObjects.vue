@@ -120,8 +120,7 @@
       <input
         type="text"
         class="dataName"
-        v-model="newName"
-        v-bind:placeholder="file.name"
+        v-model="file.name"
         :disabled="changeNameActive == false"
         :class="{ dataNameHover: hovername, seeWriteable: seeWriteable }"
         @keypress.enter="
