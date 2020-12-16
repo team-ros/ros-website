@@ -95,10 +95,10 @@
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
               <label v-if="this.$store.state.language == 'de'">
-                <i class="fas fa-upload" style=""></i> Hochladen
+                <i class="fas fa-upload" style="margin-right:5px;"></i> Hochladen
               </label>
               <label v-if="this.$store.state.language == 'en'">
-                <i class="fas fa-upload"></i> Upload
+                <i class="fas fa-upload" style="margin-right:5px;"></i> Upload
               </label>
               <input
                 type="file"
@@ -111,11 +111,11 @@
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper" @click="newFolder">
               <label v-if="this.$store.state.language == 'de'">
-                <i class="fas fa-plus"></i>
+                <i class="fas fa-plus" style="margin-right:5px;" ></i>
                 Neuer Ordner
               </label>
               <label v-if="this.$store.state.language == 'en'">
-                <i class="fas fa-plus"></i>
+                <i class="fas fa-plus" style="margin-right:5px;"></i>
                 New Folder
               </label>
             </div>

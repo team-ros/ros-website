@@ -378,9 +378,12 @@
               @click="closeErrorBlock()"
             />
           </div>
-          <div class="loginError" v-if="this.userNotFound">
-            <p class="passwortRecoveryBlockMessage">
+          <div class="loginError" v-if="this.loginError">
+            <p v-if="this.userNotFound" class="passwortRecoveryBlockMessage">
               Die von Ihnen eingegebenen Benutzerdaten stimmen nicht überein
+            </p>
+            <p v-if="this.passwordFalse" class="passwortRecoveryBlockMessage">
+              Das von Ihnen eingegebene Passwort ist falsch
             </p>
             <img
               src="@/assets/closeX.png"
@@ -487,6 +490,8 @@ export default {
       emailSent: false,
       passwordRecoveryMessage: "",
       userNotFound: false,
+      passwordFalse: false,
+      loginError: false,
     };
   },
   created() {
@@ -693,8 +698,13 @@ export default {
           this.$router.push("/dashboard");
         })
         .catch((error) => {
+          console.log(error)
           if (error.code === "auth/user-not-found") {
+            this.loginError = true;
             this.userNotFound = true;
+          } else if(error.code === "auth/wrong-password"){
+            this.loginError = true;
+            this.passwordFalse = true;
           }
         });
     },
@@ -742,6 +752,8 @@ export default {
       this.errorCode = false;
       this.emailSent = false;
       this.userNotFound = false;
+      this.loginError = false;
+      this.passwordFalse = false;
     },
     emptyFields() {
       this.name = "";

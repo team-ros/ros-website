@@ -12,36 +12,110 @@
         class="logo logo2"
         @click="getNewPath()"
       />
-      <img v-else-if="this.file.fileExtention == 'docx'" src="@/assets/doc.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'png'" src="@/assets/png.png" class="logo" />
       <img
-        v-else-if="this.file.fileExtention == 'jpg' || this.file.fileExtention == 'jpeg'"
+        v-else-if="this.file.fileExtention == 'docx'"
+        src="@/assets/doc.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'png'"
+        src="@/assets/png.png"
+        class="logo"
+      />
+      <img
+        v-else-if="
+          this.file.fileExtention == 'jpg' || this.file.fileExtention == 'jpeg'
+        "
         src="@/assets/jpg.png"
         class="logo"
       />
 
-      <img v-else-if="this.file.fileExtention == 'html'" src="@/assets/html.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'js'" src="@/assets/javascript.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'xml'" src="@/assets/xml.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'rtf'" src="@/assets/rtf.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'iso'" src="@/assets/iso.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'pdf'" src="@/assets/pdf.png" class="logo" />
+      <img
+        v-else-if="this.file.fileExtention == 'html'"
+        src="@/assets/html.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'js'"
+        src="@/assets/javascript.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'xml'"
+        src="@/assets/xml.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'rtf'"
+        src="@/assets/rtf.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'iso'"
+        src="@/assets/iso.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'pdf'"
+        src="@/assets/pdf.png"
+        class="logo"
+      />
       <img
         v-else-if="this.file.fileExtention == 'json'"
         src="@/assets/json-file.png"
         class="logo"
       />
-      <img v-else-if="this.file.fileExtention == 'ai'" src="@/assets/ai.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'csv'" src="@/assets/csv.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'exe'" src="@/assets/exe.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'mp3'" src="@/assets/mp3.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'mp4'" src="@/assets/mp4.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'ppt'" src="@/assets/ppt.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'psd'" src="@/assets/psd.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'txt'" src="@/assets/txt.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'xls'" src="@/assets/xls.png" class="logo" />
-      <img v-else-if="this.file.fileExtention == 'zip'" src="@/assets/zip.png" class="logo" />
-      <img v-else src="@/assets/file.png" class="logo">
+      <img
+        v-else-if="this.file.fileExtention == 'ai'"
+        src="@/assets/ai.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'csv'"
+        src="@/assets/csv.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'exe'"
+        src="@/assets/exe.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'mp3'"
+        src="@/assets/mp3.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'mp4'"
+        src="@/assets/mp4.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'ppt'"
+        src="@/assets/ppt.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'psd'"
+        src="@/assets/psd.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'txt'"
+        src="@/assets/txt.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'xls'"
+        src="@/assets/xls.png"
+        class="logo"
+      />
+      <img
+        v-else-if="this.file.fileExtention == 'zip'"
+        src="@/assets/zip.png"
+        class="logo"
+      />
+      <img v-else src="@/assets/file.png" class="logo" />
 
       <input
         type="text"
@@ -72,29 +146,54 @@
       <li class="contextMenuEntries" @click="changeNameSet">
         <p>
           <i class="fas fa-eraser"></i>
-          <span v-if="this.$store.state.language == 'de'" class="contextMenuText">Umbenennen</span>
-          <span v-if="this.$store.state.language == 'en'" class="contextMenuText">Rename</span>
+          <span
+            v-if="this.$store.state.language == 'de'"
+            class="contextMenuText"
+            >Umbenennen</span
+          >
+          <span
+            v-if="this.$store.state.language == 'en'"
+            class="contextMenuText"
+            >Rename</span
+          >
         </p>
       </li>
       <li class="contextMenuEntries" @click="deleteFile">
         <p>
           <i class="far fa-trash-alt" style="margin-left: 2px"></i>
-          <span v-if="this.$store.state.language == 'de'" class="contextMenuText">Löschen</span>
-          <span v-if="this.$store.state.language == 'en'" class="contextMenuText">Delete</span>
+          <span
+            v-if="this.$store.state.language == 'de'"
+            class="contextMenuText"
+            >Löschen</span
+          >
+          <span
+            v-if="this.$store.state.language == 'en'"
+            class="contextMenuText"
+            >Delete</span
+          >
         </p>
       </li>
       <div
         @click="downloadFile"
         style="color: rgb(117, 117, 117); text-decoration: none"
-        :href="singleFileURL"
-        :download="file.name"
+        
       >
         <li class="contextMenuEntries" v-if="file.type != 'directory'">
-          <a :href="this.sameOriginURL" :download="this.file.name">
+          <a :href="this.sameOriginURL" :download="this.file.name+'.'+ file.fileExtention">
             <p>
               <i class="fas fa-download"></i>
-              <span v-if="this.$store.state.language == 'de'" class="contextMenuText"> Herunterladen </span>
-              <span v-if="this.$store.state.language == 'en'" class="contextMenuText"> Download </span>
+              <span
+                v-if="this.$store.state.language == 'de'"
+                class="contextMenuText"
+              >
+                Herunterladen
+              </span>
+              <span
+                v-if="this.$store.state.language == 'en'"
+                class="contextMenuText"
+              >
+                Download
+              </span>
             </p>
           </a>
         </li>
@@ -102,10 +201,16 @@
       <li class="contextMenuEntries v-context__sub">
         <p>
           <i class="fas fa-angle-double-right"></i>
-          <span v-if="this.$store.state.language == 'de'" class="contextMenuText" style="margin-left: 3px"
+          <span
+            v-if="this.$store.state.language == 'de'"
+            class="contextMenuText"
+            style="margin-left: 3px"
             >Verschieben nach</span
           >
-          <span v-if="this.$store.state.language == 'en'" class="contextMenuText" style="margin-left: 3px"
+          <span
+            v-if="this.$store.state.language == 'en'"
+            class="contextMenuText"
+            style="margin-left: 3px"
             >Move to</span
           >
         </p>
@@ -127,15 +232,25 @@
           <span class="contextMenuText">Info</span>
         </p>
         <ul class="v-context">
-          <li v-if="this.$store.state.language == 'de'" style="color: black; padding: 5px; padding-right: 10px">
+          <li
+            v-if="this.$store.state.language == 'de'"
+            style="color: black; padding: 5px; padding-right: 10px"
+          >
             <p>Erstellt am: {{ getHumanDate(this.file.date) }}</p>
-            <p v-if="file.type != 'directory'">Typus: {{ this.file.fileExtention}}</p>
+            <p v-if="file.type != 'directory'">
+              Typus: {{ this.file.fileExtention }}
+            </p>
             <p>Object-ID: {{ this.file.id }}</p>
             <p>Dateigröße: {{ file.size | prettyBytes }}</p>
           </li>
-          <li v-if="this.$store.state.language == 'en'" style="color: black; padding: 5px; padding-right: 10px">
+          <li
+            v-if="this.$store.state.language == 'en'"
+            style="color: black; padding: 5px; padding-right: 10px"
+          >
             <p>Created: {{ getHumanDate(this.file.date) }}</p>
-            <p v-if="file.type != 'directory'">Type: {{ this.file.fileExtention}}</p>
+            <p v-if="file.type != 'directory'">
+              Type: {{ this.file.fileExtention }}
+            </p>
             <p>Object-ID: {{ this.file.id }}</p>
             <p>File size: {{ file.size | prettyBytes }}</p>
           </li>
@@ -148,7 +263,6 @@
 
 <script>
 import VueContext from "ros-vue-context";
-import "ros-vue-context/src/sass/vue-context.scss";
 import moment from "moment";
 import NProgress from "nprogress";
 
@@ -238,6 +352,7 @@ export default {
       try {
         const response = await api.object().download(this.singleFileURL);
         this.sameOriginURL = response;
+        console.log(response);
       } catch (err) {
         console.log(err);
       }
@@ -249,6 +364,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~ros-vue-context/src/sass/vue-context";
+
 $rosblue: #0047bb;
 $rosfont: montserrat;
 * {
