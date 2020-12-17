@@ -1,5 +1,5 @@
 <template>
-  <div @contextmenu.prevent="$refs.menu.open" :title="file.name">
+  <div @contextmenu.prevent="$refs.menu.open">
     <div
       class="wrapper"
       @mouseover="addHoverName"
@@ -175,10 +175,12 @@
       <div
         @click="downloadFile"
         style="color: rgb(117, 117, 117); text-decoration: none"
-        
       >
         <li class="contextMenuEntries" v-if="file.type != 'directory'">
-          <a :href="this.sameOriginURL" :download="this.file.name+'.'+ file.fileExtention">
+          <a
+            :href="this.sameOriginURL"
+            :download="this.file.name + '.' + file.fileExtention"
+          >
             <p>
               <i class="fas fa-download"></i>
               <span
@@ -197,7 +199,7 @@
           </a>
         </li>
       </div>
-      <li class="contextMenuEntries v-context__sub">
+      <li class="contextMenuEntries" @click="moveFileMenu()">
         <p>
           <i class="fas fa-angle-double-right"></i>
           <span
@@ -213,17 +215,6 @@
             >Move to</span
           >
         </p>
-        <ul class="v-context">
-          <li v-for="directory in directoryList.listing" :key="directory.id">
-            <a
-              v-if="directory.type == 'directory' && directory.id != file.id"
-              @click="moveFile(file.id, directory.id, file.name)"
-              style="color: black"
-            >
-              {{ directory.name }}
-            </a>
-          </li>
-        </ul>
       </li>
       <li class="contextMenuEntries v-context__sub">
         <p>
@@ -308,6 +299,9 @@ export default {
     deleteFile() {
       this.$emit("deleteFolderInformation", this.file);
     },
+    moveFileMenu() {
+      this.$emit("moveFileMenu");
+    },
     async changeName(newName) {
       try {
         await api.object().move(this.file.id, this.file.parent, newName);
@@ -319,6 +313,7 @@ export default {
       try {
         const response = await api.object().move(ID, directoryID, name);
         console.log(response);
+        console.log(this.file);
         this.$emit("fileMoved");
       } catch (err) {
         console.log(err);
@@ -331,6 +326,7 @@ export default {
       NProgress.start();
       try {
         const response = await api.object().get(this.file.id);
+        console.log(response);
         this.$emit("newCurrentPath", this.file.id);
         this.$emit("newPath", response);
         this.$emit("newParentPath", this.file.parent);

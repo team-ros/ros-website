@@ -72,7 +72,7 @@
           <li>
             <div>
               <input
-              v-if="this.$store.state.language == 'de'"
+                v-if="this.$store.state.language == 'de'"
                 type="text"
                 class="such_box"
                 placeholder="Suche nach Dateien"
@@ -80,7 +80,7 @@
                 @input="searchFiles()"
               />
               <input
-              v-if="this.$store.state.language == 'en'"
+                v-if="this.$store.state.language == 'en'"
                 type="text"
                 class="such_box"
                 placeholder="Search for files"
@@ -95,10 +95,11 @@
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper">
               <label v-if="this.$store.state.language == 'de'">
-                <i class="fas fa-upload" style="margin-right:5px;"></i> Hochladen
+                <i class="fas fa-upload" style="margin-right: 5px"></i>
+                Hochladen
               </label>
               <label v-if="this.$store.state.language == 'en'">
-                <i class="fas fa-upload" style="margin-right:5px;"></i> Upload
+                <i class="fas fa-upload" style="margin-right: 5px"></i> Upload
               </label>
               <input
                 type="file"
@@ -111,11 +112,11 @@
           <li class="leiste-ul-li leiste-button">
             <div class="upload-wrapper" @click="newFolder">
               <label v-if="this.$store.state.language == 'de'">
-                <i class="fas fa-plus" style="margin-right:5px;" ></i>
+                <i class="fas fa-plus" style="margin-right: 5px"></i>
                 Neuer Ordner
               </label>
               <label v-if="this.$store.state.language == 'en'">
-                <i class="fas fa-plus" style="margin-right:5px;"></i>
+                <i class="fas fa-plus" style="margin-right: 5px"></i>
                 New Folder
               </label>
             </div>
@@ -134,6 +135,7 @@
           @newCurrentPath="updateCurrentPath"
           @newParentPath="newParentPath"
           @fileMoved="fileMoved"
+          @moveFileMenu="updatemoveFileMenu"
         />
       </div>
     </div>
@@ -262,6 +264,39 @@
         />
       </div>
     </div>
+
+    <!-- Verschieben Menu -->
+
+    <div class="moveMenu createDirectoryScreenInactive" id="moveMenu">
+      <div>
+        <i
+          class="fas fa-arrow-left moveMenuBack"
+          @click="moveMenuLastPath()"
+        ></i>
+        <p class="moveMenuHeader">Verschieben nach {{this.moveMenucurrentPath}}</p>
+        <img
+          src="@/assets/closeX.png"
+          width="16"
+          height="16"
+          class="moveMenuClose"
+          @click="moveMenuClose()"
+        />
+        <DataList
+          v-for="entry in directorysMove.listing"
+          :key="entry.id"
+          :file="entry"
+          @MoveListing="newMoveListing"
+          @MoveMenuNewCurrentPath="MoveMenuNewCurrentPath"
+          @MoveMenunewParentPath="MoveMenunewParentPath"
+        />
+        <input
+          type="button"
+          value="Hierher verschieben"
+          class="moveMenuButton"
+          @click="moveFile()"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -272,6 +307,7 @@ import accountSlider from "@/components/accountSlider.vue";
 import dropdown from "@/components/dropdown.vue";
 import api from "@/api";
 import NProgress from "nprogress";
+import DataList from "@/components/DataList.vue";
 import _ from "lodash";
 NProgress.configure({ parent: "#blurBackgroundData" });
 
@@ -280,6 +316,7 @@ export default {
   data() {
     return {
       directorys: {},
+      directorysMove: {},
       files: {},
       selectedFilter: "",
       options: ["Name", "Datum", "Dateityp", "Dateigröße"],
@@ -295,6 +332,10 @@ export default {
       pathIterator: -1,
       currentPath: null,
       photoURL: false,
+      moveMenucurrentParentPath: null,
+      moveMenupathHistory: [],
+      moveMenupathIterator: -1,
+      moveMenucurrentPath: null,
     };
   },
 
@@ -303,9 +344,17 @@ export default {
       this.currentPath = newPath;
       this.pathIterator++;
     },
+    MoveMenuNewCurrentPath(newPath) {
+      this.moveMenucurrentPath = newPath;
+      this.moveMenupathIterator++;
+    },
     newParentPath(newParentPath) {
       this.currentParentPath = newParentPath;
       this.pathHistory.push(newParentPath);
+    },
+    MoveMenunewParentPath(newParentPath) {
+      this.moveMenucurrentParentPath = newParentPath;
+      this.moveMenupathHistory.push(newParentPath);
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");
@@ -489,6 +538,22 @@ export default {
         console.log(err);
       }
     },
+    async moveMenuLastPath() {
+      try {
+        const response = await api
+          .object()
+          .get(this.moveMenupathHistory[this.moveMenupathIterator]);
+        this.moveMenupathHistory.pop();
+        this.moveMenupathIterator--;
+        this.directorysMove = response;
+        this.moveMenucurrentPath = this.moveMenucurrentParentPath;
+        this.moveMenucurrentParentPath = this.moveMenupathHistory[
+          this.moveMenupathIterator
+        ];
+      } catch (err) {
+        console.log(err);
+      }
+    },
     sortData(filterByWhat) {
       console.log(filterByWhat);
       if (filterByWhat == "filterBySize") {
@@ -507,12 +572,45 @@ export default {
         this.filterByName = this.selectedFilter;
       }
     },
+    updatemoveFileMenu() {
+      document
+        .getElementById("moveMenu")
+        .classList.remove("createDirectoryScreenInactive");
+      document
+        .getElementById("blurBackgroundNav")
+        .classList.add("blurBackground");
+      document
+        .getElementById("blurBackgroundData")
+        .classList.add("blurBackground");
+      document
+        .getElementById("blurBackgroundLeiste")
+        .classList.add("blurBackground");
+    },
+    moveMenuClose() {
+      document
+        .getElementById("moveMenu")
+        .classList.add("createDirectoryScreenInactive");
+      document
+        .getElementById("blurBackgroundNav")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundData")
+        .classList.remove("blurBackground");
+      document
+        .getElementById("blurBackgroundLeiste")
+        .classList.remove("blurBackground");
+    },
+    newMoveListing(newList) {
+      this.directorysMove = newList;
+    },
   },
+
   async mounted() {
     try {
       const response = await api.object().get(this.currentPath);
       this.user = api.firebase().auth().currentUser;
       this.directorys = response;
+      this.directorysMove = response;
       console.log(this.directorys);
       this.photoURL = api.firebase().auth().currentUser.photoURL;
     } catch (err) {
@@ -532,6 +630,7 @@ export default {
     DataObjects,
     accountSlider,
     dropdown,
+    DataList,
   },
 };
 </script>
@@ -824,5 +923,41 @@ $rosfont: montserrat;
   color: #e5e1e6;
   font-weight: 500;
   border: 0;
+}
+.moveMenu {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  transform: translate(-50%);
+  width: 60vw;
+  height: 60vh;
+  background-color: #eee;
+  border-color: black;
+  border: 1px solid;
+  z-index: 9999999999;
+}
+.moveMenuHeader {
+  padding: 10px;
+  text-align: center;
+}
+.moveMenuClose {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
+}
+.moveMenuButton {
+  position: absolute;
+  bottom: 10px;
+  width: 95%;
+  height: 30px;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.moveMenuBack {
+  position: absolute;
+  padding: 10px;
+  cursor: pointer;
 }
 </style>
