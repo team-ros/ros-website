@@ -7,7 +7,9 @@ export default new Vuex.Store({
   state: {
     ActiveID: "",
     activeSlider: false,
-    language: "de"
+    language: "de",
+    fileNameMove: "",
+    fileID: ""
   },
 
   mutations: {
@@ -22,6 +24,12 @@ export default new Vuex.Store({
     },
     changeLanguage(state, newLang){
       state.language = newLang
+    },
+    newMoveFileName(state, newName){
+      state.fileNameMove = newName;
+    },
+    newMoveFileID(state, newID){
+      state.fileID = newID;
     }
   },
   actions: {
@@ -36,6 +44,12 @@ export default new Vuex.Store({
     },
     changeLanguage({ commit }, newLanguage) {
       commit("changeLanguage", newLanguage)
+    },
+    moveFileMenuName({ commit }, newName){
+      commit("newMoveFileName", newName)
+    },
+    moveFileMenuID({commit}, newID){
+      commit("newMoveFileID", newID)
     }
   },
   modules: {}

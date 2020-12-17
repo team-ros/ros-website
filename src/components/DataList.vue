@@ -45,6 +45,7 @@ $rosfont: montserrat;
 * {
   font-family: $rosfont;
 }
+
 .event-link {
   color: black;
   text-decoration: none;
@@ -52,10 +53,10 @@ $rosfont: montserrat;
 .wrapper {
   margin: 0px;
   display: flex;
+  border-bottom: 1px solid black;
 }
 .wrapper:hover {
   background-color: rgb(216, 216, 216);
-  border-radius: 5px;
   cursor: pointer;
 }
 .logo {

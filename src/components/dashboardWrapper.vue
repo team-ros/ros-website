@@ -134,7 +134,6 @@
           @newPath="updatePath"
           @newCurrentPath="updateCurrentPath"
           @newParentPath="newParentPath"
-          @fileMoved="fileMoved"
           @moveFileMenu="updatemoveFileMenu"
         />
       </div>
@@ -269,32 +268,51 @@
 
     <div class="moveMenu createDirectoryScreenInactive" id="moveMenu">
       <div>
-        <i
-          class="fas fa-arrow-left moveMenuBack"
-          @click="moveMenuLastPath()"
-        ></i>
-        <p class="moveMenuHeader">Verschieben nach {{this.moveMenucurrentPath}}</p>
-        <img
-          src="@/assets/closeX.png"
-          width="16"
-          height="16"
-          class="moveMenuClose"
-          @click="moveMenuClose()"
-        />
-        <DataList
-          v-for="entry in directorysMove.listing"
-          :key="entry.id"
-          :file="entry"
-          @MoveListing="newMoveListing"
-          @MoveMenuNewCurrentPath="MoveMenuNewCurrentPath"
-          @MoveMenunewParentPath="MoveMenunewParentPath"
-        />
-        <input
-          type="button"
-          value="Hierher verschieben"
-          class="moveMenuButton"
-          @click="moveFile()"
-        />
+        <div class="moveMenuHeader">
+          <div
+            v-if="this.moveMenupathIterator == -1"
+            class="moveMenuBack"
+            style="cursor: not-allowed"
+          >
+            <i class="fas fa-arrow-left moveMenuArrow"></i>
+          </div>
+          <div
+            class="moveMenuBack"
+            v-if="this.moveMenupathIterator != -1"
+            @click="moveMenuLastPath()"
+          >
+            <i class="fas fa-arrow-left moveMenuArrow"></i>
+          </div>
+          <div>
+            <p class="moveMenuText">Verschieben nach</p>
+          </div>
+          <div class="moveMenuCloseField" @click="moveMenuClose()">
+            <img
+              src="@/assets/closeX.png"
+              width="16"
+              height="16"
+              class="moveMenuClose"
+            />
+          </div>
+        </div>
+        <div class="dataListClass">
+          <DataList
+            v-for="entry in directorysMove.listing"
+            :key="entry.id"
+            :file="entry"
+            @MoveListing="newMoveListing"
+            @MoveMenuNewCurrentPath="MoveMenuNewCurrentPath"
+            @MoveMenunewParentPath="MoveMenunewParentPath"
+          />
+        </div>
+        <div class="moveMenuButtonField">
+          <input
+            type="button"
+            value="Hierher verschieben"
+            class="moveMenuButton"
+            @click="moveFile(), moveMenuClose()"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -355,6 +373,23 @@ export default {
     MoveMenunewParentPath(newParentPath) {
       this.moveMenucurrentParentPath = newParentPath;
       this.moveMenupathHistory.push(newParentPath);
+    },
+
+    async moveFile() {
+      try {
+        const response = await api
+          .object()
+          .move(
+            this.$store.state.fileID,
+            this.moveMenucurrentPath,
+            this.$store.state.fileNameMove
+          );
+        console.log(response);
+        console.log(this.file);
+        this.fileMoved();
+      } catch (err) {
+        console.log(err);
+      }
     },
     loadSlider() {
       this.$store.dispatch("loadSlider");
@@ -479,6 +514,7 @@ export default {
         await api.object().createDir(name, this.currentPath);
         const response = await api.object().get(this.currentPath);
         this.directorys = response;
+        this.directorysMove = response;
         NProgress.done();
       } catch (err) {
         console.log(err);
@@ -863,6 +899,7 @@ $rosfont: montserrat;
   float: right;
   cursor: pointer;
 }
+
 .createDirectoryFieldButtonDisabled {
   width: 100px;
   height: 35px;
@@ -937,27 +974,75 @@ $rosfont: montserrat;
   z-index: 9999999999;
 }
 .moveMenuHeader {
-  padding: 10px;
   text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  background-color: #eee;
+  height: 50px;
+  border-bottom: 1px solid black;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
 }
 .moveMenuClose {
   position: absolute;
-  right: 15px;
-  top: 15px;
   cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 32%;
 }
 .moveMenuButton {
-  position: absolute;
-  bottom: 10px;
-  width: 95%;
-  height: 30px;
+  width: 98%;
+  height: 98%;
   text-align: center;
-  left: 50%;
-  transform: translateX(-50%);
 }
 .moveMenuBack {
   position: absolute;
-  padding: 10px;
   cursor: pointer;
+  height: 100%;
+  width: 50px;
+  &:hover {
+    background-color: rgb(216, 216, 216);
+  }
+}
+.moveMenuButtonField {
+  padding: 10px;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 199999990000;
+  background-color: #eee;
+  height: 50px;
+  border-top: 1px solid black;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+}
+.dataListClass {
+  overflow-y: scroll;
+  max-height: 48vh;
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+.moveMenuText {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30%;
+}
+.moveMenuArrow {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.moveMenuCloseField {
+  position: absolute;
+  right: 0px;
+  cursor: pointer;
+  height: 100%;
+  width: 50px;
+  &:hover {
+    background-color: rgb(216, 216, 216);
+  }
 }
 </style>

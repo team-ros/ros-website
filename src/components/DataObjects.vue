@@ -301,6 +301,8 @@ export default {
     },
     moveFileMenu() {
       this.$emit("moveFileMenu");
+      this.$store.dispatch("moveFileMenuName", this.file.name);
+      this.$store.dispatch("moveFileMenuID", this.file.id)
     },
     async changeName(newName) {
       try {
@@ -309,16 +311,7 @@ export default {
         console.log(err);
       }
     },
-    async moveFile(ID, directoryID, name) {
-      try {
-        const response = await api.object().move(ID, directoryID, name);
-        console.log(response);
-        console.log(this.file);
-        this.$emit("fileMoved");
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    
     getHumanDate(date) {
       return moment(date).format("DD.MM.YYYY");
     },
