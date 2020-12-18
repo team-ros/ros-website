@@ -398,7 +398,6 @@ $rosfont: montserrat;
   outline: none;
   list-style-type: none;
   padding: 0px;
-
   width: 240px;
   position: absolute;
   margin: 3px;

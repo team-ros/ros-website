@@ -107,7 +107,6 @@
                   LOGIN
                 </button>
 
-
                 <button
                   @click="loginWithGoogle"
                   value="G+"
@@ -698,11 +697,11 @@ export default {
           this.$router.push("/dashboard");
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
           if (error.code === "auth/user-not-found") {
             this.loginError = true;
             this.userNotFound = true;
-          } else if(error.code === "auth/wrong-password"){
+          } else if (error.code === "auth/wrong-password") {
             this.loginError = true;
             this.passwordFalse = true;
           }
@@ -773,7 +772,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap");
 $rosblue: #0044b2;
 $rosfont: montserrat;
 

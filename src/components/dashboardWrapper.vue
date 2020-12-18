@@ -284,7 +284,7 @@
             <i class="fas fa-arrow-left moveMenuArrow"></i>
           </div>
           <div>
-            <p class="moveMenuText">Verschieben nach</p>
+            <p class="moveMenuText"> Verschieben   </p>
           </div>
           <div class="moveMenuCloseField" @click="moveMenuClose()">
             <img
@@ -493,6 +493,7 @@ export default {
       document
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
+        this.newDirectoryName="";
     },
     async uploadFile() {
       try {
@@ -635,6 +636,15 @@ export default {
       document
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
+      this.resetMoveMenu();
+    },
+    async resetMoveMenu() {
+      try {
+        const response = await api.object().get(null);
+        this.directorysMove = response;
+      } catch (err) {
+        console.log(err);
+      }
     },
     newMoveListing(newList) {
       this.directorysMove = newList;
@@ -852,7 +862,7 @@ $rosfont: montserrat;
   -moz-transition: 0.2s -moz-filter linear;
   -ms-transition: 0.2s -ms-filter linear;
   -o-transition: 0.2s -o-filter linear;
-  filter: brightness(40%);
+  filter: brightness(30%);
 }
 .createDirectoryScreen {
   position: absolute;
@@ -964,10 +974,10 @@ $rosfont: montserrat;
 .moveMenu {
   position: absolute;
   left: 50%;
-  top: 18%;
+  top: 25%;
   transform: translate(-50%);
-  width: 60vw;
-  height: 60vh;
+  width: 55vw;
+  height: 50vh;
   background-color: #eee;
   border-color: black;
   border: 1px solid;
@@ -979,9 +989,9 @@ $rosfont: montserrat;
   top: 0;
   z-index: 10000;
   background-color: #eee;
-  height: 50px;
-  border-bottom: 1px solid black;
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+  height: 60px;
+  border-bottom: 1px solid #b0b0b0;
+  margin-bottom: 10px;
 }
 .moveMenuClose {
   position: absolute;
@@ -991,9 +1001,16 @@ $rosfont: montserrat;
   right: 32%;
 }
 .moveMenuButton {
-  width: 98%;
+  width: 35%;
   height: 98%;
+  background-color: $rosblue;
+  color: #e5e1e6;
+  font-weight: 500;
+  border: 0;
   text-align: center;
+  &:hover{
+    cursor:pointer;
+  }
 }
 .moveMenuBack {
   position: absolute;
@@ -1014,12 +1031,17 @@ $rosfont: montserrat;
   z-index: 199999990000;
   background-color: #eee;
   height: 50px;
-  border-top: 1px solid black;
-  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.4);
+  border-top: 1px solid #b0b0b0;
+  
 }
 .dataListClass {
+  position: relative;
+  left:50%;
+  transform: translateX(-50%);
   overflow-y: scroll;
-  max-height: 48vh;
+  max-height: 38vh;
+  padding-left:10px;
+  padding-right:10px;
 }
 ::-webkit-scrollbar {
   width: 0px;
@@ -1029,6 +1051,8 @@ $rosfont: montserrat;
   left: 50%;
   transform: translateX(-50%);
   top: 30%;
+  font-size:20px;
+  font-weight:500;
 }
 .moveMenuArrow {
   position: relative;

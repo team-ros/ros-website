@@ -23,7 +23,6 @@ export default {
   },
   props: {
     file: Object,
-    directoryList: Object,
   },
   methods: {
     async getNewPath() {
@@ -51,14 +50,18 @@ $rosfont: montserrat;
   text-decoration: none;
 }
 .wrapper {
-  margin: 0px;
   display: flex;
-  border-bottom: 1px solid black;
+  border:1px solid transparent;
+  transition: 0.1s;
+  &:hover {
+    border: 1px solid $rosblue ;
+    background-color: #DCDCDC;
+    cursor: pointer;
+  }
+  
 }
-.wrapper:hover {
-  background-color: rgb(216, 216, 216);
-  cursor: pointer;
-}
+
+
 .logo {
   height: 30px;
   position: relative;
