@@ -283,8 +283,11 @@
           >
             <i class="fas fa-arrow-left moveMenuArrow"></i>
           </div>
-          <div>
+          <div v-if="this.$store.state.language == 'de'">
             <p class="moveMenuText">Verschieben</p>
+          </div>
+          <div  v-if="this.$store.state.language == 'en'">
+            <p class="moveMenuText">Move</p>
           </div>
           <div class="moveMenuCloseField" @click="moveMenuClose()">
             <img
@@ -307,8 +310,16 @@
         </div>
         <div class="moveMenuButtonField">
           <input
+          v-if="this.$store.state.language == 'de'"
             type="button"
             value="Hierher verschieben"
+            class="moveMenuButton"
+            @click="moveFile(), moveMenuClose()"
+          />
+          <input
+          v-if="this.$store.state.language == 'en'"
+            type="button"
+            value="Move here"
             class="moveMenuButton"
             @click="moveFile(), moveMenuClose()"
           />
