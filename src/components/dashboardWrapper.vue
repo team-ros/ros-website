@@ -864,6 +864,7 @@ $rosfont: montserrat;
   -ms-transition: 0.2s -ms-filter linear;
   -o-transition: 0.2s -o-filter linear;
   filter: brightness(30%);
+  pointer-events: none;
 }
 .createDirectoryScreen {
   position: absolute;

@@ -40,6 +40,7 @@
                   v-if="show"
                 >
                   <ul class="dropdown__menu-nav">
+                    <!--
                     <li
                       class="dropdown__menu-item"
                       @click="startFiltering('filterByName')"
@@ -71,6 +72,7 @@
                         </div>
                       </a>
                     </li>
+                    -->
                     <li
                       class="dropdown__menu-item"
                       @click="startFiltering('filterByDate')"

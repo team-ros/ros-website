@@ -717,6 +717,7 @@ export default {
             console.log(error);
             this.errorCode = error.code;
           });
+          
       } catch (err) {
         console.log(err);
       }
