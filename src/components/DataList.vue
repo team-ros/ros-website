@@ -3,12 +3,13 @@
     <div
       class="wrapper"
       id="wrapper"
-      v-if="this.file.type == 'directory'"
+      v-if="this.file.type == 'directory' && file.id != this.$store.state.fileID"
       @click="getNewPath()"
+      
     >
       <img src="@/assets/Folder2.png" class="logo" />
 
-      <p>{{ file.name }}</p>
+      <p>{{ file.name}}</p>
     </div>
   </div>
 </template>

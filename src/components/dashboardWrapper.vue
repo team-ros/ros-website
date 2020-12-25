@@ -29,7 +29,7 @@
                 cursor: pointer;
                 height: 40px;
                 margin: 0.5px;
-                padding-right: 10px;
+                margin-right: 10px;
               "
               @click="loadSlider"
             />
@@ -284,7 +284,7 @@
             <i class="fas fa-arrow-left moveMenuArrow"></i>
           </div>
           <div>
-            <p class="moveMenuText"> Verschieben   </p>
+            <p class="moveMenuText">Verschieben</p>
           </div>
           <div class="moveMenuCloseField" @click="moveMenuClose()">
             <img
@@ -295,7 +295,8 @@
             />
           </div>
         </div>
-        <div class="dataListClass">
+        <div class="dataListClass" >
+          
           <DataList
             v-for="entry in directorysMove.listing"
             :key="entry.id"
@@ -493,7 +494,7 @@ export default {
       document
         .getElementById("blurBackgroundLeiste")
         .classList.remove("blurBackground");
-        this.newDirectoryName="";
+      this.newDirectoryName = "";
     },
     async uploadFile() {
       try {
@@ -1008,8 +1009,8 @@ $rosfont: montserrat;
   font-weight: 500;
   border: 0;
   text-align: center;
-  &:hover{
-    cursor:pointer;
+  &:hover {
+    cursor: pointer;
   }
 }
 .moveMenuBack {
@@ -1032,16 +1033,15 @@ $rosfont: montserrat;
   background-color: #eee;
   height: 50px;
   border-top: 1px solid #b0b0b0;
-  
 }
 .dataListClass {
   position: relative;
-  left:50%;
+  left: 50%;
   transform: translateX(-50%);
   overflow-y: scroll;
   max-height: 38vh;
-  padding-left:10px;
-  padding-right:10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 ::-webkit-scrollbar {
   width: 0px;
@@ -1051,8 +1051,8 @@ $rosfont: montserrat;
   left: 50%;
   transform: translateX(-50%);
   top: 30%;
-  font-size:20px;
-  font-weight:500;
+  font-size: 20px;
+  font-weight: 500;
 }
 .moveMenuArrow {
   position: relative;
