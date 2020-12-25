@@ -295,8 +295,7 @@
             />
           </div>
         </div>
-        <div class="dataListClass" >
-          
+        <div class="dataListClass">
           <DataList
             v-for="entry in directorysMove.listing"
             :key="entry.id"
@@ -643,6 +642,12 @@ export default {
       try {
         const response = await api.object().get(null);
         this.directorysMove = response;
+        (this.moveMenucurrentParentPath = null),
+          (this.moveMenupathHistory = []),
+          (this.moveMenupathIterator = -1),
+          (this.moveMenucurrentPath = null),
+          console.log("Unterhalb reset Move Menu:");
+        console.log(this.directorysMove);
       } catch (err) {
         console.log(err);
       }
