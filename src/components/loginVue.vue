@@ -716,8 +716,11 @@ export default {
           .catch((error) => {
             console.log(error);
             this.errorCode = error.code;
-          });
-          
+          })
+          .then((user) => {
+          console.log(user);
+          this.$router.push("/dashboard");
+        })
       } catch (err) {
         console.log(err);
       }
