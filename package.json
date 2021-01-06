@@ -11,7 +11,7 @@
     "@isneezy/vue-selectize": "^0.4.1",
     "@riophae/vue-treeselect": "^0.4.0",
     "@trevoreyre/autocomplete-vue": "^2.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.8.0",
     "firebase": "^7.24.0",
     "jquery": "^3.5.1",
