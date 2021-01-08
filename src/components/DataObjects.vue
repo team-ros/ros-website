@@ -140,7 +140,7 @@
         {{ getHumanDate(this.file.date) }}
       </p>
     </div>
-
+    <div @mouseleave.prevent="$refs.menu.close"> 
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
         <p>
@@ -247,6 +247,7 @@
         </ul>
       </li>
     </vue-context>
+    </div>
   </div>
 </template>
 
@@ -400,7 +401,7 @@ $rosfont: montserrat;
   padding: 0px;
   width: 240px;
   position: absolute;
-  margin: 3px;
+  margin: 0px;
   border-radius: 4px;
   z-index: 10;
   color: rgb(117, 117, 117);
