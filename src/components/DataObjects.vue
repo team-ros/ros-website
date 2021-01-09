@@ -173,13 +173,12 @@
         </p>
       </li>
       <div
-        @click="downloadFile"
         style="color: rgb(117, 117, 117); text-decoration: none"
       >
         <li class="contextMenuEntries" v-if="file.type != 'directory'">
           <a
             :href="this.sameOriginURL"
-            :download="this.file.name + '.' + file.fileExtention"
+            :download="this.file.name"
           >
             <p>
               <i class="fas fa-download"></i>
@@ -336,8 +335,10 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    },
-    async downloadFile() {
+    }
+  },
+  async mounted() {
+    await this.getFileURL();
       try {
         const response = await api.object().download(this.singleFileURL);
         this.sameOriginURL = response;
@@ -345,11 +346,8 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    },
-  },
-  async mounted() {
-    await this.getFileURL();
-  },
+    
+  }
 };
 </script>
 <style lang="scss" scoped>
