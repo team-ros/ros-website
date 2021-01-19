@@ -25,11 +25,17 @@
                   @click="secondSlideActive()"
                 />
 
-                <div class="slide s1">
+                <div class="slide s1" v-if="this.$store.state.language == 'de'">
                   <img src="@/assets/Slide1.png" alt />
                 </div>
-                <div class="slide">
-                  <img src="@/assets/Slide2.jpg" alt />
+                 <div class="slide s1" v-if="this.$store.state.language == 'en'">
+                  <img src="@/assets/Slide1_us.png" alt />
+                </div>
+                <div class="slide" v-if="this.$store.state.language == 'de'">
+                  <img src="@/assets/Slide2.png" alt />
+                </div>
+                <div class="slide" v-if="this.$store.state.language == 'en'">
+                  <img src="@/assets/Slide2_us.png" alt />
                 </div>
 
                 <div class="navigation">
