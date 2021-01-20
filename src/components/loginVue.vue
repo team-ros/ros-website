@@ -725,7 +725,11 @@ export default {
           })
           .then((user) => {
             console.log(user);
+            api.firebase().auth().currentUser.updateProfile({
+              displayName: this.name
+            }).then(() => {
             this.$router.push("/dashboard");
+            })
           });
       } catch (err) {
         console.log(err);
