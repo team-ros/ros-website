@@ -63,6 +63,7 @@
 
     <p>
       <a href="https://www.anthonyboyd.graphics/?utm_source=file_shortcuts&utm_medium=downloaded_files"> Mockup von Macbook </a>
+      <br />
       <a href="https://www.oursky.com/?utm_medium=web&utm_source=mockuphone"> Mockup von Iphone </a>
     </p>
     
