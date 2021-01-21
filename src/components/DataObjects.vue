@@ -1,4 +1,5 @@
 <template>
+<div @mouseleave.prevent="$refs.menu.close">
   <div @contextmenu.prevent="$refs.menu.open">
     <div
       class="wrapper"
@@ -140,7 +141,7 @@
         {{ getHumanDate(this.file.date) }}
       </p>
     </div>
-    <div @mouseleave.prevent="$refs.menu.close"> 
+    <div> 
     <vue-context ref="menu" class="contextMenu">
       <li class="contextMenuEntries" @click="changeNameSet">
         <p>
@@ -247,6 +248,7 @@
       </li>
     </vue-context>
     </div>
+  </div>
   </div>
 </template>
 
@@ -399,7 +401,7 @@ $rosfont: montserrat;
   padding: 0px;
   width: 240px;
   position: absolute;
-  margin: 0px;
+  margin: 10px;
   border-radius: 4px;
   z-index: 10;
   color: rgb(117, 117, 117);
