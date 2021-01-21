@@ -46,9 +46,7 @@
         <span @click="languageDE()" class="language"> Deutsch </span>|
         <span @click="languageEN()" class="language"> English </span>
       </p>
-      <h3 v-if="this.$store.state.language == 'de'">
-        Passwort zurücksetzen?
-      </h3>
+      <h3 v-if="this.$store.state.language == 'de'">Passwort zurücksetzen?</h3>
       <h3 v-if="this.$store.state.language == 'en'">RESET PASSWORD?</h3>
       <button
         class="resetButton"
@@ -88,9 +86,10 @@
       <h3 v-if="this.$store.state.language == 'en'">Help</h3>
       <router-link to="/impressum">
         <a v-if="this.$store.state.language == 'de'" href="#">Impressum</a>
-         <a v-if="this.$store.state.language == 'en'" href="#">imprint</a>
+        <a v-if="this.$store.state.language == 'en'" href="#">imprint</a>
       </router-link>
-      <a href="mailto:support@ros-cloud.at?subject=Supportanfrage">Support</a>
+      <a href="mailto:support@ros-cloud.at?subject=Support">Support</a>
+      <button class="deleteAccountButton" @click="deleteAccount()">ACCOUNT LÖSCHEN</button>
     </div>
     <div class="emailMessage" v-if="this.emailSent">
       <img
@@ -199,6 +198,18 @@ export default {
           console.log(error);
         });
     },
+
+     deleteAccount() {
+      var user = api.firebase.auth().currentUser;
+      user
+        .delete()
+        .then(function () {
+          this.$router.push("/");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     closeBlock() {
       this.emailSent = false;
     },
@@ -274,6 +285,22 @@ h3 {
   height: 30px;
 }
 .resetButton {
+  width: 100%;
+  margin-top: 15px;
+  height: 35px;
+  background-color: $rosblue;
+  border-radius: 3px;
+  color: #ffffff;
+  border-color: $rosblue;
+  font-size: 18px;
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -webkit-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
+}
+.deleteAccountButton{
   width: 100%;
   margin-top: 15px;
   height: 35px;

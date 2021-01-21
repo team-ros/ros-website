@@ -2,20 +2,24 @@
   <div class="impressumdiv">
     <img src="@/assets/ros-logo.png" class="header--icon" />
     <h1 class="adsimple-121389708">Impressum</h1>
-    <p class="adsimple-121389708"></p>
+    <p> Für diese Website verantwortlicher Herausgeber: </p>
     <p>Team ROS</p>
     <p class="adsimple-121389708">
-      Rennweg 89b, 1030 Wien
-      <br />1030 Wien, <br />Österreich
+      Rennweg 89B <br /> 1030 Wien
+  <br />Österreich
     </p>
 
-    <p>ROS ist ein Abschlussprojekt der HTL Rennweg</p>
-    <p class="adsimple-121389708">
-      <strong>Tel.: </strong> 01 2421510
-      <br />
+  
+     
       <strong>E-Mail: </strong>
       <a href="mailto:team@ros-cloud.at">team@ros-cloud.at</a>
-    </p>
+      <br/>
+      <strong> Internet: </strong> 
+      <a> www.ros-cloud.at </a>
+
+      <p>
+        Für etwaige Fragen wenden Sie sich an den Support unter der E-Mail-Adresse: <a href="mailto:info@ros-cloud.at"> info@ros-cloud.at</a>
+      </p>
     <br />
     <br />
     <br />
