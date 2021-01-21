@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import loginVue from "../components/loginVue";
 import dashboardWrapper from "../components/dashboardWrapper"
 import impressum from '../components/impressum.vue';
+import dsgvo from '../components/dsgvo.vue'
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/impressum",
     name: "Impressum",
     component: impressum
+  },
+  {
+    path: "/dsgvo",
+    name: "Dsgvo",
+    component: dsgvo
   },
   {
     path: "*",

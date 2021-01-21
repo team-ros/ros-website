@@ -128,7 +128,7 @@
                   <span
                     style="color: #002c6b; cursor: pointer"
                     id="createAccountButton"
-                    @click="createSwitch()"
+                    @click="createSwitch(), closeErrorBlock()"
                   >
                     Erstelle einen!
                   </span>
@@ -141,7 +141,7 @@
                   <span
                     style="color: #002c6b; cursor: pointer"
                     id="createAccountButton"
-                    @click="createSwitch()"
+                    @click="createSwitch(), closeErrorBlock()"
                   >
                     Create one!
                   </span>

@@ -88,6 +88,10 @@
         <a v-if="this.$store.state.language == 'de'" href="#">Impressum</a>
         <a v-if="this.$store.state.language == 'en'" href="#">imprint</a>
       </router-link>
+      <router-link to="/dsgvo">
+        <a v-if="this.$store.state.language == 'de'" href="#">DSGVO</a>
+        <a v-if="this.$store.state.language == 'en'" href="#">GDPR</a>
+      </router-link>
       <a href="mailto:support@ros-cloud.at?subject=Support">Support</a>
       <button class="deleteAccountButton" @click="deleteAccount()">ACCOUNT LÖSCHEN</button>
     </div>
