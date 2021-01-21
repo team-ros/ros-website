@@ -93,7 +93,12 @@
         <a v-if="this.$store.state.language == 'en'" href="#">GDPR</a>
       </router-link>
       <a href="mailto:support@ros-cloud.at?subject=Support">Support</a>
-      <button class="deleteAccountButton" @click="deleteAccount()">ACCOUNT LÖSCHEN</button>
+      <button v-if="this.$store.state.language == 'de'" class="deleteAccountButton" @click="deleteAccount()">
+        ACCOUNT LÖSCHEN
+      </button>
+       <button v-if="this.$store.state.language == 'en'" class="deleteAccountButton" @click="deleteAccount_en()">
+        DELETE ACCOUNT
+      </button>
     </div>
     <div class="emailMessage" v-if="this.emailSent">
       <img
@@ -203,16 +208,33 @@ export default {
         });
     },
 
-     deleteAccount() {
-      var user = api.firebase().auth().currentUser;
-      user
-        .delete()
-        .then(() => {
-          this.$router.push("/");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    deleteAccount() {
+      var check = window.prompt("Um Ihren Account inklusive sämtlichen Dateien unwiderruflich zu löschen bitte folgendes Eingeben: Löschen ");
+      if (check == "Löschen") {
+        var user = api.firebase().auth().currentUser;
+        user
+          .delete()
+          .then(() => {
+            this.$router.push("/");
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },
+    deleteAccount_en() {
+      var check = window.prompt("To delete your account including all files irrevocably please enter the following: Delete");
+      if (check == "Delete") {
+        var user = api.firebase().auth().currentUser;
+        user
+          .delete()
+          .then(() => {
+            this.$router.push("/");
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     closeBlock() {
       this.emailSent = false;
@@ -304,14 +326,14 @@ h3 {
   -webkit-transition: opacity 0.5s ease-out;
   -o-transition: opacity 0.5s ease-out;
 }
-.deleteAccountButton{
+.deleteAccountButton {
   width: 100%;
   margin-top: 15px;
   height: 35px;
-  background-color: $rosblue;
+  background-color: #BE5450;
   border-radius: 3px;
   color: #ffffff;
-  border-color: $rosblue;
+  border-color: #BE5450;
   font-size: 18px;
   cursor: pointer;
   outline: none;

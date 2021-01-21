@@ -28,7 +28,7 @@
                 <div class="slide s1" v-if="this.$store.state.language == 'de'">
                   <img src="@/assets/Slide1.png" alt />
                 </div>
-                 <div class="slide s1" v-if="this.$store.state.language == 'en'">
+                <div class="slide s1" v-if="this.$store.state.language == 'en'">
                   <img src="@/assets/Slide1_us.png" alt />
                 </div>
                 <div class="slide" v-if="this.$store.state.language == 'de'">
@@ -372,8 +372,17 @@
             </div>
           </div>
           <div class="passwortRecoveryBlock" v-if="this.emailSent">
-            <p class="passwortRecoveryBlockMessage">
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="this.$store.state.language == 'de'"
+            >
               Eine E-Mail zum Passwort ändern wurde an {{ this.email }} gesendet
+            </p>
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="this.$store.state.language == 'en'"
+            >
+              A password change email was sent to: {{ this.email }}
             </p>
             <img
               src="@/assets/closeX.png"
@@ -384,11 +393,29 @@
             />
           </div>
           <div class="loginError" v-if="this.loginError">
-            <p v-if="this.userNotFound" class="passwortRecoveryBlockMessage">
+            <p
+              v-if="this.userNotFound && this.$store.state.language == 'de'"
+              class="passwortRecoveryBlockMessage"
+            >
               Die von Ihnen eingegebenen Benutzerdaten stimmen nicht überein
             </p>
-            <p v-if="this.passwordFalse" class="passwortRecoveryBlockMessage">
+            <p
+              v-if="this.userNotFound && this.$store.state.language == 'en'"
+              class="passwortRecoveryBlockMessage"
+            >
+              The user data you entered does not match
+            </p>
+            <p
+              v-if="this.passwordFalse && this.$store.state.language == 'de'"
+              class="passwortRecoveryBlockMessage"
+            >
               Das von Ihnen eingegebene Passwort ist falsch
+            </p>
+            <p
+              v-if="this.passwordFalse && this.$store.state.language == 'en'"
+              class="passwortRecoveryBlockMessage"
+            >
+              The password you entered is incorrect
             </p>
             <img
               src="@/assets/closeX.png"
@@ -402,15 +429,39 @@
           <div v-if="this.errorCode" class="loginError">
             <p
               class="passwortRecoveryBlockMessage"
-              v-if="this.errorCode == 'auth/email-already-in-use'"
+              v-if="
+                this.errorCode == 'auth/email-already-in-use' &&
+                this.$store.state.language == 'de'
+              "
             >
               Diese E-Mail ist bereits bei uns registriert.
             </p>
             <p
               class="passwortRecoveryBlockMessage"
-              v-if="this.errorCode == 'auth/invalid-email'"
+              v-if="
+                this.errorCode == 'auth/email-already-in-use' &&
+                this.$store.state.language == 'en'
+              "
+            >
+              This email is already registered with us.
+            </p>
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="
+                this.errorCode == 'auth/invalid-email' &&
+                this.$store.state.language == 'de'
+              "
             >
               Diese E-Mail ist nicht valid.
+            </p>
+            <p
+              class="passwortRecoveryBlockMessage"
+              v-if="
+                this.errorCode == 'auth/invalid-email' &&
+                this.$store.state.language == 'en'
+              "
+            >
+              This email is not valid.
             </p>
             <p
               class="passwortRecoveryBlockMessage"
@@ -730,11 +781,15 @@ export default {
           })
           .then((user) => {
             console.log(user);
-            api.firebase().auth().currentUser.updateProfile({
-              displayName: this.name
-            }).then(() => {
-            this.$router.push("/dashboard");
-            })
+            api
+              .firebase()
+              .auth()
+              .currentUser.updateProfile({
+                displayName: this.name,
+              })
+              .then(() => {
+                this.$router.push("/dashboard");
+              });
           });
       } catch (err) {
         console.log(err);
