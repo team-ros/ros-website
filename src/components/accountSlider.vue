@@ -200,10 +200,10 @@ export default {
     },
 
      deleteAccount() {
-      var user = api.firebase.auth().currentUser;
+      var user = api.firebase().auth().currentUser;
       user
         .delete()
-        .then(function () {
+        .then(() => {
           this.$router.push("/");
         })
         .catch(function (error) {
