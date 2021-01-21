@@ -463,6 +463,11 @@
             <a v-if="this.$store.state.language == 'de'" href="#">Impressum</a>
             <a v-if="this.$store.state.language == 'en'" href="#">imprint</a>
           </router-link>
+          <span style="margin: 5px">|</span>
+          <router-link to="/dsgvo">
+            <a v-if="this.$store.state.language == 'de'" href="#">DSGVO</a>
+            <a v-if="this.$store.state.language == 'en'" href="#">GDPR</a>
+          </router-link>
         </div>
       </div>
     </div>
