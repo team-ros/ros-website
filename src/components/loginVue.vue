@@ -508,7 +508,7 @@
           ></iframe>
         </div>
         <div class="copyright">
-          © ROS 2020
+          © ROS 2021
           <span style="margin: 5px">|</span>
           <router-link to="/impressum">
             <a v-if="this.$store.state.language == 'de'" href="#">Impressum</a>
