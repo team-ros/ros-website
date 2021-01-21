@@ -10,17 +10,12 @@ Für zusätzliche Informationen bezüglich Datenschutz, kontaktieren Sie uns unt
       <h3> Automatische Datenspeicherung </h3>
       <p>
 Bei einem Besuch der Webseite werden automatisch gewisse Informationen gespeichert. Darunter fallen
-<ul>
-<li>
-- die URL</li>
-<li>
-- Browser und Browserversion</li>
-<li>
-- das Betriebssystem</li>
-<li>
-- IP-Adresse</li>
-<li>
-- Datum und Uhrzeit</li>
+<ul class="a">
+<li>● die URL</li>
+<li>● Browser und Browserversion</li>
+<li>● das Betriebssystem</li>
+<li>● IP-Adresse</li>
+<li>● Datum und Uhrzeit</li>
 </ul>
       </p>
       <p>
@@ -102,7 +97,9 @@ $rosfont: montserrat;
 * {
   font-family: $rosfont;
   overflow: hidden;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+
 }
+
 </style>
