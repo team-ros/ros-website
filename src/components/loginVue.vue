@@ -69,8 +69,16 @@
                 <p
                   class="rightPageContentGrey"
                   id="rightPageContentLoginEmailfield"
+                  v-if="this.$store.state.language == 'de'"
                 >
                   E-Mail
+                </p>
+                <p
+                  class="rightPageContentGrey"
+                  id="rightPageContentLoginEmailfield"
+                  v-if="this.$store.state.language == 'en'"
+                >
+                  E-mail
                 </p>
                 <input
                   @input="validOrInvalidEmail"

@@ -23,7 +23,7 @@
       <h1>Account</h1>
 
       <p v-if="this.$store.state.language == 'de'">
-        Hier sind ihre Accountinformationen zu sehen
+        Hier sind Ihre Accountinformationen zu sehen
       </p>
       <p v-if="this.$store.state.language == 'en'">
         Here you can see your account information
@@ -47,7 +47,7 @@
         <span @click="languageEN()" class="language"> English </span>
       </p>
       <h3 v-if="this.$store.state.language == 'de'">Passwort zurücksetzen?</h3>
-      <h3 v-if="this.$store.state.language == 'en'">RESET PASSWORD?</h3>
+      <h3 v-if="this.$store.state.language == 'en'">reset password?</h3>
       <button
         class="resetButton"
         @click="resetPassword()"
